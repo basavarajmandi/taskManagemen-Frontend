@@ -1,0 +1,39 @@
+/* Styling for dialog title */
+mat-dialog-title {
+  text-align: center;
+  padding: 70px 0;
+  background-color: #e2e0e0;
+  margin-bottom: 10px;
+}
+
+/* Styling for dialog actions (buttons) */
+mat-dialog-actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px;
+  background-color: #fafafa;
+  border-top: 1px solid #ccc;
+}
+
+/* General button styling */
+button {
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+/* Hover effect for buttons */
+button:hover {
+  background-color: #ececec;
+}
+
+/* Styling for 'Yes' button with warning color */
+button[color='warn'] {
+  background-color: #96362f;
+  color: white;
+}
+
+button[color='warn']:hover {
+  background-color: #e93d3d;
+}
