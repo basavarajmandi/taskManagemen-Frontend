@@ -1,27 +1,53 @@
-.navbar{
+.navbar {
     display: flex;
     align-items: center;
     padding: 0 16px;
     background-color: #3f51b5;
     color: white;
 }
-.navbar-brand{
+
+.navbar-brand {
     font-size: 20px;
     font-weight: 600;
     margin-right: 16px;
 }
-.space{
+
+.space {
     flex: 1;
 }
-button{
+
+button {
     color: white !important;
     text-transform: uppercase;
     margin-left: 8px;
 }
 
-button.active{
+button.active {
     font-weight: 600;
 }
-.custom-toolbar{
+
+.custom-toolbar {
     background-color: #ff000f;
 }
+
+
+.mat-icon.logout-icon {
+    color: rgb(253, 83, 83);
+    /* Specific color for logout icon */
+}
+
+/* Text styles for menu items */
+.menu-text {
+    font-size: 14px;
+    /* Adjust text size */
+    color: #636262;
+    /* Neutral color for text */
+    margin-left: 5px;
+    /* Space between icon and text */
+    font-weight: 500;
+    /* Consistent font weight */
+}
+
+ 
+
+

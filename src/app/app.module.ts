@@ -9,13 +9,16 @@ import { SignupComponent } from './auth/components/signup/signup.component';
 import { DemoAngularMaterialModule } from './demo-angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from './shared/shared/shared.module';
+import { SharedModule } from './shared/shared.module';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -25,9 +28,10 @@ import { SharedModule } from './shared/shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    SharedModule
-
+    SharedModule,
+    NgChartsModule,
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })

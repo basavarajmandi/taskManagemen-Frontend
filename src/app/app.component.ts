@@ -30,7 +30,8 @@ logout(){
   StorageService.signOut();
   this.router.navigateByUrl("/login")
 }
-
-
-
+openDialog(){}
+settings(){}
+profile(){}
+about(){}
 }

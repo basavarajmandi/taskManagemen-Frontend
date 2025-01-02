@@ -1,25 +1,44 @@
+/* Centering the dialog box as a popup */
+.contenar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* Keeps the popup in place even when scrolling */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the container */
+  width: 400px; /* Fixed width for the popup */
+  padding: 5px; /* Padding for content inside */
+  box-sizing: border-box;
+  background-color: #fff; /* Solid background color for popup */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0px 4px 10px rgba(236, 4, 4, 0.25); /* Subtle shadow for elevation */
+  flex-direction: column;
+}
+
 /* Styling for dialog title */
 mat-dialog-title {
   text-align: center;
-  padding: 70px 0;
-  background-color: #e2e0e0;
-  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ccc;
 }
 
 /* Styling for dialog actions (buttons) */
 mat-dialog-actions {
   display: flex;
-  justify-content: space-around;
-  padding: 12px;
-  background-color: #fafafa;
-  border-top: 1px solid #ccc;
+  justify-content: end;
+  padding-top: 10px;
+  width: 100%;
 }
 
 /* General button styling */
 button {
-  font-size: 16px;
+  font-size: 14px;
   padding: 8px 16px;
-  border-radius: 5px;
+  border-radius: 4px;
   transition: background-color 0.3s;
 }
 
@@ -30,8 +49,8 @@ button:hover {
 
 /* Styling for 'Yes' button with warning color */
 button[color='warn'] {
-  background-color: #96362f;
-  color: white;
+  background-color: #e06158;
+  color: rgb(247, 247, 247);
 }
 
 button[color='warn']:hover {

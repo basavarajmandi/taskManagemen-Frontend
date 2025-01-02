@@ -1,54 +1,239 @@
+// .container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh;
+// }
+
+// mat-card {
+//     max-width: 400px;
+//     width: 100%;
+//     padding: 20px;
+
+//     @media screen and (max-width: 500px) {
+//         max-width: 90%;
+//     }
+// }
+
+// mat-card-title {
+//     text-align: center;
+//     font-size: 24px;
+//     margin-bottom: 20px;
+// }
+
+// form {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+// }
+
+// mat-form-field {
+//     width: 100%;
+//     margin-bottom: 20px;
+// }
+
+// button {
+//     width: 100%;
+//     transform: scale(1.1) translateY(-3px);
+// }
+
+// @media screen and (max-width: 500px) {
+//     mat-card-title {
+//         font-size: 20px;
+//     }
+
+//     mat-form-field {
+//         margin-bottom: 10px;
+//     }
+// }
+// .error-snackbar{
+//     background-color: red ;
+//     color: #fff;
+// }
+// .success-snackBar{
+//     background-color: #4caf50;
+//     color: #fff;
+// }
+/* Centering the container */
+
+// ----------------
+
+// .login-card {
+//     width: 100%;
+//     max-width: 400px;
+//     padding: 20px;
+//     border-radius: 8px;
+//     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+//     background-color: #fff;
+//     position: relative;
+//     z-index: 1;
+//     transition: box-shadow 0.2s ease;
+// }
+// .container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh;
+//     padding: 20px;
+//     background-image: url('/assets/img/background.jpg');
+//     background-size: cover;
+//     background-position: center;
+//     background-repeat: no-repeat;
+// }
+
+// .login-card:hover {
+//     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+// }
+// /* Mat card styling */
+// mat-card {
+//     max-width: 450px;
+//     width: 100%;
+//     padding: 20px;
+//     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+//     border-radius: 10px;
+// }
+
+// /* Card title */
+// mat-card-title {
+//     text-align: center;
+//     font-size: 26px;
+//     font-weight: bold;
+//     color: #3f51b5;
+//     margin-bottom: 30px;
+// }
+
+// /* Input field styling */
+// mat-form-field {
+//     width: 100%;
+//     margin-bottom: 20px;
+// }
+
+// /* Customizing appearance for the form fields */
+// .input-field .mat-form-field-appearance-fill .mat-form-field-label {
+//     font-size: 14px;
+//     font-weight: 500;
+// }
+
+// /* Button styling */
+// button.login-button {
+//     width: 100%;
+//     font-size: 16px;
+//     padding: 12px;
+//     margin-top: 20px;
+// }
+
+// /* Styling for the sign-up link */
+// .signup-link {
+//     width: 100%;
+//     text-align: center;
+// }
+
+// /* Password visibility button styling */
+// button mat-icon {
+//     font-size: 20px;
+// }
+
+// /* Responsive design for smaller screens */
+// @media screen and (max-width: 500px) {
+//     mat-card-title {
+//         font-size: 20px;
+//     }
+
+//     .input-field {
+//         margin-bottom: 15px;
+//     }
+
+//     button.login-button {
+//         font-size: 14px;
+//         padding: 10px;
+//     }
+// }
+
+/* Custom error and success messages */
+// .error-snackbar {
+//     background-color: #f44336;
+//     color: white;
+// }
+
+// .success-snackBar {
+//     background-color: #4caf50;
+//     color: white;
+// }
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+   background-image: url('/assets/img/erp.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-mat-card {
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
+.draggable-card {
+    display: inline-block;  /* Makes the login card behave like a block element */
+    cursor:grab  /* Add a move cursor to indicate drag capability */
+}
 
-    @media screen and (max-width: 500px) {
-        max-width: 90%;
-    }
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 100px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+    transition: box-shadow 0.2s ease;
+}
+
+.login-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #108ee9;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.signup-link {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
 }
 
 mat-card-title {
-    text-align: center;
     font-size: 24px;
-    margin-bottom: 20px;
+    font-weight: 600;
+    color: #108ee9;
+    text-align: center;
+    padding-bottom: 12px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+mat-progress-bar {
+    padding-bottom: 10px;
+}
+mat-form-field .mat-form-field-label {
+    color: #333;
 }
 
-mat-form-field {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-button {
-    width: 100%;
-    transform: scale(1.1) translateY(-3px);
-}
-
-@media screen and (max-width: 500px) {
-    mat-card-title {
-        font-size: 20px;
-    }
-
-    mat-form-field {
-        margin-bottom: 10px;
-    }
-}
-.error-snackbar{
-    background-color: red ;
-}
-.success-snackBar{
-    background-color: #4caf50;
+mat-error {
+    color: #e74c3c;
 }

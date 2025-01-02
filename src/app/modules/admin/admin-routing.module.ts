@@ -4,8 +4,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PostTaskComponent } from './components/post-task/post-task.component';
 import { UpdateTaskComponent } from './components/update-task/update-task.component';
 import { ViewTaskDetailsComponent } from './components/view-task-details/view-task-details.component';
+import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
 
 const routes: Routes = [
+  {path:"Maindashboard",component:MainDashboardComponent},
   {path:"dashboard" ,component:DashboardComponent},
   {path:"task",component:PostTaskComponent},
   {path:"task/:id/edit",component:UpdateTaskComponent},

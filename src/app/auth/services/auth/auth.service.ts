@@ -9,8 +9,8 @@ const BASE_URL="http://localhost:8080/";
 })
 export class AuthService {
 
-
   constructor(private httpClient: HttpClient) { }
+  
 
   signUp(signupRequest:any):Observable<any>{
     return this.httpClient.post(BASE_URL+ "api/auth/signup",signupRequest);

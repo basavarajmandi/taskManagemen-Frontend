@@ -3,22 +3,27 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+   background-image: url('/assets/img/dashboard.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 mat-card {
     max-width: 400px;
     width: 100%;
     padding: 20px;
-
-    @media screen and (max-width: 500px) {
-        max-width: 90%;
-    }
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 20px;
 }
 
 mat-card-title {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #3f51b5;
+    margin-bottom: 30px;
 }
 
 form {
@@ -26,14 +31,26 @@ form {
     flex-direction: column;
     align-items: center;
 }
+/* Customizing appearance for the form fields */
+.input-field .mat-form-field-appearance-fill .mat-form-field-label {
+    font-size: 14px;
+    font-weight: 500;
+}
 
 mat-form-field {
     width: 100%;
     margin-bottom: 20px;
 }
+/* Password visibility button styling */
+button mat-icon {
+    font-size: 20px;
+}
 
-button {
+button.signup-button {
     width: 100%;
+    font-size: 16px;
+    padding: 12px;
+    margin-top: 20px;
 }
 
 @media screen and (max-width: 500px) {

@@ -1,0 +1,85 @@
+/* Main container for the dashboard */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title styling */
+  .dashboard-title {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  /* Container to display charts side by side */
+  .chart-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  
+  /* Styling for each chart card */
+  .chart-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 45%;
+    min-width: 300px;
+    text-align: center;
+  }
+  
+
+  /* Title for the charts */
+  .chart-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  /* Canvas styling to make sure charts are responsive */
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 400px;
+  }
+/* Styling for the summary section */
+.summary-section {
+  background-color: #fff; /* White background */
+  padding: 20px; /* Padding around the content */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a subtle 3D effect */
+  margin-bottom: 30px; /* Spacing below the section */
+  display: flex;
+  justify-content: space-between; /* Align content in space-between layout */
+  align-items: center; /* Center-align the items vertically */
+}
+
+.summary-section h3 {
+  color: #333; /* Dark text color */
+  font-size: 1.5rem; /* Font size */
+  font-weight: bold; /* Bold text */
+  margin: 0; /* Remove any default margin */
+}
+
+.summary-section .count {
+  background-color: #FF6384; /* Accent color */
+  color: #fff; /* White text */
+  padding: 5px 10px; /* Padding for the count text */
+  border-radius: 50px; /* Rounded count box */
+  font-size: 1.2rem; /* Larger font size for the count */
+  font-weight: bold; /* Bold count text */
+  display: inline-block; /* Inline block to keep the count within its container */
+  min-width: 50px; /* Minimum width for the count box */
+  text-align: center; /* Center align the count number */
+}
+

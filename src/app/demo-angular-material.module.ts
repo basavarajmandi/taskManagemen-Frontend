@@ -19,7 +19,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
-
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -43,8 +48,14 @@ import { MatListModule } from '@angular/material/list';
     MatNativeDateModule,
     MatDialogModule,
     MatTableModule,
-    MatListModule
-
+    MatListModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    DragDropModule,
+    MatTreeModule,
+    MatProgressBarModule
+    
   ],
   exports: [
     MatButtonModule,
@@ -65,8 +76,13 @@ import { MatListModule } from '@angular/material/list';
     MatNativeDateModule,
     MatDialogModule,
     MatTableModule,
-    MatListModule
-
+    MatListModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    DragDropModule,
+    MatTreeModule,
+    MatProgressBarModule
   ]
 })
 export class DemoAngularMaterialModule { }

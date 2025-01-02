@@ -9,14 +9,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { DemoAngularMaterialModule } from 'src/app/demo-angular-material.module';
 import { UpdateTaskComponent } from './components/update-task/update-task.component';
 import { ViewTaskDetailsComponent } from './components/view-task-details/view-task-details.component';
+import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
 
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     PostTaskComponent,
     UpdateTaskComponent,
-    ViewTaskDetailsComponent
+    ViewTaskDetailsComponent,
+    MainDashboardComponent,
+ 
   ],
   imports: [
     CommonModule,
@@ -24,7 +28,9 @@ import { ViewTaskDetailsComponent } from './components/view-task-details/view-ta
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DemoAngularMaterialModule
+    DemoAngularMaterialModule,
+    NgChartsModule,
+   
   ]
 })
 export class AdminModule { }

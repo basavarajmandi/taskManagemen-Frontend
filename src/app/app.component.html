@@ -1,31 +1,61 @@
-
 <div *ngIf="!isEmployeeLoggedIn && !isAdminLoggedIn">
-<mat-toolbar color="primary" class="navbar">
-  <span class="navbar-brand">Task Management System</span>
-  <span class="space"></span>
-  <button mat-button routerLink="/signup" routerLinkActive="active">Register</button>
-  <button mat-button routerLink="/login" routerLinkActive="active">Login</button>
-</mat-toolbar>
+  <mat-toolbar color="primary" class="navbar">
+    <span class="navbar-brand">Task Management System</span>
+    <span class="space"></span>
+    <button mat-button routerLink="/signup" routerLinkActive="active">Register</button>
+    <button mat-button routerLink="/login" routerLinkActive="active">Login</button>
+  </mat-toolbar>
 </div>
-
 
 <div *ngIf="isAdminLoggedIn">
   <mat-toolbar color="primary" class="navbar">
     <span class="navbar-brand">Task Management System</span>
     <span class="space"></span>
-    <button mat-button routerLink="/admin/dashboard" routerLinkActive="active">Admin Dashboard</button>
+    <button mat-button routerLink="/admin/dashboard" routerLinkActive="active">Admin-Dashboard</button>
     <button mat-button routerLink="/admin/task" routerLinkActive="active">Post-task</button>
-    <button mat-button  routerLinkActive="active" (click)="logout()">Logout</button>
+
+    <!-- Settings Dropdown Menu -->
+    <button mat-icon-button [matMenuTriggerFor]="settingsMenu">
+      <mat-icon>settings</mat-icon>
+    </button>
+
+    <mat-menu #settingsMenu="matMenu">
+      <button mat-menu-item (click)="profile()">
+        <mat-icon>account_circle</mat-icon>
+        <span class="menu-text">Profile</span>
+      </button>
+
+      <button mat-menu-item (click)="settings()">
+        <mat-icon>settings</mat-icon>
+       <span class="menu-text" >Settings</span> 
+      </button>
+
+      <button mat-menu-item (click)="logout()">
+        <mat-icon class="logout-icon">power_settings_new</mat-icon>
+        <span class="menu-text">Logout</span>
+        </button>
+
+        <button mat-menu-item (click)="about()">
+             <mat-icon>about</mat-icon>
+             <span class="menu-text">About</span>
+
+        </button>
+    </mat-menu>
+
+    <!-- Logout button with a wheel/gear icon
+<button mat-icon-button routerLinkActive="active" (click)="logout()">
+  <mat-icon>settings</mat-icon>
+</button> -->
   </mat-toolbar>
 </div>
 <div *ngIf="isEmployeeLoggedIn">
   <mat-toolbar color="primary" class="navbar">
     <span class="navbar-brand">Task Management System</span>
     <span class="space"></span>
-    <button mat-button routerLink="/employee/dashboard" routerLinkActive="active">Employe Dashboard</button>
+    <button mat-button routerLink="/employee/dashboard" routerLinkActive="active">Employe-Dashboard</button>
     <button mat-button routerLinkActive="active" (click)="logout()">Logout</button>
   </mat-toolbar>
 </div>
-  
+
 
 <router-outlet></router-outlet>

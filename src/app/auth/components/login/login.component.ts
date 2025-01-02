@@ -13,8 +13,9 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm!: FormGroup;
   hidePassword: boolean = true;
+isLoading: any;
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private authService: AuthService,private router:Router) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar, private authService: AuthService, private router: Router) {
 
   }
 
@@ -31,31 +32,82 @@ export class LoginComponent {
     this.hidePassword = !this.hidePassword;
   }
 
+  // login() {
+  //    console.log(this.loginForm.value);
+
+  //   this.authService.login(this.loginForm.value).subscribe((res) => {
+  //     console.log(res);
+
+  //     if (res.userId != null) {
+
+  //       const user={
+  //         id:res.userId,
+  //         role:res.userRole
+  //       };
+  //       StorageService.saveUser(user);
+  //       StorageService.saveToken(res.jwt);
+
+  //       if(StorageService.isAdminLoggedIn())
+  //         this.router.navigateByUrl("/admin/dashboard");
+  //       else if(StorageService.isEmployeeLoggedIn()){ 
+  //         this.router.navigateByUrl("/employee/dashboard");
+  //       }
+  //         this.snackBar.open("login successfully","close",{duration: 5000, panelClass:'success-snackBar'});
+
+  //     }else{
+  //         this.snackBar.open("inValid Credentials","close",{duration:5000, panelClass:'error-snackBar'});
+  //     }
+  //   })
+
+  // }
+
   login() {
     console.log(this.loginForm.value);
-    this.authService.login(this.loginForm.value).subscribe((res) => {
-      console.log(res);
 
-      if (res.userId != null) {
-     
-        const user={
-          id:res.userId,
-          role:res.userRole
+    // If form is invalid, stop execution and show a message
+this.isLoading=true;
+    // Make API call to check credentials
+    this.authService.login(this.loginForm.value).subscribe({
+
+      next: (res) => {
+        console.log(res);
+
+        // If login is successful, proceed with saving token and redirecting
+        if (res.userId != null) {
+          const user = {
+            id: res.userId,
+            role: res.userRole,
+          };
+          StorageService.saveUser(user);
+          StorageService.saveToken(res.jwt);
+
+          if (StorageService.isAdminLoggedIn()) {
+            this.router.navigateByUrl("/admin/Maindashboard");
+          } else if (StorageService.isEmployeeLoggedIn()) {
+            this.router.navigateByUrl("/employee/dashboard");
+          }
+
+          // Display success message
+          this.snackBar.open("Login successful", "close", {
+            duration: 5000,
+            panelClass: 'success-snackBar',
+          });
+        } else {
+          // If credentials are invalid (e.g., wrong username/password)
+          this.snackBar.open("Invalid credentials, please try again", "close", { duration: 5000, panelClass: 'error-snackBar', });
         }
-        StorageService.saveUser(user);
-        StorageService.saveToken(res.jwt);
-        if(StorageService.isAdminLoggedIn())
-          this.router.navigateByUrl("/admin/dashboard");
-        else if(StorageService.isEmployeeLoggedIn())
-          this.router.navigateByUrl("/employee/dashboard");
-          this.snackBar.open("login successfully","close",{duration: 5000, panelClass:'success-snackBar'});
-        
-      }else{
-          this.snackBar.open("inValid Credentials","close",{duration:5000,panelClass:'error-snackBar'})
-      }
-    })
-    
+      },
+      error: (err) => {
+        // Handle error from the backend if login fails (e.g., network or server error)
+        console.error("Login error:", err);
+        this.snackBar.open("Invalid credentials, please try again", "close", {
+          duration: 5000,
+          panelClass: 'error-snackBar',
+        });
+      },
 
-  }
 
+    });
+  };
 }
+

@@ -1,16 +1,73 @@
 
-<form [formGroup]="searchTaskForm" class="search-form">
-
-    <mat-form-field appearance="outline" class="search-input">
-        <mat-label >Enter KeyWord to Search</mat-label>
-        <input matInput formControlName="title" (input)="searchTask()">
-    </mat-form-field>
 
 
-</form>
-<div class="task-list">
-    <mat-card class="task-card" *ngFor="let task of listOfTasks">
-        <div class="task-details">
+
+<div class="filter-list">
+    <mat-expansion-panel hideToggle class="filter-panel" [(expanded)]="isPanelExpanded">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>filter_list</mat-icon> Filter
+            </mat-panel-title>
+            <mat-icon>{{ isPanelExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="searchTaskForm" class="filter-form">
+
+            <mat-form-field appearance="fill" class="filter-input">
+                <mat-label>employe Name</mat-label>
+                <input matInput formControlName="employeeName" placeholder="search by employee">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="filter-input">
+                <mat-label>title</mat-label>
+                <input matInput formControlName="title" placeholder="search by title">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="filter-input">
+                <mat-label>TaskStatus</mat-label>
+                <mat-select formControlName="taskStatus">
+                    <mat-option value="PENDING">IN PENDING</mat-option>
+                    <mat-option value="INPROGRESS">IN PROGRESS</mat-option>
+                    <mat-option value="COMPLETED">COMPLETED</mat-option>
+                    <mat-option value="DEFERRED">DEFERRED</mat-option>
+                    <mat-option value="CANCELLED">CANCELLED</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="filter-input">
+                <mat-label>Priority</mat-label>
+                <mat-select formControlName="priority">
+                    <mat-option value="LOW">low</mat-option>
+                    <mat-option value="MEDIUM">Medium</mat-option>
+                    <mat-option value="HIGH">High</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="filter-input">
+                <mat-label>Due Date</mat-label>
+                <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate"
+                    placeholder="Choose a DueDate ">
+                <mat-datepicker #DueDatePicker></mat-datepicker>
+                <mat-datepicker-toggle [for]="DueDatePicker" matSuffix />
+            </mat-form-field>
+
+            <div class="filter-buttons">
+                <button mat-flat-button matTooltip="Search" color="primary" class="apply-filter-btn" (click)="applyFilter()">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <button mat-mini-fab   matTooltip="clear!" color="warn" class="clear-filter-btn " (click)="clearFilter()">
+                    <mat-icon>clear_all</mat-icon>
+                </button>
+            </div>
+        </form>
+    </mat-expansion-panel>
+
+</div>
+
+
+<div class="task-list" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">
+    <mat-card class="task-card" *ngFor="let task of listOfTasks" cdkDrag>
+        <div class="task-details" cdkDropList>
 
             <h2 class="task-name">{{task.title}}</h2>
 
@@ -22,7 +79,7 @@
                 <div class="info-row">
                     <span class="info-label">Due Date</span>
                     <span class="info-value">{{task.dueDate | date:'MMM dd, Y'}}</span>
-            </div>
+                </div>
 
                 <div class="info-row">
                     <span class="info-label">Employee:</span>
@@ -42,18 +99,88 @@
             <mat-divider></mat-divider>
 
             <div class="actions">
-                <button mat-icon-button color="warn" class="view-button" routerLink="/admin/task/{{task.id}}/view">
+                <button mat-icon-button color="warn"  matTooltip="Go to View"  class="view-button" routerLink="/admin/task/{{task.id}}/view">
                     <mat-icon>visibility</mat-icon>
                 </button>
-                <button mat-icon-button color="warn" class="update-button" routerLink="/admin/task/{{task.id}}/edit">
-                    <mat-icon>edite</mat-icon>
+                <!-- <button mat-icon-button color="warn" matTooltip="Edit"  class="update-button" routerLink="/admin/task/{{task.id}}/edit">
+                    <mat-icon>edit</mat-icon>
+                </button> -->
+                <button mat-icon-button color="warn" matTooltip="Edit" class="update-button" (click)="openUpdateTaskDialog(task.id)">
+                  <mat-icon>edit</mat-icon>
                 </button>
-
-                <button mat-icon-button color="warn" class="delete-button" (click)="deleteTask(task.id)">
+              
+                <button mat-icon-button color="warn"  matTooltip="Delete"   class="delete-button" (click)="deleteTask(task.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
+
             </div>
 
         </div>
     </mat-card>
-</div>
+</div> 
+
+
+<!-- <div class="task-list-container" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">
+    <div class="task-grid" cdkDropList [cdkDropListOrientation]="'horizontal'" (cdkDropListDropped)="onTaskDropped($event)">
+      <div *ngFor="let task of listOfTasks" class="task-item" cdkDrag>
+        
+          <div class="task-details">
+            <h2 class="task-name">{{ task.title }}</h2>
+            <p class="task-description">{{ task.description }}</p>
+            <mat-divider></mat-divider>
+            <div class="task-info">
+              <div class="info-row">
+                <span class="info-label">Due Date:</span>
+                <span class="info-value">{{ task.dueDate | date: 'MMM dd, Y' }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Employee:</span>
+                <span class="info-value">{{ task.employeeName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Priority:</span>
+                <span class="info-value">{{ task.priority }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Status:</span>
+                <span class="info-value">{{ task.taskStatus }}</span>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="actions">
+              <button mat-icon-button color="primary" routerLink="/admin/task/{{ task.id }}/view">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="white" routerLink="/admin/task/{{ task.id }}/edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  
+   -->
+
+
+<div class="footer-panel">
+    <!-- Home Button -->
+    <button mat-raised-button color="primary" matTooltip="Go to Home" (click)="navigateHome()">
+      <i class="material-icons">home</i> Home
+    </button>
+  
+    <!-- Clear Button -->
+    <button mat-raised-button color="warn" matTooltip="Clear Fields" (click)="clearFields()">
+      <i class="material-icons">clear_all</i> Clear
+    </button>
+  
+    <!-- Save Button -->
+    <button mat-raised-button color="accent" matTooltip="Save Data" (click)="saveData()">
+      <i class="material-icons">save</i> Save
+    </button>
+  </div>
+  

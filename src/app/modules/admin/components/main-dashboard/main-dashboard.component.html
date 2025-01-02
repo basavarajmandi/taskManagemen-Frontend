@@ -1,0 +1,33 @@
+<div class="dashboard-container">
+  <h2 class="dashboard-title">Task Overview</h2>
+  <a style="color: rgb(255, 0, 255); font-size: large;"> 
+    <marquee> Welcome to the Task Management Dashboard! View the task list below. Click on "Tasks" to update task statuses or add new tasks. Visualize task progress with pie charts and bar charts for a comprehensive overview!</marquee>
+    <!-- <marquee> Welcome to Medicines dashboard.please find the Medicines list below!!. click Medicines to view and update Medicines,click and Medicines to add new Medicines</marquee> -->
+  </a>
+   
+  <div class="summary-section">
+    <h3>
+        Overdue Tasks: <span class="count">{{ overdueTaskCount }}</span>
+    </h3>
+  </div>
+  
+  <div class="chart-container">
+    <div class="chart-card">
+      <h3 class="chart-title">Pie Chart</h3>
+      <canvas baseChart
+        [data]="pieChartData"
+        [options]="chartOptions"
+        chartType="pie">
+      </canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="chart-title">Bar Chart</h3>
+      <canvas baseChart     
+        [data]="barChartData"
+        [options]="chartOptions"
+        chartType="bar">
+      </canvas>
+    </div>
+  </div>
+</div>

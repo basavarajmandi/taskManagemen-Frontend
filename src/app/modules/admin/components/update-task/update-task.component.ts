@@ -19,7 +19,10 @@ export class UpdateTaskComponent {
   listOfTaskStatus: any = ["PENDING", "INPROGRESS", "COMPLETED", "DEFERRED", "CANCELLED"];
   
   constructor(private service: AdminService
-    , private route: ActivatedRoute, private fb: FormBuilder,private snackbar:MatSnackBar,private router:Router) {
+    , private route: ActivatedRoute,
+     private fb: FormBuilder,
+     private snackbar:MatSnackBar,
+     private router:Router) {
 
   }
 
@@ -36,6 +39,9 @@ export class UpdateTaskComponent {
     this.getTaskById();
   }
 
+
+
+  
 
   getTaskById() {
     this.service.getTaskById(this.id).subscribe((res) => {
