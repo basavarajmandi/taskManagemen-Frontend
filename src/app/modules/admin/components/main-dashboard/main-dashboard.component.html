@@ -1,33 +1,72 @@
+
 <div class="dashboard-container">
   <h2 class="dashboard-title">Task Overview</h2>
-  <a style="color: rgb(255, 0, 255); font-size: large;"> 
-    <marquee> Welcome to the Task Management Dashboard! View the task list below. Click on "Tasks" to update task statuses or add new tasks. Visualize task progress with pie charts and bar charts for a comprehensive overview!</marquee>
-    <!-- <marquee> Welcome to Medicines dashboard.please find the Medicines list below!!. click Medicines to view and update Medicines,click and Medicines to add new Medicines</marquee> -->
+  <a style="color: rgb(117, 7, 243); font-size: large;">
+    <marquee>
+      Hey hi.. Welcome to the Task Management Dashboard! View the task list below.
+      Click on "admin-Dashboard" to update task statuses or add new tasks. Visualize
+      task progress with pie charts and bar charts for a comprehensive overview!... ಹಾಯ್, ನಮಸ್ಕಾರ.. ಟಾಸ್ಕ್ ಮ್ಯಾನೇಜ್ಮೆಂಟ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಸ್ವಾಗತ! ಕೆಳಗಿನ ಟಾಸ್ಕ್ ಲಿಸ್ಟ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ.
+      "ಅಡ್ಮಿನ್-ಡ್ಯಾಶ್‌ಬೋರ್ಡ್" ಕ್ಲಿಕ್ ಮಾಡಿ ಟಾಸ್ಕ್ ಸ್ಥಿತಿಯನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡಲು ಅಥವಾ ಹೊಸ ಟಾಸ್ಕ್‌ಗಳನ್ನು ಸೇರಿಸಲು.
+      ಪೈ ಚಾರ್ಟ್‌ಗಳು ಮತ್ತು ಬಾರ್ ಚಾರ್ಟ್‌ಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಟಾಸ್ಕ್ ಪ್ರಗತಿಯನ್ನು ಸಂಪೂರ್ಣ ಚಿತ್ರಣದೊಂದಿಗೆ ವೀಕ್ಷಿಸಿ!
+    </marquee>
   </a>
-   
-  <div class="summary-section">
-    <h3>
-        Overdue Tasks: <span class="count">{{ overdueTaskCount }}</span>
-    </h3>
-  </div>
-  
-  <div class="chart-container">
-    <div class="chart-card">
-      <h3 class="chart-title">Pie Chart</h3>
-      <canvas baseChart
-        [data]="pieChartData"
-        [options]="chartOptions"
-        chartType="pie">
-      </canvas>
+
+  <div class="summary-section"  [@slideInFromRight]="animationState">
+    <div class="card total-task">
+      <h3>Total Tasks</h3>
+      <p class="count">{{ TotalTaskCount }}</p>
     </div>
 
-    <div class="chart-card">
-      <h3 class="chart-title">Bar Chart</h3>
-      <canvas baseChart     
-        [data]="barChartData"
-        [options]="chartOptions"
-        chartType="bar">
-      </canvas>
+    <div class="card overdue-task">
+      <h3>Overdue Tasks</h3>
+      <p class="count">{{ OverdueTaskCount }}</p>
     </div>
+
+    <div class="card completed-task">
+      <h3>Completed Tasks</h3>
+      <p class="count">{{ CompletedTaskCount }}</p>
+    </div>
+
+    <div class="card pending-task">
+      <h3>Pending Tasks</h3>
+      <p class="count">{{ PendingTaskCount }}</p>
+    </div>
+
+    <div class="card inprogress-task">
+      <h3>In-Progress Tasks</h3>
+      <p class="count">{{ InprogressTaskCount }}</p>
+    </div>
+    <div class="card Cancelled-task">
+      <h3>Cancelled Tasks</h3>
+      <p class="count">{{ CancelledTaskCount }}</p>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <mat-card>
+      <h3 class="chart-title">Project By Status</h3>
+      <canvas baseChart 
+      [data]="barChartData"
+       [options]="barchartOptions"
+        [type]="'bar'"></canvas>
+    </mat-card>
+
+    <mat-card>
+      <h3 class="chart-title">Task Status Overview</h3>
+      <canvas baseChart
+       [data]="pieChartData" 
+       [options]="piechartOptions"
+        [type]="'pie'"></canvas>
+    </mat-card>
+
+    <mat-card>
+      <h3 class="chart-title">Projects by Priority</h3>
+      <canvas baseChart
+        [data]="doughnutChartData"
+        [options]="doughnutChartOptions"
+        [type]="'doughnut'"
+      ></canvas>
+    </mat-card>
+
   </div>
 </div>

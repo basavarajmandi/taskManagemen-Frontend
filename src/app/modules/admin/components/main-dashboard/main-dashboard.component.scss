@@ -1,85 +1,239 @@
+// /* Main container for the dashboard */
+// .dashboard-container {
+//   max-width: 1200px;
+//   margin: 0 auto;
+//   padding: 20px;
+//   font-family: 'Arial', sans-serif;
+//   background-color: #f9f9f9;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+// }
+
+// /* Title styling */
+// .dashboard-title {
+//   text-align: center;
+//   color: #333;
+//   font-size: 2rem;
+//   margin-bottom: 30px;
+// }
+
+// /* Container to display charts side by side */
+// .chart-container {
+//   display: flex;
+//   justify-content: space-evenly;
+//   // align-items: center;
+//   align-items: flex-start;
+//   gap: 20px;
+//   flex-wrap: wrap;
+// }
+
+// /* Styling for each chart card */
+// .chart-card {
+//   background-color: #fff;
+//   padding: 20px;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   width: 45%;
+//   min-width: 300px;
+//   text-align: center;
+// }
+
+// /* Title for the charts */
+// .chart-title {
+//   font-size: 1.5rem;
+//   margin-bottom: 15px;
+//   color: #333;
+// }
+
+// /* Canvas styling to make sure charts are responsive */
+// canvas {
+//   max-width: 100% !important;
+//   height: auto !important;
+//   max-height: 400px;
+// }
+
+// /* Styling for the summary section */
+// .summary-section {
+//   background-color: #fff;
+//   padding: 10px;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   margin-bottom: 30px;
+//   display: flex;
+//   // justify-content: space-between;
+//   // align-items: center;
+//   gap: 30px;
+
+// }
+
+
+
+// .summary-section h3 {
+//   color: #333;
+//   font-size: 1.3rem;
+//   font-weight: bold;
+//   margin: 0;
+// } 
+
+// .summary-section .count {
+//   background-color: #FF6384;
+//   color: #fff;
+//   padding: 5px 10px;
+//   border-radius: 50px;
+//   font-size: 1.2rem;
+//   font-weight: bold;
+//   display: inline-block;
+//   min-width: 50px;
+//   text-align: center;
+// }
+
+// /* Media Queries for Responsiveness */
+// @media (max-width: 500px) {
+//   .chart-card {
+//     width: 100%;
+//   }
+
+//   .dashboard-title {
+//     font-size: 1.5rem;
+//   }
+
+//   .chart-title {
+//     font-size: 1.2rem;
+//   }
+//   .summary-section {
+//     flex-direction: column; /* Stack cards vertically on smaller screens */
+//     gap: 10px; /* Smaller gap for smaller screens */
+//   }
+// }
 /* Main container for the dashboard */
 .dashboard-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Title styling */
-  .dashboard-title {
-    text-align: center;
-    color: #333;
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-  
-  /* Container to display charts side by side */
-  .chart-container {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 30px;
-    flex-wrap: wrap;
-  }
-  
-  
-  /* Styling for each chart card */
-  .chart-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 45%;
-    min-width: 300px;
-    text-align: center;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  /* Title for the charts */
-  .chart-title {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  /* Canvas styling to make sure charts are responsive */
-  canvas {
-    max-width: 100% !important;
-    height: auto !important;
-    max-height: 400px;
-  }
+/* Title styling */
+.dashboard-title {
+  text-align: center;
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
 /* Styling for the summary section */
 .summary-section {
-  background-color: #fff; /* White background */
-  padding: 20px; /* Padding around the content */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a subtle 3D effect */
-  margin-bottom: 30px; /* Spacing below the section */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 0.5fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Common styling for each card */
+.card {
+  background-color: #fff;
+  padding: 3px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific colors for each card */
+.total-task {
+  background-color: #e0cf34;
+  color: #fff;
+}
+
+.overdue-task {
+  background-color: #f5214f;
+  color: #fff;
+}
+
+.completed-task {
+  background-color: #5bc7c7;
+  color: #fff;
+}
+
+.pending-task {
+  background-color: #54aae4;
+  color: #fff;
+}
+
+.inprogress-task {
+  background-color: #9a6ef1;
+  color: #fff;
+}
+.Cancelled-task{
+  background-color: rgb(34, 33, 33);
+  color: #fff;
+}
+
+/* Styling for the count text */
+.count {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 11px;
+}
+
+/* Chart container */
+.chart-container {
   display: flex;
-  justify-content: space-between; /* Align content in space-between layout */
-  align-items: center; /* Center-align the items vertically */
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: nowrap;
+
 }
 
-.summary-section h3 {
-  color: #333; /* Dark text color */
-  font-size: 1.5rem; /* Font size */
-  font-weight: bold; /* Bold text */
-  margin: 0; /* Remove any default margin */
+mat-card {
+  padding: 5px;
+  width: 40%;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
-.summary-section .count {
-  background-color: #FF6384; /* Accent color */
-  color: #fff; /* White text */
-  padding: 5px 10px; /* Padding for the count text */
-  border-radius: 50px; /* Rounded count box */
-  font-size: 1.2rem; /* Larger font size for the count */
-  font-weight: bold; /* Bold count text */
-  display: inline-block; /* Inline block to keep the count within its container */
-  min-width: 50px; /* Minimum width for the count box */
-  text-align: center; /* Center align the count number */
+
+/* Chart card styling */
+.chart-card {
+  background-color: #fff;
+  padding: 35px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1; /* Ensure charts take up equal space */
+  max-width: 30%; /* Prevent charts from being too wide */
+  text-align: center;
+  min-width: 300px; /* Ensure charts don’t become too narrow */
+
 }
 
+.chart-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Canvas styling to make charts responsive */
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 500px) {
+  .chart-container {
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  }
+  .chart-card {
+    width: 90%; /* Take up more width on smaller screens */
+    max-width: 90%;
+    margin-bottom: 15px;
+  }
+}

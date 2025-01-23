@@ -1,7 +1,6 @@
-<div class="container">
-
+<div class="container" [@slideInFromRight]="animationState">
     <h2>Post Task</h2>
-    <form [formGroup]="postTaskForm" (ngSubmit)="postTask()">
+    <form [formGroup]="postTaskForm">
 
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Title</mat-label>
@@ -42,11 +41,20 @@
             <mat-error *ngIf="postTaskForm.get('employeeId')?.hasError('required')"> this Input is Required</mat-error>
         </mat-form-field>
 
-        
-        <button mat-raised-button color="primary"   matTooltip="Save Data"  type="submit" [disabled]="postTaskForm.invalid">
-            <i class="material-icons">save</i> Post Task
-        </button>
-
-       
     </form>
+
+    
 </div>
+<app-footer
+(saveClicked)="postTask()" 
+[disabled]="postTaskForm.invalid"
+(clerClicked)="clearFields()">
+</app-footer>
+
+ <!-- Save Button -->
+ <!-- <button mat-raised-button color="accent" matTooltip="Save Data"  (click)="postTask()" type="submit" [disabled]="postTaskForm.invalid">
+    <i class="material-icons">save</i> Save
+  </button>
+
+-->
+   

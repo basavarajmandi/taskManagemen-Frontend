@@ -2,12 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/auth/services/storage/storage.service';
+import { TaskDTO } from 'src/app/shared/models/task-dto';
 
 const BASE_URL="http://localhost:8080/";
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+  http: any;
+  baseUrl: any;
 
   constructor(private httpClient :HttpClient) {
   }
@@ -104,9 +107,29 @@ getOverdueTaskCount(): Observable<number> {
 }
 
 getTaskStatusCounts():Observable<Record<string,number>>{
+
   return this.httpClient.get<Record<string,number>>(BASE_URL+'api/admin/tasks/status-counts',{
     headers:this.createAuthorizationHeader(),
   });
 }
+
+getTaskCountByStatus(status:string):Observable<number>{
+  return this.httpClient.get<number>(`${BASE_URL}/api/admin/tasks/{status}`);
+}
+
+getAllOverdueTask():Observable<TaskDTO[]>{
+  return this.httpClient.get<TaskDTO[]>(BASE_URL+'api/admin/task/alloverdue',{
+    headers:this.createAuthorizationHeader()
+  })
+}
+getProjectsByPriority() {
+  return [
+    { priority: 'High', count: 12 },
+    { priority: 'Very High', count: 15 },
+    { priority: 'Low', count: 19 },
+    { priority: 'Medium', count: 18 },
+  ];
+}
+
 
 }

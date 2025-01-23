@@ -1,7 +1,4 @@
 
-
-
-
 <div class="filter-list">
     <mat-expansion-panel hideToggle class="filter-panel" [(expanded)]="isPanelExpanded">
         <mat-expansion-panel-header>
@@ -12,7 +9,7 @@
         </mat-expansion-panel-header>
 
         <form [formGroup]="searchTaskForm" class="filter-form">
-
+          
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>employe Name</mat-label>
                 <input matInput formControlName="employeeName" placeholder="search by employee">
@@ -26,7 +23,7 @@
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>TaskStatus</mat-label>
                 <mat-select formControlName="taskStatus">
-                    <mat-option value="PENDING">IN PENDING</mat-option>
+                    <mat-option value="PENDING">PENDING</mat-option>
                     <mat-option value="INPROGRESS">IN PROGRESS</mat-option>
                     <mat-option value="COMPLETED">COMPLETED</mat-option>
                     <mat-option value="DEFERRED">DEFERRED</mat-option>
@@ -34,7 +31,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="filter-input">
+            <mat-form-field appearance="fill"   class="filter-input"  >
                 <mat-label>Priority</mat-label>
                 <mat-select formControlName="priority">
                     <mat-option value="LOW">low</mat-option>
@@ -43,7 +40,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="filter-input">
+            <mat-form-field appearance ="fill" class="filter-input">
                 <mat-label>Due Date</mat-label>
                 <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate"
                     placeholder="Choose a DueDate ">
@@ -55,17 +52,22 @@
                 <button mat-flat-button matTooltip="Search" color="primary" class="apply-filter-btn" (click)="applyFilter()">
                     <mat-icon>search</mat-icon>
                 </button>
+                
+                <button mat-flat-button matTooltip="Show Overdue Tasks" color="accent" class="overdue-filter-btn" (click)="filterOverdueTasks()">
+                  <mat-icon>schedule</mat-icon> Overdue
+                </button>
+
                 <button mat-mini-fab   matTooltip="clear!" color="warn" class="clear-filter-btn " (click)="clearFilter()">
                     <mat-icon>clear_all</mat-icon>
                 </button>
+               
             </div>
         </form>
     </mat-expansion-panel>
-
 </div>
 
 
-<div class="task-list" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">
+<div class="task-list" cdkDropList (cdkDropListDropped)="onTaskDropped($event)" >
     <mat-card class="task-card" *ngFor="let task of listOfTasks" cdkDrag>
         <div class="task-details" cdkDropList>
 
@@ -78,7 +80,8 @@
             <div class="task-info">
                 <div class="info-row">
                     <span class="info-label">Due Date</span>
-                    <span class="info-value">{{task.dueDate | date:'MMM dd, Y'}}</span>
+                    <!-- <span class="info-value">{{task.dueDate | date:'MMM dd, Y'}}</span> -->
+                    <span class="info-value">{{task.dueDate | date:'y MMM, dd'}}</span>
                 </div>
 
                 <div class="info-row">
@@ -112,15 +115,35 @@
                 <button mat-icon-button color="warn"  matTooltip="Delete"   class="delete-button" (click)="deleteTask(task.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
-
             </div>
-
         </div>
     </mat-card>
+   
 </div> 
 
+<!-- <mat-paginator 
+[length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+</mat-paginator> -->
 
-<!-- <div class="task-list-container" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div class="task-list-container" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">
     <div class="task-grid" cdkDropList [cdkDropListOrientation]="'horizontal'" (cdkDropListDropped)="onTaskDropped($event)">
       <div *ngFor="let task of listOfTasks" class="task-item" cdkDrag>
         
@@ -166,21 +189,4 @@
   
    -->
 
-
-<div class="footer-panel">
-    <!-- Home Button -->
-    <button mat-raised-button color="primary" matTooltip="Go to Home" (click)="navigateHome()">
-      <i class="material-icons">home</i> Home
-    </button>
-  
-    <!-- Clear Button -->
-    <button mat-raised-button color="warn" matTooltip="Clear Fields" (click)="clearFields()">
-      <i class="material-icons">clear_all</i> Clear
-    </button>
-  
-    <!-- Save Button -->
-    <button mat-raised-button color="accent" matTooltip="Save Data" (click)="saveData()">
-      <i class="material-icons">save</i> Save
-    </button>
-  </div>
   

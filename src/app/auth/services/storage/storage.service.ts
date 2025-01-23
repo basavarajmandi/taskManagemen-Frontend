@@ -14,7 +14,7 @@ export class StorageService {
     window.localStorage.setItem(TOKEN,token);
   }
 
-  static saveUser(user:any){
+  static saveUser(user:any):void{
     window.localStorage.removeItem(USER);
     window.localStorage.setItem(USER,JSON.stringify(user));
   }
@@ -39,6 +39,13 @@ export class StorageService {
       return '';
     return user.role;
   }
+
+
+ static getuserName():string{
+    const user = this.getUser();
+    return user?.name || '';
+ }
+
 
   static isAdminLoggedIn():boolean{
     if(this.getToken()===null)
@@ -66,6 +73,7 @@ export class StorageService {
     window.localStorage.removeItem(USER);
    
   }
+  
 
 
 }

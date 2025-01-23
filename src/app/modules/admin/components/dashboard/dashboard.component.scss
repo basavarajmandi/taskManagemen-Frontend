@@ -1,7 +1,8 @@
 
+
 .filter-list{
     padding: 15px;
- 
+   
 }
 .filter-panel {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -15,24 +16,30 @@
     background-color: #fff;
 
 }
+
 .filter-input{
-    flex: none;
-    max-width: none;
+    flex: 10px;
+    max-width: 500px;
     margin: 0;
+   
 }
 .filter-buttons{
     display: flex;
     gap: 10px;
     align-items: center;
-    
+     
 }
 
 .apply-filter-btn {
-    background-color: rgb(75, 75, 233);
+    background-color: rgb(94, 94, 240);
     color: white; /* Ensures the icon is visible on blue background */
     border-radius: 4px; /* Optional: Makes corners slightly rounded */
     padding: 8px; /* Adds some spacing inside the button */
 }
+.overdue-filter-btn{
+    padding: 2px;
+}
+
 .clear-filter-btn {
     background-color: rgb(207, 62, 62);
     color: white; /* Ensures the icon is visible on red background */
@@ -60,14 +67,18 @@
       }
 }
 
+
 .task-list {
     display: flex;
-    background-color: #f8f5f5;
+    background-color: #f7dbdb;
     padding: 20px;
     min-height: 37vh;
     flex-wrap: wrap;
     justify-content: space-between;
-
+    align-items: stretch;
+    border-radius: 10px;
+  
+  
     .task-card {
         width: calc(33.33% - 20px);
         margin-bottom: 20px;
@@ -145,35 +156,55 @@
 }
 
 
-.footer-panel {
-    position: fixed;
-    bottom: 0;
-    width: calc(100% - 40px); /* Account for horizontal padding */
-    margin: 0 20px; /* Center the footer with equal margins */
-    padding: 10px 15px; /* Inner spacing */
-    display: flex;
-    justify-content: center; /* Align items to the right */
-    align-items: center;
-    gap: 100px; /* Space between buttons */
-    background-size: cover; /* Ensure the background image covers */
-    background-position: center; /* Center the background image */
-    box-shadow: 0 -2px 5px rgba(14, 13, 13, 0.1); /* Subtle shadow */
-    border-radius: 10px; /* Rounded corners */
-    box-sizing: border-box; /* Include padding in width/height */
-  }
-  
 
-  .footer-panel button {
-    display: flex;
-    align-items: center; /* Align icon and text */
-    gap: 5px; /* Space between icon and text */
-    border-radius: 5px; /* Rounded corners */
-    font-weight: bold; /* Emphasize button text */
-    padding: 8px 12px; /* Provide consistent button padding */
-    cursor: pointer; /* Show pointer on hover */
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .footer-panel {
+//     position: fixed;
+//     bottom: 1%;
+//     width: calc(100% - 40px); /* Account for horizontal padding */
+//     margin: 0 20px; /* Center the footer with equal margins */
+//     padding: 10px 15px; /* Inner spacing */
+//     display: flex;
+//     justify-content: center; /* Align items to the right */
+//     align-items: center;
+//     gap: 100px; /* Space between buttons */
+//     background-size: cover; /* Ensure the background image covers */
+//     background-position: center; /* Center the background image */
+//    background-color: #a9abaf9a; /* Background color for the footer */
+//     box-shadow: 0 -2px 5px rgba(14, 13, 13, 0.1); /* Subtle shadow */
+//     border-radius: 10px; /* Rounded corners */
+//     box-sizing: border-box; /* Include padding in width/height */
+//   }
+
   
-  .footer-panel button i {
-    font-size: 20px; /* Icon size */
-    line-height: 1; /* Align icon with text */
-  }
+//   .footer-panel button {
+//     display: flex;
+//     align-items: center; /* Align icon and text */
+//     gap: 5px; /* Space between icon and text */
+//     border-radius: 5px; /* Rounded corners */
+//     font-weight: bold; /* Emphasize button text */
+//     padding: 8px 12px; /* Provide consistent button padding */
+//     cursor: pointer; /* Show pointer on hover */
+//   }
+  
+//   .footer-panel button i {
+//     font-size: 20px; /* Icon size */
+//     line-height: 1; /* Align icon with text */
+//   }

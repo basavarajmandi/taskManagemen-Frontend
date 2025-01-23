@@ -1,3 +1,45 @@
+
+.filter-list{
+    padding: 10px;
+ 
+}
+.filter-panel {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 17px;
+  }
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0,13,12px;
+    background-color: #fff;
+
+}
+.filter-input{
+    flex: none;
+    max-width: none;
+    margin: 0;
+}
+.filter-buttons{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    
+}
+
+.apply-filter-btn {
+    background-color: rgb(75, 75, 233);
+    color: white; /* Ensures the icon is visible on blue background */
+    border-radius: 4px; /* Optional: Makes corners slightly rounded */
+    padding: 8px; /* Adds some spacing inside the button */
+}
+.clear-filter-btn {
+    background-color: rgb(207, 62, 62);
+    color: white; /* Ensures the icon is visible on red background */
+    border-radius: 3px;
+    padding: 6px;
+}
+
 .search-form {
     display: flex;
     align-items: center;

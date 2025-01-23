@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/auth/services/storage/storage.service';
@@ -9,17 +9,15 @@ const BASE_URL="http://localhost:8080/";
 })
 export class EmployeeService {
 
-  constructor(private httpClient :HttpClient) { }
-
+  constructor(private httpClient :HttpClient) { 
+  }
 
   private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set(
       'Authorization', 'Bearer ' + StorageService.getToken())
   }
 
-
   getTaskByUserId(): Observable<any> {
-
     return this.httpClient.get(BASE_URL + `api/employee/task/user/${StorageService.getUserId()}`, {
       headers: this.createAuthorizationHeader()
     });
@@ -35,7 +33,6 @@ export class EmployeeService {
     return this.httpClient.get(BASE_URL+`api/employee/task/${id}`,{
       headers:this.createAuthorizationHeader()
     })
-  
   }
   createComment(id:number, content:string):Observable<any>{
     const params={
@@ -49,10 +46,11 @@ export class EmployeeService {
     });
   }
   getCommentsByTaskId(id:number):Observable<any>{
-    return this.httpClient.get(BASE_URL+`api/employee/task/${id}/comments`,{
+     return this.httpClient.get(BASE_URL+`api/employee/task/${id}/comments`,{
       headers: this.createAuthorizationHeader()
     }
     )
   }
+
 
 }

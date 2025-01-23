@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DemoAngularMaterialModule } from 'src/app/demo-angular-material.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ViewTaskDetailsComponent } from './components/view-task-details/view-task-details.component';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { EmployeminiDashboardComponent } from './components/employemini-dashboard/employemini-dashboard.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ViewTaskDetailsComponent
+    ViewTaskDetailsComponent,
+    EmployeminiDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { ViewTaskDetailsComponent } from './components/view-task-details/view-ta
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    DemoAngularMaterialModule
+    DemoAngularMaterialModule,
+    MatPaginatorModule
   ]
 })
 export class EmployeeModule { }

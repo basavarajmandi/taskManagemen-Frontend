@@ -1,0 +1,34 @@
+<mat-card class="about-company-card">
+
+    <mat-card-header>
+      <div mat-card-avatar>
+        <img [src]="logoUrl" alt="Company Logo" class="company-logo"/>
+        <mat-card-title>Suktha Business Solutions </mat-card-title>
+      </div>
+    </mat-card-header>
+  
+
+    <mat-card-content>
+      <p>
+        <mat-card-subtitle>Version: {{ version }}</mat-card-subtitle>
+      </p>
+      <p>
+        <strong>Support:</strong> 
+        <a [href]="'mailto:' + supportEmail">{{ supportEmail }}</a>
+      </p>
+    
+      <p>
+        <strong>Website:</strong> 
+        <a [href]="websiteUrl" target="_blank">{{ websiteUrl }}</a>
+      </p>
+      <p><strong>Contact:</strong> {{ contactNumber }}</p>
+    </mat-card-content>
+
+
+  
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="'/admin/Maindashboard'">Home</button>
+      
+    </mat-card-actions>
+  </mat-card>
+  

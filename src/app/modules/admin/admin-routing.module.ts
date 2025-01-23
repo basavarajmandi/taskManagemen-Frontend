@@ -6,10 +6,12 @@ import { UpdateTaskComponent } from './components/update-task/update-task.compon
 import { ViewTaskDetailsComponent } from './components/view-task-details/view-task-details.component';
 import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
 
+
 const routes: Routes = [
-  {path:"Maindashboard",component:MainDashboardComponent},
+  {path:"Maindashboard",component:MainDashboardComponent ,data: { hideFooter: true }},
   {path:"dashboard" ,component:DashboardComponent},
-  {path:"task",component:PostTaskComponent},
+  {path:"task",component:PostTaskComponent ,data: { hideFooter: true }},
+
   {path:"task/:id/edit",component:UpdateTaskComponent},
   {path:"task/:id/view",component:ViewTaskDetailsComponent}
 ];

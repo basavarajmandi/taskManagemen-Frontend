@@ -7,19 +7,20 @@ import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-di
 import { Router } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { UpdateDialogComponent } from 'src/app/shared/components/update-dialog/update-dialog.component';
-
+//import { TaskDTO } from 'src/app/shared/models/task-dto';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+
 })
 export class DashboardComponent {
-
 
   isFilterPanelOpen: any;
   isPanelExpanded = false; 
   listOfTasks: any = []
+  //overdueTasks:TaskDTO[]=[]  //Define overdueTasks as an array of TaskDTOs
   searchTaskForm!: FormGroup;
 
   constructor(private service: AdminService,
@@ -38,6 +39,7 @@ export class DashboardComponent {
     });
     this.getTask();
     this.applyFilter();
+    this.filterOverdueTasks();
    
   }
   getTask() {
@@ -45,9 +47,6 @@ export class DashboardComponent {
       this.listOfTasks = res;
     })
   }
-
-
-
 
   // Open the confirmation dialog before deleting a task
   deleteTask(taskId: number) {
@@ -108,9 +107,10 @@ export class DashboardComponent {
     this.getTask();
   }
   
-  navigateHome(){
-this.router.navigate(['admin/Maindashboard']);
-  }
+  // navigateHome(){
+  //   this.router.navigate(['admin/Maindashboard']);
+  //     }
+
 
   onTaskDropped(event: CdkDragDrop<any[]>) {
     moveItemInArray(this.listOfTasks, event.previousIndex, event.currentIndex);
@@ -130,12 +130,17 @@ this.router.navigate(['admin/Maindashboard']);
 
   }
 
-  clearFields(){}
-  saveData(){}
+  // clearFields(){
+  
+  // }
+  // saveData(){}
+  filterOverdueTasks():void{
+    this.service.getAllOverdueTask().subscribe((Task)=>{
+      //this.overdueTasks=Task;
+      this.listOfTasks = Task;
+      console.log(Task);
+    },(error)=>{
+      console.error('Error loading overdue tasks',error);
+    })
+  }
 }
- //   deleteTask(id:number){
-  // this.service.deleteTask(id).subscribe((res)=>{
-  // this.snackbar.open("Task delete successfully..","close",{duration:5000});
-  // this.getTask();
-  // })
-  //   }

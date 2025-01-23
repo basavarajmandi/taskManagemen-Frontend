@@ -4,19 +4,25 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { DemoAngularMaterialModule } from 'src/app/demo-angular-material.module';
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FooterComponent } from './footer/footer.component';
+
+
 
 @NgModule({
-  declarations: [ConfirmDialogComponent, UpdateDialogComponent,
+  declarations: [ConfirmDialogComponent,
+     UpdateDialogComponent, 
+     FooterComponent,
   ],
   imports: [
     CommonModule,
     DemoAngularMaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 
   ],
    exports: [ConfirmDialogComponent,
-    UpdateDialogComponent
+    UpdateDialogComponent,
+    FooterComponent,  // Export FooterComponent to use in other modules
    ]
 })
 export class SharedModule { }

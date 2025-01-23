@@ -1,54 +1,5 @@
-.navbar {
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    background-color: #3f51b5;
-    color: white;
-    position: static;
-    border-bottom-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-}
-.navbar-brand {
-    font-size: 20px;
-    font-weight: 600;
-    margin-right: 16px;
-}
-.space {
-    flex: 1;
-}
-button {
-    color: white !important;
-    text-transform: uppercase;
-    margin-left: 8px;
-}
-
-button.active {
-    font-weight: 600;
-}
-
-.custom-toolbar {
-    background-color: #ff000f;
-}
-
-.mat-icon.logout-icon {
-    color: rgb(253, 83, 83);
-    /* Specific color for logout icon */
-}
-
-/* Text styles for menu items */
-.menu-text {
-    font-size: 14px;
-    /* Adjust text size */
-    color: #636262;
-    /* Neutral color for text */
-    margin-left: 5px;
-    /* Space between icon and text */
-    font-weight: 500;
-    /* Consistent font weight */
-}
-
 .footer-panel {
-    position: relative;
+    position: fixed;
     bottom: 0;
     width: calc(100% - 40px); /* Account for horizontal padding */
     margin: 0 20px; /* Center the footer with equal margins */
@@ -78,14 +29,4 @@ button.active {
     font-size: 20px; /* Icon size */
     line-height: 1; /* Align icon with text */
   }
- 
-header {
-    flex: 0 0 auto; /* Navbar takes up only as much space as needed */
-  }
   
-  main {
-    flex: 1 0 auto; /* Main content area grows to fill available space */
-    padding: 20px;  /* Optional: Add padding for content */
-  }
-
-
