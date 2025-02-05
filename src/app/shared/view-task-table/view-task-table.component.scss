@@ -1,0 +1,170 @@
+// .mat-elevation-z6 {
+//     border-radius: 12px; /* Rounded corners for the table */
+//     overflow: hidden; /* Ensures rounded corners are applied properly */
+//     padding: 16px; /* Add padding inside the table container */
+//     background-color: #fff; /* White background for the table card */
+//     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for card-like effect */
+//   }
+  
+//   table {
+//     width: 100%;
+//     border-spacing: 0; /* Removes gaps between table cells */
+//     border-collapse: collapse; /* Merges table cell borders for consistent style */
+//   }
+  
+//   th, td {
+//     padding: 12px 16px; /* Padding inside table cells */
+//     text-align: left;
+//     border-bottom: 1px solid #ddd; /* Adds a light border below table rows */
+//   }
+  
+//   th {
+//     background-color: #f7f7f7; /* Slightly shaded background for header */
+//     font-weight: 600; /* Bold text for header cells */
+//   }
+  
+//   td {
+//     font-size: 14px;
+//     color: #333; /* Darker text color for better readability */
+//   }
+  
+//   tr:hover {
+//     background-color: #f0f8ff; /* Light blue hover effect for rows */
+//     cursor: pointer; /* Changes cursor to pointer on hover */
+//   }
+  
+//   mat-paginator {
+//     margin-top: 16px; /* Adds space between table and paginator */
+//     border-top: 1px solid #ddd; /* Divider above paginator */
+//     padding-top: 12px;
+//   }
+  
+.filter-list{
+    padding: 8px;
+  //  margin-top: 5px;
+   
+}
+.filter-panel {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 17px;
+  }
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0,13,12px;
+    background-color: #fff;
+
+}
+
+.filter-input{
+    flex: 10px;
+    max-width: 500px;
+    margin: 0;
+    border-radius: 0;
+   
+}
+
+.filter-buttons{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+     
+}
+
+.apply-filter-btn {
+    background-color: rgb(94, 94, 240);
+    color: white; /* Ensures the icon is visible on blue background */
+    border-radius: 4px; /* Optional: Makes corners slightly rounded */
+    padding: 8px; /* Adds some spacing inside the button */
+}
+.overdue-filter-btn{
+    padding: 2px;
+}
+
+.clear-filter-btn {
+    background-color: rgb(207, 62, 62);
+    color: white; /* Ensures the icon is visible on red background */
+    border-radius: 3px;
+    padding: 6px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+    .search-input {
+        width: 300px;
+        margin-right: 15px;
+      
+        input {
+            padding-right: 40px;
+        }
+    }
+
+    button {
+        cursor: pointer;
+      }
+   
+      
+}
+
+.mat-elevation-z6 {
+    border-radius: 12px; /* Slightly larger rounded corners for a more modern look */
+    overflow: hidden;
+    padding: 10px; /* Adequate padding inside the table container */
+    background-color: #fff; /* White background for the table card */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15); /* Slightly larger shadow for more depth */
+  }
+  
+  table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 12px 14px; /* Slightly larger padding for better spacing */
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0; /* Light gray border for cleaner look */
+    font-family: 'Roboto', sans-serif; /* More contemporary font */
+  }
+  
+  th {
+    background-color: #fafafa; /* Slightly lighter background for header */
+    font-weight: 600;
+    color: #555; /* Darker text for better contrast */
+    text-transform: uppercase; /* Make header text all caps */
+  }
+  
+  td {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  tr:hover {
+    background-color: #f4f4f4; /* Soft gray hover effect */
+    cursor: pointer;
+  }
+  
+  mat-paginator {
+    margin-top: 10px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+    display: flex;
+    justify-content: flex-end; /* Align paginator to the right */
+  }
+  
+  .mat-paginator-range-actions {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #757575; /* Lighter color for paginator text */
+  }
+  
+  .mat-paginator-page-size {
+    color: #757575;
+    font-size: 14px;
+  }
+  

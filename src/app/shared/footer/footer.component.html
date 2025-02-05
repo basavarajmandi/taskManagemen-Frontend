@@ -1,16 +1,16 @@
 <div class="footer-panel">
     <!-- Home Button -->
-    <button mat-raised-button color="primary" matTooltip="Go to Home" (click)="navigateHome()">
+    <button mat-raised-button  style="background-color: white;" matTooltip="Go to Home" (click)="navigateHome()">
       <i class="material-icons">home</i> Home
     </button>
   
     <!-- Clear Button -->
-    <button mat-raised-button color="warn" matTooltip="Clear Fields" (click)="OnClear()">
+    <button mat-raised-button color="primary" matTooltip="Clear Fields"  [disabled]="disabled" (click)="OnClear()">
       <i class="material-icons">clear_all</i> Clear
     </button>
   
     <!-- Save Button -->
-    <button mat-raised-button color="accent" matTooltip="Save Data" [disabled]="disabled" (click)="OnSave()" >
+    <button mat-raised-button  color="primary"  matTooltip="Save Data" [disabled]="disabled" (click)="OnSave()" >
       <i class="material-icons">save</i> Save
     </button>
   </div>

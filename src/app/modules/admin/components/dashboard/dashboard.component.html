@@ -8,14 +8,15 @@
             <mat-icon>{{ isPanelExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
         </mat-expansion-panel-header>
 
+
+
         <form [formGroup]="searchTaskForm" class="filter-form">
-          
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>employe Name</mat-label>
                 <input matInput formControlName="employeeName" placeholder="search by employee">
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="filter-input">
+            <mat-form-field appearance="fill"class="filter-input">
                 <mat-label>title</mat-label>
                 <input matInput formControlName="title" placeholder="search by title">
             </mat-form-field>
@@ -37,6 +38,8 @@
                     <mat-option value="LOW">low</mat-option>
                     <mat-option value="MEDIUM">Medium</mat-option>
                     <mat-option value="HIGH">High</mat-option>
+                    <mat-option value="VERY-HIGH">VERY-HIGH</mat-option>
+                    <mat-option value="VERY-LOW">VERY-LOW</mat-option>
                 </mat-select>
             </mat-form-field>
 

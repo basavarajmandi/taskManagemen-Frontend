@@ -21,8 +21,10 @@
     flex: 10px;
     max-width: 500px;
     margin: 0;
+    border-radius: 0;
    
 }
+
 .filter-buttons{
     display: flex;
     gap: 10px;
@@ -70,7 +72,7 @@
 
 .task-list {
     display: flex;
-    background-color: #f7dbdb;
+   // background-color: #f7f1f1;
     padding: 20px;
     min-height: 37vh;
     flex-wrap: wrap;

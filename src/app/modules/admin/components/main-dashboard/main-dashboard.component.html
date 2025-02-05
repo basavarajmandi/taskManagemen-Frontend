@@ -1,10 +1,9 @@
-
 <div class="dashboard-container">
   <h2 class="dashboard-title">Task Overview</h2>
   <a style="color: rgb(117, 7, 243); font-size: large;">
     <marquee>
-      Hey hi.. Welcome to the Task Management Dashboard! View the task list below.
-      Click on "admin-Dashboard" to update task statuses or add new tasks. Visualize
+      🚀  Hey hi.. Welcome to the Task Management Dashboard! View the task list below.
+      Click on <a routerLink="/admin/dashboard" style="color: blue; text-decoration: underline;"> "admin-Dashboard"</a>  to update task statuses or add new tasks. Visualize
       task progress with pie charts and bar charts for a comprehensive overview!... ಹಾಯ್, ನಮಸ್ಕಾರ.. ಟಾಸ್ಕ್ ಮ್ಯಾನೇಜ್ಮೆಂಟ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಸ್ವಾಗತ! ಕೆಳಗಿನ ಟಾಸ್ಕ್ ಲಿಸ್ಟ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ.
       "ಅಡ್ಮಿನ್-ಡ್ಯಾಶ್‌ಬೋರ್ಡ್" ಕ್ಲಿಕ್ ಮಾಡಿ ಟಾಸ್ಕ್ ಸ್ಥಿತಿಯನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡಲು ಅಥವಾ ಹೊಸ ಟಾಸ್ಕ್‌ಗಳನ್ನು ಸೇರಿಸಲು.
       ಪೈ ಚಾರ್ಟ್‌ಗಳು ಮತ್ತು ಬಾರ್ ಚಾರ್ಟ್‌ಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಟಾಸ್ಕ್ ಪ್ರಗತಿಯನ್ನು ಸಂಪೂರ್ಣ ಚಿತ್ರಣದೊಂದಿಗೆ ವೀಕ್ಷಿಸಿ!
@@ -48,7 +47,8 @@
       <canvas baseChart 
       [data]="barChartData"
        [options]="barchartOptions"
-        [type]="'bar'"></canvas>
+        [type]="'bar'">
+      </canvas>
     </mat-card>
 
     <mat-card>
@@ -56,7 +56,8 @@
       <canvas baseChart
        [data]="pieChartData" 
        [options]="piechartOptions"
-        [type]="'pie'"></canvas>
+        [type]="'pie'">
+      </canvas>
     </mat-card>
 
     <mat-card>
@@ -64,8 +65,8 @@
       <canvas baseChart
         [data]="doughnutChartData"
         [options]="doughnutChartOptions"
-        [type]="'doughnut'"
-      ></canvas>
+        [type]="'doughnut'">
+      </canvas>
     </mat-card>
 
   </div>

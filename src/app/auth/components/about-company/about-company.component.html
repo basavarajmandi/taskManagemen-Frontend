@@ -27,8 +27,12 @@
 
   
     <mat-card-actions>
-      <button mat-raised-button color="primary" [routerLink]="'/admin/Maindashboard'">Home</button>
+     <!-- // <button mat-raised-button color="primary" [routerLink]="'/admin/Maindashboard'">Home</button> -->
       
+      <button mat-raised-button color="primary" matTooltip="Go to Home" (click)="navigateHome()">
+        <i class="material-icons">close</i>
+      </button>
     </mat-card-actions>
+
   </mat-card>
   

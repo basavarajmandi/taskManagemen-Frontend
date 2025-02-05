@@ -24,7 +24,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
+
+
+
 @NgModule({
   declarations: [],
   imports: [
@@ -53,7 +58,9 @@ import {MatFormFieldModule } from '@angular/material/form-field';
     MatTooltipModule,
     DragDropModule,
     MatTreeModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ReactiveFormsModule,
+    MatSortModule
     
   ],
   exports: [
@@ -81,7 +88,9 @@ import {MatFormFieldModule } from '@angular/material/form-field';
     MatTooltipModule,
     DragDropModule,
     MatTreeModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ReactiveFormsModule,
+    MatSortModule
   ]
 })
 export class DemoAngularMaterialModule { }

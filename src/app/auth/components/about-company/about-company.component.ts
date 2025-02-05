@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage/storage.service';
 
 @Component({
   selector: 'app-about-company',
@@ -15,6 +17,19 @@ export class AboutCompanyComponent {
   websiteUrl: string = 'https://suktha.com';
   contactNumber: string = '+91-9513997444';
 
+ constructor(private router: Router){}
+
+ isAdminLoggedIn : boolean =StorageService.isAdminLoggedIn();
+  isEmployeloggedin: boolean=StorageService.isEmployeeLoggedIn();
+
   contactSupport(){}
  
+  navigateHome(){
+    if(this.isAdminLoggedIn){
+      this.router.navigateByUrl("/admin/Maindashboard");
+    }else if(this.isEmployeloggedin){
+      this.router.navigateByUrl("/employee/Maindashboard");
+    }
+   
+  }
 }

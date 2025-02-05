@@ -20,6 +20,5 @@ priority:string;
 employeeId:number;
 employeeName:string;
 taskStatus:TaskStatus; //use enum type here
-
-
 }
+

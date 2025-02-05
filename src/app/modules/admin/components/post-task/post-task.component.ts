@@ -20,13 +20,12 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ])
   ],
 
-
-
 })
 export class PostTaskComponent {
   postTaskForm !: FormGroup;
+  
   listofEmployees: any = [];
-  listOfPriorities: any = ["LOW", "HIGH", "MEDIUM"];
+  listOfPriorities: any = ["LOW", "HIGH", "MEDIUM","VERY-HIGH","VERY_LOW"];
   animationState = 'hidden'; // Animation state
 
   constructor(private adminService: AdminService,
@@ -48,10 +47,7 @@ export class PostTaskComponent {
     setTimeout(() => {
       this.animationState = 'visible';
     }, 0);
-
-
   }
-
 
   getUsers() {
     this.adminService.getUsers().subscribe((res => {
@@ -76,4 +72,5 @@ export class PostTaskComponent {
     this.postTaskForm.reset();
   }
 
+  openCategoryDialog(){}
 }

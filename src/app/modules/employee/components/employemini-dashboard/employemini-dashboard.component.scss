@@ -1,0 +1,132 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+  }
+  
+  /* Title styling */
+  .dashboard-title {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  /* Styling for the summary section */
+  .summary-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 0.5fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Common styling for each card */
+  .card {
+    background-color: #fff;
+    padding: 3px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Specific colors for each card */
+  .total-task {
+    background-color: #e0cf34;
+    color: #fff;
+  }
+  
+  .overdue-task {
+    background-color: #f5214f;
+    color: #fff;
+  }
+  
+  .completed-task {
+    background-color: #5bc7c7;
+    color: #fff;
+  }
+  
+  .pending-task {
+    background-color: #54aae4;
+    color: #fff;
+  }
+  
+  .inprogress-task {
+    background-color: #9a6ef1;
+    color: #fff;
+  }
+  .Cancelled-task{
+    background-color: rgb(34, 33, 33);
+    color: #fff;
+  }
+  
+  /* Styling for the count text */
+  .count {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 11px;
+  }
+  
+  /* Chart container */
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: nowrap;
+  
+  }
+  
+  mat-card {
+    padding: 5px;
+    width: 40%;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  
+  
+  /* Chart card styling */
+  .chart-card {
+    background-color: #fff;
+    padding: 35px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1; /* Ensure charts take up equal space */
+    max-width: 30%; /* Prevent charts from being too wide */
+    text-align: center;
+    min-width: 300px; /* Ensure charts don’t become too narrow */
+  
+  }
+  
+  .chart-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  /* Canvas styling to make charts responsive */
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Responsive design for small screens */
+  @media (max-width: 500px) {
+    .chart-container {
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    .chart-card {
+      width: 90%; /* Take up more width on smaller screens */
+      max-width: 90%;
+      margin-bottom: 15px;
+    }
+  }
+  

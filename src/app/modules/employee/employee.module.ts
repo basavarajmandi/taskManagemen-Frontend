@@ -8,7 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ViewTaskDetailsComponent } from './components/view-task-details/view-task-details.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EmployeminiDashboardComponent } from './components/employemini-dashboard/employemini-dashboard.component';
-
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -22,7 +22,8 @@ import { EmployeminiDashboardComponent } from './components/employemini-dashboar
     ReactiveFormsModule,
     FormsModule,
     DemoAngularMaterialModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgChartsModule
   ]
 })
 export class EmployeeModule { }

@@ -5,13 +5,14 @@ import { DemoAngularMaterialModule } from 'src/app/demo-angular-material.module'
 import { UpdateDialogComponent } from './components/update-dialog/update-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
-
-
+import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 
 @NgModule({
-  declarations: [ConfirmDialogComponent,
+  declarations: [
+     ConfirmDialogComponent,
      UpdateDialogComponent, 
-     FooterComponent,
+     FooterComponent, 
+     CategoryDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -20,9 +21,12 @@ import { FooterComponent } from './footer/footer.component';
     ReactiveFormsModule,
 
   ],
-   exports: [ConfirmDialogComponent,
+   exports: [
+    ConfirmDialogComponent,
     UpdateDialogComponent,
-    FooterComponent,  // Export FooterComponent to use in other modules
+    FooterComponent, 
+    CategoryDialogComponent// Export this all components to use in other modules
+ 
    ]
 })
 export class SharedModule { }

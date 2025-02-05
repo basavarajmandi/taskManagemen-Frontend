@@ -1,1 +1,73 @@
-<p>employemini-dashboard works!</p>
+<div class="dashboard-container">
+    <h2 class="dashboard-title">Task Overview</h2>
+    <a style="color: rgb(117, 7, 243); font-size: large;">
+        <marquee>
+            <img src="assets/img/new.gif" alt="New" width="40" height="30">  
+            Hey hi.. Welcome to the Task Management Dashboard!  &#9989; View the task list below.
+            🏆,Admin will assign tasks to you, and you can update ⏳ or reply with task details.
+             Click on <a routerLink="/employee/dashboard" style="color: blue; text-decoration: underline;"> "Employee-Dashboard" </a>  to update your task statuses or add new task responses. Visualize task 📊 progress with pie charts and 📈 bar charts for a comprehensive overview..Stay productive & achieve more! 🛠️💡🔔 !... 
+            ಹಾಯ್, ನಮಸ್ಕಾರ.. ಟಾಸ್ಕ್ ಮ್ಯಾನೇಜ್ಮೆಂಟ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಸ್ವಾಗತ! ಕೆಳಗಿನ ಟಾಸ್ಕ್ ಲಿಸ್ಟ್ ಅನ್ನು ವೀಕ್ಷಿಸಿ.
+            ಅಡ್ಮಿನ್ ನಿಮಗೆ ಟಾಸ್ಕ್‌ಗಳನ್ನು ಅಸೈನ್ ಮಾಡಲಿದ್ದಾರೆ, ಮತ್ತು ನೀವು ಅವುಗಳನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡಿ ಅಥವಾ ಪ್ರತಿಕ್ರಿಯಿಸಬಹುದು. "ಎಂಪ್ಲಾಯಿ-ಡಾಶ್‌ಬೋರ್ಡ್" ಕ್ಲಿಕ್ ಮಾಡಿ ನಿಮ್ಮ ಟಾಸ್ಕ್ ಸ್ಥಿತಿಗಳನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡಲು ಅಥವಾ ಹೊಸ ಟಾಸ್ಕ್ ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ಸೇರಿಸಲು.
+            ಪೈ ಚಾರ್ಟ್‌ಗಳು ಮತ್ತು ಬಾರ್ ಚಾರ್ಟ್‌ಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಟಾಸ್ಕ್ ಪ್ರಗತಿಯನ್ನು ಸಂಪೂರ್ಣ ಚಿತ್ರಣದೊಂದಿಗೆ ವೀಕ್ಷಿಸಿ!
+        </marquee>
+    </a>
+  
+    <div class="summary-section"  [@slideInFromRight]="animationState">
+      <div class="card total-task">
+        <h3>Total Tasks</h3>
+        <p class="count">{{ TotalTaskCount }}</p>
+      </div>
+  
+      <!-- <div class="card overdue-task">
+        <h3>Overdue Tasks</h3>
+        <p class="count">{{ OverdueTaskCount }}</p>
+      </div> -->
+  
+      <div class="card completed-task">
+        <h3>Completed Tasks</h3>
+        <p class="count">{{ CompletedTaskCount }}</p>
+      </div>
+  
+      <div class="card pending-task">
+        <h3>Pending Tasks</h3>
+        <p class="count">{{ PendingTaskCount }}</p>
+      </div>
+  
+      <div class="card inprogress-task">
+        <h3>In-Progress Tasks</h3>
+        <p class="count">{{ InprogressTaskCount }}</p>
+      </div>
+      <div class="card Cancelled-task">
+        <h3>Cancelled Tasks</h3>
+        <p class="count">{{ CancelledTaskCount }}</p>
+      </div>
+    </div>
+
+      
+    <div class="chart-container">
+      <mat-card>
+        <h3 class="chart-title">Task Status Overview</h3>
+        <canvas baseChart
+         [data]="pieChartData" 
+         [options]="piechartOptions"
+          [type]="'pie'"></canvas>
+      </mat-card>
+  
+       <mat-card>
+        <h3 class="chart-title">Projects by Priority</h3>
+        <canvas baseChart
+          [data]="doughnutChartData"
+          [options]="doughnutChartOptions"
+          [type]="'doughnut'">
+        </canvas>
+      </mat-card> 
+  
+    </div>
+  </div>
+  <!-- <mat-card>
+        <h3 class="chart-title">Project By Status</h3>
+        <canvas baseChart 
+        [data]="barChartData"
+         [options]="barchartOptions"
+          [type]="'bar'"></canvas>
+      </mat-card> -->

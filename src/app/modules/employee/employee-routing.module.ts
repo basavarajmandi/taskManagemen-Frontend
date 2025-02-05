@@ -6,7 +6,6 @@ import { EmployeminiDashboardComponent } from './components/employemini-dashboar
 
 const routes: Routes = [
   {path:"Maindashboard",component:EmployeminiDashboardComponent,data :{hideFooter:true} },
-
  {path:"dashboard" ,component:DashboardComponent},
  {path:"task-details/:id",component:ViewTaskDetailsComponent}
 ];

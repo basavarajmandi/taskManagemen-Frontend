@@ -10,7 +10,8 @@
     gap: 100px; /* Space between buttons */
     background-size: cover; /* Ensure the background image covers */
     background-position: center; /* Center the background image */
-    box-shadow: 0 -2px 5px rgba(14, 13, 13, 0.1); /* Subtle shadow */
+    background-color: rgb(201, 200, 200,.8);
+    box-shadow: 0 -2px 5px rgba(44, 43, 43, 0.1); /* Subtle shadow */
     border-radius: 10px; /* Rounded corners */
     box-sizing: border-box; /* Include padding in width/height */
   }
@@ -30,3 +31,7 @@
     line-height: 1; /* Align icon with text */
   }
   
+  .mat-raised-button {
+    //color: rgba(0,0,0,.87);
+    background-color: #ffff;
+  }

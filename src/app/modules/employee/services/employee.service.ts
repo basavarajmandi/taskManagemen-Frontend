@@ -52,5 +52,17 @@ export class EmployeeService {
     )
   }
 
+  // Fetch the employee's dashboard data
+  getEmployeeTaskStatus(employeeId: number): Observable<any> {
+    return this.httpClient.get(`${BASE_URL}api/employee/dashboard?employeeId=${employeeId}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  getTaskCountsByPriority(employeeId:number):Observable<any>{
+    return this.httpClient.get(`${BASE_URL}api/employee/${employeeId}/task-counts-by-priority`,{
+      headers: this.createAuthorizationHeader()
+    });
+  }
 
 }

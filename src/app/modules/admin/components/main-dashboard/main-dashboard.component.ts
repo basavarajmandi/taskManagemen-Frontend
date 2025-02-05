@@ -23,12 +23,9 @@ Chart.register(ChartDataLabels);
 })
 export class MainDashboardComponent {
 
-  doughnutChartData: any;
-  doughnutChartLabels: string[] = [];
-  doughnutChartCounts: number[] = [];
-  doughnutChartColors: any;
-  doughnutChartOptions: any;
-
+  doughnutChartData!: ChartData<'doughnut'>; // Doughnut chart data
+  doughnutChartLabels: string[] = []; // Labels for doughnut chart
+  doughnutChartOptions: ChartOptions<'doughnut'> = {}; // Chart configuration option
   animationState: string = '';
 
   public TotalTaskCount: number = 0;
@@ -51,22 +48,7 @@ export class MainDashboardComponent {
     this.animationState = 'in';
 
   }
-  loadChartData(): void {
-    const projectData = this.adminService.getProjectsByPriority();
-    this.doughnutChartLabels = projectData.map((item) => item.priority);
-    this.doughnutChartCounts = projectData.map((item) => item.count);
-    this.doughnutChartData = {
-      labels: this.doughnutChartLabels,
-      datasets: [
-        {
-          data: this.doughnutChartCounts,
-          backgroundColor: ['#3DB1C4', '#4BC0C0', '#F7B633', '#7F8C8D', '#FF6384'],
-        },
-      ],
-    };
-  }
-
-
+ 
   groupTasksByStatus(tasks: any[]): { [status: string]: number } {
     const statusCounts: { [status: string]: number } = {};
     tasks.forEach((task) => {
@@ -96,6 +78,28 @@ export class MainDashboardComponent {
     });
   }
 
+  loadChartData(): void {
+
+    this.adminService.getTaskCountsByPriotity().subscribe({
+      next:(data)=>{
+        this.doughnutChartLabels = data.map((item:any)=>item.priority);
+       const counts= data.map((item:any)=>item.count);
+       this.doughnutChartData={
+        labels:this.doughnutChartLabels,
+        datasets:[
+          {
+            data:counts,
+            backgroundColor: ['#49d4eb', '#4BC0C0', '#F7B633', '#7F8C8D', '#FF6384','#d465f0'],
+          }, 
+        ],
+       };
+      },
+      error:(err)=>{
+        console.error('Error fetching task counts by priority:',err);
+      },
+    });
+
+  }
   configureChartOptions(): void {
     this.doughnutChartOptions = {
       responsive: true,
@@ -107,7 +111,8 @@ export class MainDashboardComponent {
           callbacks: {
             label: (context: any) =>
               `${context.label}: ${context.raw} (${(
-                (context.raw / this.doughnutChartCounts.reduce((a, b) => a + b, 0)) *
+                (context.raw / 
+                  this.doughnutChartData.datasets[0].data.reduce((a, b) => a + b, 0)) *
                 100
               ).toFixed(2)}%)`,
           },

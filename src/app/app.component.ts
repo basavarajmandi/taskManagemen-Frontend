@@ -14,8 +14,6 @@ export class AppComponent {
   isAdminLoggedIn: boolean = StorageService.isAdminLoggedIn();
   isEmployeeLoggedIn: boolean = StorageService.isEmployeeLoggedIn();
   employeeName: string = ''; // variable to hold logged-in employee
-
-
   showFooter: boolean = false;
 
 constructor(private router: Router, private activatedRoute: ActivatedRoute) {
@@ -50,14 +48,22 @@ constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.navigateByUrl("/login");
   }
   openDialog() { }
-  settings() { }
+  // settings() { 
+  //   this.router.navigateByUrl("/virw-table");
+  // }
+  openSetting2(){}
   profile() { }
   
   about() { 
    this.router.navigateByUrl("/about");
   }
- 
 
+ changePassword(){}
+ privacySettings(){}
+
+ ViewSettings(){
+   this.router.navigateByUrl("/Admin-view-table");
+ }
 }
 
 

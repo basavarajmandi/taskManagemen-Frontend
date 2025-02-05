@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/auth/services/storage/storage.service';
+import { PaginatedResponse } from 'src/app/shared/models/paginated-response';
 import { TaskDTO } from 'src/app/shared/models/task-dto';
 
 const BASE_URL="http://localhost:8080/";
@@ -9,8 +10,9 @@ const BASE_URL="http://localhost:8080/";
   providedIn: 'root'
 })
 export class AdminService {
-  http: any;
-  baseUrl: any;
+  // getCategories() {
+  //   throw new Error('Method not implemented.');
+  // }  
 
   constructor(private httpClient :HttpClient) {
   }
@@ -33,6 +35,25 @@ getAllTask():Observable<any>{
   })
 }
 
+getAllTaskWithPagination(params: any): Observable<PaginatedResponse> {
+  let httpParams = new HttpParams()
+    .set('page', params.page)
+    .set('size', params.size)
+    .set('sortField', params.sort)
+    .set('direction', params.direction);
+
+  return this.httpClient.get<PaginatedResponse>(BASE_URL + 'api/admin/tasks/paginated',{
+      params: httpParams,
+      headers: this.createAuthorizationHeader(),
+    }
+  );
+}
+
+// getAllTaskwithtable(): Observable<TaskDTO[]> {
+//   return this.httpClient.get<TaskDTO[]>(BASE_URL + 'api/admin/tasks', {
+//     headers:this.createAuthorizationHeader()
+//   });
+// }
 
 deleteTask(id:number):Observable<any>{
   return this.httpClient.delete(BASE_URL+`api/admin/task/${id}`,{
@@ -45,10 +66,6 @@ getTaskById(id:number):Observable<any>{
     headers:this.createAuthorizationHeader()
   })
 
-}
- private createAuthorizationHeader(): HttpHeaders {
-  return new HttpHeaders().set(
-    'Authorization', 'Bearer ' + StorageService.getToken())
 }
 
 updateTask(id:number,taskDto: any):Observable<any>{
@@ -122,14 +139,24 @@ getAllOverdueTask():Observable<TaskDTO[]>{
     headers:this.createAuthorizationHeader()
   })
 }
-getProjectsByPriority() {
-  return [
-    { priority: 'High', count: 12 },
-    { priority: 'Very High', count: 15 },
-    { priority: 'Low', count: 19 },
-    { priority: 'Medium', count: 18 },
-  ];
+
+getTaskCountsByPriotity():Observable<any>{
+  return this.httpClient.get(BASE_URL+ 'api/admin/tasks/priority-counts',{
+    headers:this.createAuthorizationHeader(),
+  });
 }
+private createAuthorizationHeader(): HttpHeaders {
+  return new HttpHeaders().set(
+    'Authorization', 'Bearer ' + StorageService.getToken())
+}
+
+exportToExcel(): Observable<Blob> {
+  return this.httpClient.get(BASE_URL + 'api/admin/tasks/export', {
+    headers: this.createAuthorizationHeader(),
+    responseType: 'blob', // Important for handling file downloads
+  });
+}
+
 
 
 }

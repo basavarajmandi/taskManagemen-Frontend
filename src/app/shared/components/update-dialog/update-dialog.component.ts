@@ -18,7 +18,7 @@ export class UpdateDialogComponent {
 
   updateTaskForm !: FormGroup;
   listofEmployees: any = [];
-  listOfPriorities: any = ["LOW", "HIGH", "MEDIUM"];
+  listOfPriorities: any = ["LOW", "HIGH", "MEDIUM","VERY-HIGH","VERY-LOW"];
   listOfTaskStatus: any = ["PENDING", "INPROGRESS", "COMPLETED", "DEFERRED", "CANCELLED"];
   
   constructor(
