@@ -37,7 +37,7 @@ export class ViewTaskTableComponent implements OnInit {
       'priority', 
       'dueDate', 
       'taskStatus',
-      
+      'categoryName',
     ];
 
   dataSource = new MatTableDataSource<TaskDTO>([]);
@@ -107,11 +107,21 @@ export class ViewTaskTableComponent implements OnInit {
     // Apply filter to tasks
     applyFilter(): void {
       const formValues = this.searchTaskForm.value;
+      // const priority: string | undefined = formValues.priority || undefined;
+      const priority: string[] | undefined = 
+      formValues.priority && Array.isArray(formValues.priority) ? formValues.priority : 
+      formValues.priority ? [formValues.priority] : undefined;
 
       const title: string | undefined = formValues.title || undefined;
-      const priority: string | undefined = formValues.priority || undefined;
       const employeeName:string | undefined = formValues.employeeName || undefined;
-      const taskStatus: string | undefined = formValues.taskStatus || undefined;
+      // const taskStatus: string | undefined = formValues.taskStatus || undefined; for onlu single
+
+
+    // Ensure that taskStatus is always an array
+    const taskStatus: string[] | undefined = 
+    formValues.taskStatus && Array.isArray(formValues.taskStatus) ? formValues.taskStatus : 
+    formValues.taskStatus ? [formValues.taskStatus] : undefined;
+
      // Ensure dueDate is sent in YYYY-MM-DD format to match backend expectations
      const dueDate: string | undefined = formValues.dueDate? new Date(formValues.dueDate.getTime() - new Date().getTimezoneOffset() * 60000)
          .toISOString()
@@ -144,26 +154,27 @@ export class ViewTaskTableComponent implements OnInit {
     this.fetchTasks(); // Fetch tasks with updated page and pageSize
   }
 
-  exportToExcel(): void {
-    this.adminService.exportToExcel().subscribe(
-      (blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'tasks.xlsx';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      },
-      (error) => {
-        console.error('Error exporting to Excel:', error);
-        this.snackbar.open('Failed to export tasks!', 'Close', {
-          duration: 3000,
-        });
-      }
-    );
-  }
 }
+  // exportToExcel(): void { first writing this method in her later i put this export to excel method in footerdelogcompunent 
+  //   this.adminService.exportToExcel().subscribe(
+  //     (blob) => {
+  //       const url = window.URL.createObjectURL(blob);
+  //       const a = document.createElement('a');
+  //       a.href = url;
+  //       a.download = 'tasks.xlsx';
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       document.body.removeChild(a);
+  //     },
+  //     (error) => {
+  //       console.error('Error exporting to Excel:', error);
+  //       this.snackbar.open('Failed to export tasks!', 'Close', {
+  //         duration: 3000,
+  //       });
+  //     }
+  //   );
+  // }
+
 
 
 

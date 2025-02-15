@@ -25,11 +25,22 @@ ngOnInit(){
     content:[null, Validators.required]
   })
 }
+
+
 getTaskById(){
   this.service.getTaskById(this.taskId).subscribe((res)=>{
     this.taskData=res;
 
-  })
+       //  addming this in today Ensure the image URL is formatted correctly if it's not already a full URL
+       if (this.taskData && this.taskData.imageName && !this.taskData.imageName.startsWith("http")) {
+        this.taskData.imageName = `http://localhost:8080/api/files/images/${this.taskData.imageName}`;
+      }
+
+      if(this.taskData && this.taskData.voiceName && !this.taskData.voiceName.startsWith("http")){
+        this.taskData.voiceName =`http://localhost:8080/api/files/voice/${this.taskData.voiceName}`;
+      }
+
+  });
 }
 publishComment(){
   this.service.createComment(this.taskId,this.commentForm.get('content')?.value).subscribe((res)=>{

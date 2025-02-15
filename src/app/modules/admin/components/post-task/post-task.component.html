@@ -1,59 +1,141 @@
 <div class="container" [@slideInFromRight]="animationState">
-    <h2>Post Task</h2>
-    <form [formGroup]="postTaskForm">
+  <h2>Post Task</h2>
+  <form [formGroup]="postTaskForm">
 
-        <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Title</mat-label>
-          <input matInput type="text" placeholder="Title" formControlName="title">
-          <mat-error *ngIf="postTaskForm.get('title')?.hasError('required')">This input is required</mat-error>
-        </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" placeholder="Title" formControlName="title">
+      <mat-error *ngIf="postTaskForm.get('title')?.hasError('required')">This input is required</mat-error>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" formControlName="description"></textarea>
-            <mat-error *ngIf="postTaskForm.get('description')?.hasError('required')"> This Input Is Required</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Due Date</mat-label>
-            <input matInput [matDatepicker]="dueDatePicker" placeholder="choose a due date" formControlName="dueDate">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #dueDatePicker></mat-datepicker>
-            <mat-error *ngIf="postTaskForm.get('dueDate')?.hasError('required')">This Input is Required</mat-error>
-        </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+      <mat-error *ngIf="postTaskForm.get('description')?.hasError('required')"> This Input Is Required</mat-error>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Select priority</mat-label>
-            <mat-select formControlName="priority" name="priority">
-                <mat-option *ngFor="let priority of listOfPriorities" [value]="priority">
-                    {{priority}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="postTaskForm.get('priority')?.hasError('required')"> this Input is Required</mat-error>
-        </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Due Date</mat-label>
+      <input matInput [matDatepicker]="dueDatePicker" placeholder="choose a due date" formControlName="dueDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #dueDatePicker></mat-datepicker>
+      <mat-error *ngIf="postTaskForm.get('dueDate')?.hasError('required')">This Input is Required</mat-error>
+    </mat-form-field>
+
+    
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Select priority</mat-label>
+      <!-- Icon Inside the Field -->
+      <mat-icon matPrefix class="priority-icon">flag</mat-icon>
+      <mat-select formControlName="priority" name="priority">
+        <mat-option *ngFor="let priority of listOfPriorities" [value]="priority">
+          {{priority}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="postTaskForm.get('priority')?.hasError('required')"> this Input is Required</mat-error>
+    </mat-form-field>
 
 
-        <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Select The Employee</mat-label>
-            <mat-select formControlName="employeeId" name="employeeId">
-                <mat-option *ngFor="let employee of listofEmployees" [value]="employee.id">
-                    {{employee.name | uppercase}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="postTaskForm.get('employeeId')?.hasError('required')"> this Input is Required</mat-error>
-        </mat-form-field>
+    <!-- Employee and Category (Side by Side) -->
+    <div class="row-container">
+      <!-- Select Employee -->
 
-    </form>
+      <mat-form-field appearance="outline" class="form-field half-width">
+        <mat-label>Select The Employee</mat-label>
+        <mat-select formControlName="employeeId" name="employeeId">
+          <mat-option *ngFor="let employee of listofEmployees" [value]="employee.id">
+            {{employee.name | uppercase}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="postTaskForm.get('employeeId')?.hasError('required')"> this Input is Required</mat-error>
+      </mat-form-field>
+
+      <!-- Display Selected Category -->
+      <mat-form-field appearance="outline" class="form-field half-width">
+        <mat-label >Category</mat-label>
+
+        <mat-icon matPrefix  class="category-icon" (click)="openCategoryDialog()" style="cursor: pointer;">loyalty</mat-icon>
+        <input matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()">
+      </mat-form-field>
+
+    </div>
+
+    <div class="actions-section">
+      <!-- File Upload -->
+      <input type="file" #fileInput (change)="onImageUpload($event)" hidden />
+      <button mat-icon-button (click)="fileInput.click()" matTooltip="Upload Image">
+        <mat-icon>folder</mat-icon>
+      </button>
+    
+    
+        <button mat-icon-button (click)="startRecording()" matTooltip="Start Recording" [disabled]="isRecording">
+          <mat-icon>mic</mat-icon>
+        </button>
+        <button mat-icon-button (click)="stopRecording()" matTooltip="Stop Recording" [disabled]="!isRecording">
+          <mat-icon>mic_off</mat-icon>
+        </button>
+      
+        <div *ngIf="audioUrl">
+          <p>🎵 Voice Preview:</p>
+          <audio controls>
+            <source [src]="audioUrl" type="audio/wav">
+            Your browser does not support the audio tag.
+          </audio>
+          <button (click)="deleteVoice()">🗑 Delete Voice</button>
+        </div>
+     
+
+      <!-- Image Preview -->
+      <div class="image-preview-container" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Preview" />
+
+        <button type="button" class="delete-btn" (click)="deleteImage()" matTooltip="Delete Image">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
 
 </div>
-<app-footer
-(saveClicked)="postTask()" 
-[disabled]="postTaskForm.invalid"
-(clerClicked)="clearFields()">
+<app-footer (saveClicked)="postTask()" [disabled]="postTaskForm.invalid" (clerClicked)="clearFields()">
 </app-footer>
 
- <!-- Save Button -->
- <!-- <button mat-raised-button color="accent" matTooltip="Save Data"  (click)="postTask()" type="submit" [disabled]="postTaskForm.invalid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Save Button -->
+<!-- <button mat-raised-button color="accent" matTooltip="Save Data"  (click)="postTask()" type="submit" [disabled]="postTaskForm.invalid">
     <i class="material-icons">save</i> Save
   </button>
 
 -->
-   

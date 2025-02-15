@@ -1,12 +1,11 @@
-
-
 <div class="container">
- 
     <button mat-icon-button class="close-btn" (click)="closeDialog()">
         <mat-icon>close</mat-icon>
     </button>
     <h2>update Task </h2>
-    <form  [formGroup]="updateTaskForm" (ngSubmit)="updateTask()">
+
+
+    <form [formGroup]="updateTaskForm" (ngSubmit)="updateTask()">
 
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Title</mat-label>
@@ -18,7 +17,8 @@
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Description</mat-label>
             <textarea matInput placeholder="Description" formControlName="description"></textarea>
-            <mat-error *ngIf="updateTaskForm.get('description')?.hasError('required')"> This Input Is Required</mat-error>
+            <mat-error *ngIf="updateTaskForm.get('description')?.hasError('required')"> This Input Is
+                Required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
@@ -48,19 +48,35 @@
             <mat-error *ngIf="updateTaskForm.get('status')?.hasError('required')"> this Input is Required</mat-error>
         </mat-form-field>
 
-
-        <mat-form-field appearance="outline" class="form-field">
+<div  class="row-container"> 
+        <mat-form-field appearance="outline" class="form-field half-width">
             <mat-label>Select The Employee</mat-label>
             <mat-select formControlName="employeeId" name="employeeId">
 
                 <mat-option *ngFor="let employee of listofEmployees" [value]="employee.id">
                     {{employee.name | uppercase}}</mat-option>
             </mat-select>
-            <mat-error *ngIf="updateTaskForm.get('employeeId')?.hasError('required')"> this Input is Required</mat-error>
+            <mat-error *ngIf="updateTaskForm.get('employeeId')?.hasError('required')"> this Input is
+                Required</mat-error>
         </mat-form-field>
 
+        <!-- Category Selection -->
+        <mat-form-field appearance="outline" class="form-field half-width">
+            <mat-label>Category</mat-label>
+            <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()"
+                style="cursor: pointer;">loyalty</mat-icon>
+            <input matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()">
+        </mat-form-field>
+    </div>
         <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid">Update Task</button>
 
     </form>
+
+  
+   <!-- <mat-dialog-actions align="end" class="sticky-footer">
+    <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid" (click)="updateTask()">
+        Update Task
+    </button>
+</mat-dialog-actions> -->
 
 </div>

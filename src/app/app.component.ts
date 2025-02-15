@@ -14,24 +14,34 @@ export class AppComponent {
   isAdminLoggedIn: boolean = StorageService.isAdminLoggedIn();
   isEmployeeLoggedIn: boolean = StorageService.isEmployeeLoggedIn();
   employeeName: string = ''; // variable to hold logged-in employee
-  showFooter: boolean = false;
+  showFooter: boolean = true;
+  showExport:boolean=false;
+  showFooterButtons: boolean = true; // New flag to control Save & Clear buttons
 
-constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-  this.router.events
-    .pipe(
-      filter((event) => event instanceof NavigationEnd),
-      map(() => {
-        let route = this.activatedRoute.firstChild;
-        while (route?.firstChild) {
-          route = route.firstChild; // Get the deepest child route
-        }
-        return route?.snapshot.data['hideFooter'] || false;
-      })
-    )
-    .subscribe((hideFooter) => {
-      this.showFooter = !hideFooter;
-    });
-}
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          let route = this.activatedRoute.root;
+          while (route.firstChild) {
+            route = route.firstChild; // Get the deepest child route
+          }
+          return {
+            hideFooter: route.snapshot.data['hideFooter'] || false,
+            hideFooterButtons: route.snapshot.data['hideFooterButtons'] || false,
+            showExport: route.snapshot.data['showExport'] || false, // Add this line
+          };
+        })
+      )
+      .subscribe(({ hideFooter, hideFooterButtons,showExport }) => {
+        this.showFooter = !hideFooter;
+        this.showFooterButtons = !hideFooterButtons;
+        this.showExport = showExport; // Update the export button visibilit
+      });
+  }
+
 
   ngOnInit() {
     this.router.events.subscribe(evnt => {

@@ -1,27 +1,166 @@
+// .task-list {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+//     min-height: 37vh;
+    
+//    // padding: 20px;
+
+//     .task-card {
+//         margin-bottom: 20px;
+//         width: 100%;
+//         border-radius: 10px;
+//         box-shadow: 0 2px 6px rgba($color: #000000, $alpha: 1.0);
+//         .task-details {
+//             padding: 15px;
+
+//             .task-image {
+//                 max-width: 150px; /* Adjust width as needed */
+//                 max-height: 150px; /* Adjust height as needed */
+//                 border-radius: 8px; /* Optional: Adds rounded corners */
+//                 object-fit: cover; /* Ensures the image fits within the box */
+//                 display: block; /* Ensures proper alignment */
+//                 margin: 5px auto;
+//                 // margin-top: 5px; /* Adds spacing */
+//                 // margin-bottom: 5px; /* Adds spacing below image */
+//             }
+//             .download-button {
+//                 margin-left: 10px; /* Adds spacing between image and button */
+//             }
+            
+//             .task-image:hover {
+//                 transform: scale(1.05);  // Slight zoom effect on hover
+//             }
+
+//             .task-name {
+//                 font-size: 20px;
+//                 font-weight: bold;
+//                 color: #108ee9;
+//                 margin-bottom: 10px;
+//             }
+
+//             .task-description {
+//                 margin-bottom: 10px;
+//             }
+
+//             .task-info {
+//                 display: flex;
+//                 flex-wrap: wrap;
+//                 margin-bottom: 10px;
+//                 margin-top: 10px;
+
+                
+//                 .info-row {
+//                     flex: 0 0 50%;
+//                     display: flex;
+//                     align-items: center;
+//                     margin-bottom: 8px;
+//                     gap: 5px; /* Adds space between the icon and text */
+                    
+//                     .category-icon {
+//                         font-size: 20px; /* Adjust the icon size */
+//                         color: #108ee9; /* Optional: Adjust icon color */
+//                     }
+//                     .info-label {
+//                         font-weight: 10px;
+//                         margin-right: 5px;
+//                     }
+
+//                     .info-value {
+//                         font-weight: bold;
+//                     }
+//                 }
+
+//             }
+//             .actions{
+//                 display: flex;
+//                 justify-content: flex-end;
+//                 margin-top: 10px;
+
+//                 .update-button{
+//                     margin-right: 10px;
+//                 }
+
+//                 .view-button{
+//                     margin-right: 10px;
+//                 }
+//             }
+
+//         }
+       
+
+//     }
+
+// }
+// .card-container{
+//     margin: 16px;
+//     //padding: 30px;
+//     max-width: 60%;
+//     padding-bottom: 30px;
+// }
+
+// mat-card{
+// padding: 10px;
+// }
+
+// .example-header-image{
+//     background-image: url('http://material.angular.io/assets/img/suktha.jpg');
+//     background-size: cover;
+// }
+
+// .example-header-image {
+//     background-image: url('/assets/img/admin-avatar.jpg');
+//     background-size: cover;
+// }
+
+// mat-card-content{
+//     margin-top: 10px;
+// }
+
+// mat-card-footer{
+//     margin-left: 20px;
+// }
+
+// .img{
+//     object-fit: cover;
+// }
+
+// .comment-card{
+//     margin-top: 20px;
+// }
+
+// mat-form-field{
+// width: 100%;
+// }
 .task-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    min-height: 37vh;
-    
-   // padding: 20px;
+    min-height: 20vh;
+    min-width: 50%; /* Set a minimum width */
 
     .task-card {
-        margin-bottom: 20px;
-        width: 100%;
+        margin-bottom: 10px;
+        width: 55%;
         border-radius: 10px;
-        box-shadow: 0 2px 6px rgba($color: #000000, $alpha: 1.0);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
         .task-details {
-            padding: 20px;
+            padding: 13px;
+
+            .task-image {
+                max-width: 120px;
+                max-height: 120px;
+                border-radius: 8px;
+                object-fit: cover;
+                display: block;
+                margin: 5px auto;
+            }
 
             .task-name {
                 font-size: 20px;
                 font-weight: bold;
                 color: #108ee9;
-                margin-bottom: 10px;
-            }
-
-            .task-description {
                 margin-bottom: 10px;
             }
 
@@ -36,9 +175,15 @@
                     display: flex;
                     align-items: center;
                     margin-bottom: 8px;
+                    gap: 5px;
+
+                    .category-icon {
+                        font-size: 20px;
+                        color: #108ee9;
+                    }
 
                     .info-label {
-                        font-weight: 10px;
+                        font-weight: 600;
                         margin-right: 5px;
                     }
 
@@ -46,67 +191,47 @@
                         font-weight: bold;
                     }
                 }
-
             }
-            .actions{
-                display: flex;
-                justify-content: flex-end;
-                margin-top: 10px;
-
-                .update-button{
-                    margin-right: 10px;
-                }
-
-                .view-button{
-                    margin-right: 10px;
-                }
-            }
-
         }
-       
-
     }
-
 }
-.card-container{
-    margin: 16px;
-    //padding: 30px;
-    max-width: 60%;
-    padding-bottom: 30px;
+.example-header-image{
+    background-image: url('http://material.angular.io/assets/img/suktha.jpg');
+    background-size: cover;
 }
-
-mat-card{
-padding: 10px;
-}
-
-// .example-header-image{
-//     background-image: url('http://material.angular.io/assets/img/suktha.jpg');
-//     background-size: cover;
-// }
 
 .example-header-image {
     background-image: url('/assets/img/admin-avatar.jpg');
     background-size: cover;
 }
 
-mat-card-content{
-    margin-top: 10px;
-}
-
-mat-card-footer{
-    margin-left: 20px;
-}
-
-.img{
-    object-fit: cover;
-}
-
-.comment-card{
+/* Center Image and Voice */
+.media-container {
+    display: flex;
+    gap: 15px;
+    justify-content:  flex-start;
+    align-items: center;
     margin-top: 20px;
+    //min-width: 30%;
+
+    .media-card {
+        width: 70%;
+        text-align: center;
+        padding: 0px;
+    }
+
+    audio {
+        width: 50%;
+    }
 }
 
-mat-form-field{
-width: 100%;
+/* Comment Section */
+.comment-card {
+    margin-top: 10px;
+    width: 55%;
+ 
 }
 
-
+mat-form-field {
+    width: 75%;
+}

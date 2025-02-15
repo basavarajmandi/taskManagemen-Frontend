@@ -28,9 +28,60 @@ ngOnInit(){
 getTaskById(){
   this.service.getTaskById(this.taskId).subscribe((res)=>{
     this.taskData=res;
+  // Ensure taskData is defined and imageName exists
+  if (this.taskData && this.taskData.imageName && !this.taskData.imageName.startsWith("http")) {
+    this.taskData.imageName = `http://localhost:8080/api/files/images/${this.taskData.imageName}`;
+  }
+  
+  if(this.taskData && this.taskData.voiceName && !this.taskData.voiceName.startsWith("http")){
+    this.taskData.voiceName =`http://localhost:8080/api/files/voice/${this.taskData.voiceName}`;
+  }
 
   })
+
+  
 }
+downloadImage(imageUrl: string) {
+  fetch(imageUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.blob(); // Convert response to blob
+    })
+    .then(blob => {
+      const blobUrl = window.URL.createObjectURL(blob); // Create a blob URL
+      const link = document.createElement('a'); 
+      link.href = blobUrl;
+      link.download = this.extractFileName(imageUrl); // Extract filename
+      document.body.appendChild(link);
+      link.click(); // Trigger download
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl); // Cleanup memory
+    })
+    .catch(error => console.error('Image download failed:', error));
+}
+
+// Extracts the file name from the image URL
+extractFileName(url: string): string {
+  return url.substring(url.lastIndexOf('/') + 1) || 'downloaded-image.jpg';
+}
+shareImage(imageUrl: string) {
+  const text = encodeURIComponent("Check out this image!");
+  const url = encodeURIComponent(imageUrl);
+
+  // WhatsApp Share Link
+  const whatsappUrl = `https://wa.me/?text=${text} ${url}`;
+
+  // Open in new tab
+  window.open(whatsappUrl, "_blank");
+}
+
+
+
+
+
+
 publishComment(){
   this.service.createComment(this.taskId,this.commentForm.get('content')?.value).subscribe((res)=>{
     console.log(res);

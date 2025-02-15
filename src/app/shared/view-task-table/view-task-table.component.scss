@@ -1,44 +1,4 @@
-// .mat-elevation-z6 {
-//     border-radius: 12px; /* Rounded corners for the table */
-//     overflow: hidden; /* Ensures rounded corners are applied properly */
-//     padding: 16px; /* Add padding inside the table container */
-//     background-color: #fff; /* White background for the table card */
-//     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for card-like effect */
-//   }
-  
-//   table {
-//     width: 100%;
-//     border-spacing: 0; /* Removes gaps between table cells */
-//     border-collapse: collapse; /* Merges table cell borders for consistent style */
-//   }
-  
-//   th, td {
-//     padding: 12px 16px; /* Padding inside table cells */
-//     text-align: left;
-//     border-bottom: 1px solid #ddd; /* Adds a light border below table rows */
-//   }
-  
-//   th {
-//     background-color: #f7f7f7; /* Slightly shaded background for header */
-//     font-weight: 600; /* Bold text for header cells */
-//   }
-  
-//   td {
-//     font-size: 14px;
-//     color: #333; /* Darker text color for better readability */
-//   }
-  
-//   tr:hover {
-//     background-color: #f0f8ff; /* Light blue hover effect for rows */
-//     cursor: pointer; /* Changes cursor to pointer on hover */
-//   }
-  
-//   mat-paginator {
-//     margin-top: 16px; /* Adds space between table and paginator */
-//     border-top: 1px solid #ddd; /* Divider above paginator */
-//     padding-top: 12px;
-//   }
-  
+
 .filter-list{
     padding: 8px;
   //  margin-top: 5px;
@@ -108,13 +68,12 @@
         cursor: pointer;
       }
    
-      
 }
 
 .mat-elevation-z6 {
     border-radius: 12px; /* Slightly larger rounded corners for a more modern look */
     overflow: hidden;
-    padding: 10px; /* Adequate padding inside the table container */
+    padding: 7px; /* Adequate padding inside the table container */
     background-color: #fff; /* White background for the table card */
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15); /* Slightly larger shadow for more depth */
   }
@@ -123,6 +82,7 @@
     width: 100%;
     border-spacing: 0;
     border-collapse: collapse;
+    
   }
   
   th, td {
@@ -130,6 +90,7 @@
     text-align: left;
     border-bottom: 1px solid #e0e0e0; /* Light gray border for cleaner look */
     font-family: 'Roboto', sans-serif; /* More contemporary font */
+  
   }
   
   th {

@@ -5,13 +5,17 @@
     </button>
   
     <!-- Clear Button -->
-    <button mat-raised-button color="primary" matTooltip="Clear Fields"  [disabled]="disabled" (click)="OnClear()">
+    <button     *ngIf="showClear"       mat-raised-button color="primary" matTooltip="Clear Fields"  [disabled]="disabled" (click)="OnClear()">
       <i class="material-icons">clear_all</i> Clear
     </button>
   
     <!-- Save Button -->
-    <button mat-raised-button  color="primary"  matTooltip="Save Data" [disabled]="disabled" (click)="OnSave()" >
+    <button  *ngIf="showSave"   mat-raised-button    color="primary"  matTooltip="Save Data" [disabled]="disabled" (click)="OnSave()" >
       <i class="material-icons">save</i> Save
     </button>
+
+    <button *ngIf="showExport" mat-raised-button color="primary" matTooltip="Export to Excel" (click)="onExport()">
+      <mat-icon>import_export</mat-icon>Export to Excel
+    </button>
   </div>
-  
+ 

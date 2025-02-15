@@ -81,6 +81,15 @@
         .task-details {
             padding: 20px;
 
+            .task-image {
+                max-width: 150px; /* Adjust width as needed */
+                max-height: 150px; /* Adjust height as needed */
+                border-radius: 8px; /* Optional: Adds rounded corners */
+                object-fit: cover; /* Ensures the image fits within the box */
+                display: block; /* Ensures proper alignment */
+                margin-top: 10px; /* Adds spacing */
+            }
+
             .task-name {
                 font-size: 20px;
                 font-weight: bold;
@@ -99,11 +108,17 @@
                 margin-bottom: 10px;
                 flex-wrap: wrap;
 
+
                 .info-row {
                     flex: 0 0 50%;
                     display: flex;
                     align-items: center;
                     margin-bottom: 8px;
+                    
+                    .category-icon {
+                        font-size: 20px; /* Adjust the icon size */
+                        color: #108ee9; /* Optional: Adjust icon color */
+                    }
 
                     .info-label {
                         font-weight: 10px;
@@ -134,6 +149,21 @@
             }
 
         }
+    }
+
+    .task-thumbnail {
+        width: 50px; /* Small size */
+        height: 50px;
+        border-radius: 50%; /* Makes it circular */
+        object-fit: cover; /* Ensures it keeps its shape */
+        border: 2px solid #ddd; /* Optional: Adds a border */
+        margin-right: 20px; /* Space between image and button */
+    }
+
+    .task-thumbnail:hover {
+        transform: scale(3); /* Zooms in to 2x size */
+        position: relative;
+        z-index: 10; /* Ensures it's on top */
     }
 
 }

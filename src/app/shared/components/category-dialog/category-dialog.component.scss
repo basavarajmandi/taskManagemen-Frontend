@@ -1,0 +1,70 @@
+.dialog-container {
+  width: 100%;
+  max-width: 350px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Search Field */
+.search-field {
+  width: 100%;
+}
+
+
+/* Category List */
+.category-list {
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.category-item {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.category-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+/* New Category Section */
+.new-category-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.new-category-field {
+  flex: 1;
+}
+
+// /* Add Button */
+// button mat-icon {
+//   font-size: 25px;
+// }
+button.mat-mini-fab {
+  background-color: #1976d2 !important; /* Stronger Blue */
+  color: white !important; /* Icon color */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #1565c0 !important; /* Slightly darker on hover */
+  }
+
+  &:disabled {
+    background-color: rgba(25, 118, 210, 0.5) !important; /* Lighter when disabled */
+  }
+}

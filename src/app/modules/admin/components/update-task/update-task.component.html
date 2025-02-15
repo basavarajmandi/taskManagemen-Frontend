@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <h2>update Task </h2>
     <form [formGroup]="updateTaskForm" (ngSubmit)="updateTask()">
 
@@ -55,8 +55,21 @@
             <mat-error *ngIf="updateTaskForm.get('employeeId')?.hasError('required')"> this Input is Required</mat-error>
         </mat-form-field>
 
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Select The Category</mat-label>
+            <mat-select formControlName="categoryId" name="categoryId">
+
+                <mat-option *ngFor="let category of listofCategory" [value]="category.id">
+                    {{category.name | uppercase}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="updateTaskForm.get('category')?.hasError('required')"> this Input is Required</mat-error>
+        </mat-form-field>
+
+
+
+
         <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid">Update Task</button>
 
     </form>
     
-</div>
+</div> -->

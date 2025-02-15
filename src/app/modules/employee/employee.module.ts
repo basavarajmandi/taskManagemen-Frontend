@@ -9,11 +9,14 @@ import { ViewTaskDetailsComponent } from './components/view-task-details/view-ta
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EmployeminiDashboardComponent } from './components/employemini-dashboard/employemini-dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
+import { SharedModule } from "../../shared/shared.module";
+
 @NgModule({
   declarations: [
     DashboardComponent,
     ViewTaskDetailsComponent,
-    EmployeminiDashboardComponent
+    EmployeminiDashboardComponent,
+
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,7 @@ import { NgChartsModule } from 'ng2-charts';
     FormsModule,
     DemoAngularMaterialModule,
     MatPaginatorModule,
-    NgChartsModule
-  ]
+    NgChartsModule,
+    SharedModule]
 })
 export class EmployeeModule { }

@@ -1,9 +1,9 @@
-.container{
+.container {
     max-width: 600px;
     margin: 0 auto;
     padding: 25px;
     max-height: 500px;
-
+}
 
 .close-btn {
     position: absolute;
@@ -11,45 +11,83 @@
     right: 10px;
     background: transparent;
     border: none;
-  
+    color: inherit; /* Ensures it uses the default color */
+    transition: color 0.3s ease-in-out; /* Smooth color transition */
+
+}
+.category-icon {
+    font-size: 24px; /* Adjust the icon size */
+    color: #108ee9;
+}
+.close-btn:hover {
+    font-size: 22px;
+    color: rgb(250, 23, 23); /* Change to blue when hovered */
+
 }
 
-.close-btn mat-icon:hover{
-    font-size: 25px;
-    
-}
-h2{
+h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #3f51b5;
 }
 
+.row-container {
+    display: flex;
+    gap: 16px;
+    /* Adds space between Employee and Category fields */
+    flex-wrap: wrap;
+    /* Ensures responsiveness */
+}
+
+.half-width {
+    flex: 1;
+    /* Makes sure both fields take equal space */
+}
 
 
-form{
+form {
     display: flex;
     flex-direction: column;
-
-
-    mat-form-field{
-        margin-top: 20px;
-    }
-
-    button{
-        align-self:center;
-        margin-top: 16px;
-    }
 }
 
+form mat-form-field {
+    margin-top: 12px;
 }
 
-@media(max-width:600px){
-    .container{
+button {
+    align-self: center;
+    margin-top: 16px;
+}
+
+.dialog-content {
+    max-height: 400px; /* Adjust based on your dialog size */
+    overflow-y: auto;  /* Enables scrolling */
+   padding-bottom: 60px; /* Prevents overlap with button */
+}
+
+// .sticky-footer {
+//     position: sticky;
+//     bottom: 0;
+//     background: white;
+//     padding: 5px;
+//     z-index: 1000;
+//     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+// }
+
+@media (max-width: 600px) {
+    .container {
         padding: 10px;
-        form{
-            mat-form-field{
-                margin-bottom: 10px;
-            }
-        }
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .half-width {
+        width: 100%;
+    }
+
+    form mat-form-field {
+        margin-bottom: 10px;
     }
 }

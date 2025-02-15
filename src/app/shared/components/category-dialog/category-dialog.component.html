@@ -1,1 +1,25 @@
-<p>category-dialog works!</p>
+<div class="dialog-container">
+
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search Category</mat-label>
+    <input matInput [(ngModel)]="searchText" (input)="filterCategories()" placeholder="Search...">
+  </mat-form-field>
+
+  <!-- Existing Categories List -->
+  <div class="category-list">
+    <div *ngFor="let category of filteredCategories" class="category-item" (click)="selectCategory(category)">
+      <span>{{ category.name }}</span>
+    </div>
+  </div>
+
+  <div class="new-category-container">
+  <!-- Add New Category -->
+  <mat-form-field appearance="outline" class="new-category-field">
+    <input matInput [(ngModel)]="newCategoryName" placeholder="Enter new category">
+  </mat-form-field>
+
+    <button  mat-mini-fab color="primary" (click)="addCategory()" [disabled]="!newCategoryName && !selectedCategory">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

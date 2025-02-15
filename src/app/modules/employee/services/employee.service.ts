@@ -23,17 +23,19 @@ export class EmployeeService {
     });
   }
 
-  updateTask(id:number,status:string):Observable<any>{
-    return this.httpClient.put(BASE_URL+`api/employee/task/${id}/${status}`,{},{
-      headers:this.createAuthorizationHeader()
-    });
-  }
 
   getTaskById(id:number):Observable<any>{
     return this.httpClient.get(BASE_URL+`api/employee/task/${id}`,{
       headers:this.createAuthorizationHeader()
     })
   }
+
+  updateTask(id:number,status:string):Observable<any>{
+    return this.httpClient.put(BASE_URL+`api/employee/task/${id}/${status}`,{},{
+      headers:this.createAuthorizationHeader()
+    });
+  }
+
   createComment(id:number, content:string):Observable<any>{
     const params={
       taskId:id,
@@ -48,8 +50,7 @@ export class EmployeeService {
   getCommentsByTaskId(id:number):Observable<any>{
      return this.httpClient.get(BASE_URL+`api/employee/task/${id}/comments`,{
       headers: this.createAuthorizationHeader()
-    }
-    )
+    })
   }
 
   // Fetch the employee's dashboard data

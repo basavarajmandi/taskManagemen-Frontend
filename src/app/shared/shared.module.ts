@@ -19,8 +19,9 @@ import { CategoryDialogComponent } from './components/category-dialog/category-d
     DemoAngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-
+  
   ],
+  
    exports: [
     ConfirmDialogComponent,
     UpdateDialogComponent,

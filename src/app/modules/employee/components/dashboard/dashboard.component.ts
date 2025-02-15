@@ -26,17 +26,25 @@ export class DashboardComponent {
     this.getTask();
    //this.applyFilter();
   }
-
-  getTask(){
-    this.service.getTaskByUserId().subscribe(
-      (res)=>{
+getTask() {
+  this.service.getTaskByUserId().subscribe(
+    (res) => {
       console.log(res);
-      this.listOfTasks=res;
-    },(err)=>{
-console.error("Error fetching tasks", err);
+      
+      this.listOfTasks = res.map((task: any) => {
+        if (task.imageName && !task.imageName.startsWith("http")) {
+          task.imageName = `http://localhost:8080/api/files/images/${task.imageName}`;
+        }
+        
+        console.log("upload image url :",task.imageName);
+        return task;
+      });
+    },
+    (err) => {
+      console.error("Error fetching tasks", err);
     }
   );
-  }
+}
 
   updateStatus(id :number, status:string){
     console.log('Updating Task ID:', id, 'with Status:', status);
@@ -51,7 +59,6 @@ console.error("Error fetching tasks", err);
   }
 })
   }
-
   // Apply the filters based on user input
   applyFilter():void{
     const formValues =this.searchTaskForm.value;
@@ -68,11 +75,19 @@ console.error("Error fetching tasks", err);
       );
     });
   }
- 
   clearFilter(){
     this.searchTaskForm.reset();
     this.getTask();
   }
-  
- 
 }
+//   getTask(){
+//     this.service.getTaskByUserId().subscribe(
+//       (res)=>{
+//       console.log(res);
+//       this.listOfTasks=res;
+    
+//     },(err)=>{
+// console.error("Error fetching tasks", err);
+//     }
+//   );
+//   }

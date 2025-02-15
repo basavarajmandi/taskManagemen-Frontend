@@ -9,7 +9,7 @@ const routes: Routes = [
   {path:"login", component:LoginComponent , data: { hideFooter: true }}, //
   {path:"signup",component:SignupComponent ,data:{hideFooter:true}},//
   {path:"about", component:AboutCompanyComponent,data:{hideFooter:true}},
-  {path:"Admin-view-table",component:ViewTaskTableComponent},
+  {path:"Admin-view-table",component:ViewTaskTableComponent,data:{showExport:true,hideFooterButtons:true}},
   {path:"admin",loadChildren:()=>import("./modules/admin/admin.module").then(e=>e.AdminModule)},
   {path:"employee",loadChildren:()=>import("./modules/employee/employee.module").then(e=>e.EmployeeModule)},
 ];

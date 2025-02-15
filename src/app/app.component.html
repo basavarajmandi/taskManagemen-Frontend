@@ -125,8 +125,10 @@
     <router-outlet></router-outlet> <!-- Content area -->
   </main>
 
-  <footer *ngIf="showFooter">
+  <!-- <footer *ngIf="showFooter">
     <app-footer></app-footer>
-  </footer>
+  </footer> -->
+  <app-footer *ngIf="showFooter" [showSave]="showFooterButtons" [showClear]="showFooterButtons"  [showExport]="showExport" ></app-footer>
+
 </div>
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { StorageService } from 'src/app/auth/services/storage/storage.service';
 import { PaginatedResponse } from 'src/app/shared/models/paginated-response';
 import { TaskDTO } from 'src/app/shared/models/task-dto';
@@ -10,30 +10,115 @@ const BASE_URL="http://localhost:8080/";
   providedIn: 'root'
 })
 export class AdminService {
-  // getCategories() {
-  //   throw new Error('Method not implemented.');
-  // }  
-
+  
   constructor(private httpClient :HttpClient) {
   }
 
+  private createAuthorizationHeader(): HttpHeaders {
+    return new HttpHeaders().set(
+      'Authorization',
+       'Bearer ' + StorageService.getToken())
+  }
+
+  private createAuthorizationHeaderWithoutJSON(): HttpHeaders {
+    return new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + StorageService.getToken()
+    ); // No 'Content-Type' for FormDa
+  }
+  
  getUsers(): Observable<any>{
 return this.httpClient.get(BASE_URL+"api/admin/users",{
 headers:this.createAuthorizationHeader()
 })
  }
 
-postTask(taskDto: any):Observable<any>{
-return this.httpClient.post(BASE_URL+"api/admin/savetask",taskDto,{
-  headers:this.createAuthorizationHeader()
-});
-}
-
-getAllTask():Observable<any>{
-  return this.httpClient.get(BASE_URL+"api/admin/tasks",{
+ getAllTask():Observable<TaskDTO[]>{
+  return this.httpClient.get<TaskDTO[]> (BASE_URL+"api/admin/tasks",{
     headers:this.createAuthorizationHeader()
   })
 }
+getTasksDueToday(): Observable<TaskDTO[]> {
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/today", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+getTasksDueYesterday(): Observable<TaskDTO[]> {
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/yesterday", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+getTasksThisWeek(): Observable<TaskDTO[]> {
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/this-week", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+getTasksLastWeek(): Observable<TaskDTO[]> {
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/last-week", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+getTasksThisMonth(): Observable<TaskDTO[]> {
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/this-month", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+getTasksLastMonth(): Observable<TaskDTO[]> {
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/last-month", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+getTasksThisYear(): Observable<TaskDTO[]> {
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/this-year", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+getTasksByCustomRange(startDate: Date, endDate: Date): Observable<TaskDTO[]> {
+  const params = new HttpParams()
+    .set('startDate', startDate.toISOString().split('T')[0])
+    .set('endDate', endDate.toISOString().split('T')[0]);
+
+  return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/custom", {
+    headers: this.createAuthorizationHeader(),
+    params: params
+  });
+}
+
+
+ getCategories(): Observable<any> {
+  return this.httpClient.get(BASE_URL + "api/admin/categories", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
+postTask(taskData: any, file?: File, voiceFile?: File  ): Observable<any> {
+  const formData = new FormData();
+  Object.keys(taskData).forEach(key => {
+    if (taskData[key] !== null) {
+      formData.append(key, taskData[key]);
+    }
+  });
+
+  if (file) {
+    formData.append('image', file);
+  }
+  if (voiceFile) {
+    formData.append('voice', voiceFile);
+  }
+
+
+  return this.httpClient.post(BASE_URL + "api/admin/savetask", formData, {
+    headers: this.createAuthorizationHeaderWithoutJSON(),
+  });
+}
+
 
 getAllTaskWithPagination(params: any): Observable<PaginatedResponse> {
   let httpParams = new HttpParams()
@@ -49,23 +134,31 @@ getAllTaskWithPagination(params: any): Observable<PaginatedResponse> {
   );
 }
 
-// getAllTaskwithtable(): Observable<TaskDTO[]> {
-//   return this.httpClient.get<TaskDTO[]>(BASE_URL + 'api/admin/tasks', {
-//     headers:this.createAuthorizationHeader()
-//   });
-// }
+
 
 deleteTask(id:number):Observable<any>{
   return this.httpClient.delete(BASE_URL+`api/admin/task/${id}`,{
     headers:this.createAuthorizationHeader()
   })
 }
+getTaskById(id: number): Observable<any> {
+  return this.httpClient.get(BASE_URL + `api/admin/task/${id}`, {
+    headers: this.createAuthorizationHeader(),
+  }).pipe(
+    map((task: any) => {
 
-getTaskById(id:number):Observable<any>{
-  return this.httpClient.get(BASE_URL+`api/admin/task/${id}`,{
-    headers:this.createAuthorizationHeader()
-  })
+      if (task.imageName && !task.imageName.startsWith('http')) {
+        task.imageName = `${BASE_URL}api/files/images/${task.imageName}`;
+      }
 
+      if(task.voiceName && !task.voiceName.startsWith('http')){
+        task.voiceName= `${BASE_URL}api/files/voice/${task.voiceName}`;
+      }
+
+
+      return task;
+    })
+  );
 }
 
 updateTask(id:number,taskDto: any):Observable<any>{
@@ -78,7 +171,6 @@ searchTask(title:string):Observable<any>{
   return this.httpClient.get(BASE_URL+`api/admin/task/search/${title}`,{
     headers:this.createAuthorizationHeader()
   })
-
 }
 
 searchTaskByPriority(priority:string):Observable<any>{
@@ -103,12 +195,13 @@ getCommentsByTaskId(id:number):Observable<any>{
   )
 }
 
-filterTasks(priority?: string, title?:string, dueDate?:string,taskStatus?: string,employeeName?:string):Observable<any> {
+filterTasks(priority?: string[] | string, title?:string, dueDate?:string,taskStatus?: string[] | string,employeeName?:string):Observable<any> {
   let params:any={};
-  if(priority) params['priority'] =priority;
+
+  if (priority) params['priority'] = Array.isArray(priority) ? priority.join(',') : priority;
   if(title) params['title']=title;
   if(dueDate) params['dueDate']=dueDate;
-  if(taskStatus) params['taskStatus']=taskStatus;
+  if (taskStatus) params['taskStatus'] = Array.isArray(taskStatus) ? taskStatus.join(',') : taskStatus;
   if(employeeName) params['employeeName']=employeeName;
 
   return this.httpClient.get(BASE_URL + 'api/admin/tasks/filter',{
@@ -145,10 +238,6 @@ getTaskCountsByPriotity():Observable<any>{
     headers:this.createAuthorizationHeader(),
   });
 }
-private createAuthorizationHeader(): HttpHeaders {
-  return new HttpHeaders().set(
-    'Authorization', 'Bearer ' + StorageService.getToken())
-}
 
 exportToExcel(): Observable<Blob> {
   return this.httpClient.get(BASE_URL + 'api/admin/tasks/export', {
@@ -157,6 +246,21 @@ exportToExcel(): Observable<Blob> {
   });
 }
 
-
-
 }
+// postTask(taskDto: any):Observable<any>{
+// return this.httpClient.post(BASE_URL+"api/admin/savetask",taskDto,{
+//   headers:this.createAuthorizationHeader()
+// });
+// }
+
+// getTaskById(id:number):Observable<any>{
+//   return this.httpClient.get(BASE_URL+`api/admin/task/${id}`,{
+//     headers:this.createAuthorizationHeader()
+//   })
+// }
+
+// getAllTaskwithtable(): Observable<TaskDTO[]> {
+//   return this.httpClient.get<TaskDTO[]>(BASE_URL + 'api/admin/tasks', {
+//     headers:this.createAuthorizationHeader()
+//   });
+// }

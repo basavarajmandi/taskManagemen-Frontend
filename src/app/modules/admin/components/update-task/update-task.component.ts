@@ -11,61 +11,65 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UpdateTaskComponent {
 
-  id: number = this.route.snapshot.params['id'];
+//   id: number = this.route.snapshot.params['id'];
 
-  updateTaskForm !: FormGroup;
-  listofEmployees: any = [];
-  listOfPriorities: any = ["LOW", "HIGH", "MEDIUM","VERY-HIGH","VERY-LOW"];
-  listOfTaskStatus: any = ["PENDING", "INPROGRESS", "COMPLETED", "DEFERRED", "CANCELLED"];
-  
-  constructor(private service: AdminService
-    , private route: ActivatedRoute,
-     private fb: FormBuilder,
-     private snackbar:MatSnackBar,
-     private router:Router) {
-
-  }
-
-  ngOnInit() {
-    this.updateTaskForm = this.fb.group({
-      employeeId: [null, [Validators.required]],
-      title: [null, [Validators.required]],
-      dueDate: [null, [Validators.required]],
-      description: [null, [Validators.required]],
-      priority: [null, [Validators.required]],
-      taskStatus: [null, [Validators.required]]
-
-    })
-    this.getTaskById();
-  }
-
-
+//   updateTaskForm !: FormGroup;
+//   listofCategory:any=[];
+//   listofEmployees: any = [];
+//   listOfPriorities: any = ["LOW", "HIGH", "MEDIUM","VERY-HIGH","VERY-LOW"];
+//   listOfTaskStatus: any = ["PENDING", "INPROGRESS", "COMPLETED", "DEFERRED", "CANCELLED"];
 
   
+//   constructor(private service: AdminService
+//     , private route: ActivatedRoute,
+//      private fb: FormBuilder,
+//      private snackbar:MatSnackBar,
+//      private router:Router) {
 
-  getTaskById() {
-    this.service.getTaskById(this.id).subscribe((res) => {
-      console.log(res);
-      this.getusers();
-      this.updateTaskForm.patchValue(res);
-    })
-  }
+//   }
 
-  getusers() {
-    this.service.getUsers().subscribe((res) => {
-      this.listofEmployees = res;
-      console.log(res);
-    })
-  }
+//   // ngOnInit() {
+//   //   this.updateTaskForm = this.fb.group({
+//   //     employeeId: [null, [Validators.required]],
+//   //     title: [null, [Validators.required]],
+//   //     dueDate: [null, [Validators.required]],
+//   //     description: [null, [Validators.required]],
+//   //     priority: [null, [Validators.required]],
+//   //     taskStatus: [null, [Validators.required]],
+//   //     Category:[null,[Validators.required]]
 
-  updateTask() {
-this.service.updateTask(this.id,this.updateTaskForm.value).subscribe((res)=>{
-  if(res.id!=null){
-    this.snackbar.open("Task update successfully","close",{duration :5000});
-    this.router.navigateByUrl("admin/dashboard")
-  }else{
-    this.snackbar.open("Something went wrong","Error",{duration:5000})
-  }
-})
-  }
-}
+//   //   })
+//   //   this.getTaskById();
+//   // }
+
+
+
+  
+
+//   // getTaskById() {
+//   //   this.service.getTaskById(this.id).subscribe((res) => {
+//   //     console.log(res);
+//   //     this.getusers();
+//   //     this.updateTaskForm.patchValue(res);
+//   //   })
+//   // }
+
+//   // getusers() {
+//   //   this.service.getUsers().subscribe((res) => {
+//   //     this.listofEmployees = res;
+//   //     console.log(res);
+//   //   })
+//   // }
+
+//   updateTask() {
+
+// this.service.updateTask(this.id,this.updateTaskForm.value).subscribe((res)=>{
+//   if(res.id!=null){
+//     this.snackbar.open("Task update successfully","close",{duration :5000});
+//     this.router.navigateByUrl("admin/dashboard")
+//   }else{
+//     this.snackbar.open("Something went wrong","Error",{duration:5000})
+//   }
+// })
+//   }
+ }
