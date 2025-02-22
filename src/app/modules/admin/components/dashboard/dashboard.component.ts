@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 import { TaskDTO } from 'src/app/shared/models/task-dto';
 import * as moment from 'moment';
 
-
 //import { TaskDTO } from 'src/app/shared/models/task-dto';
 
 @Component({
@@ -22,10 +21,11 @@ import * as moment from 'moment';
 })
 export class DashboardComponent {
 
+
   isFilterPanelOpen: any;
   isPanelExpanded = false;
   listOfTasks: any = [];
-  //overdueTasks:TaskDTO[]=[]  //Define overdueTasks as an array of TaskDTOs
+  allCategories: string[] = []; // Store existing category names
   searchTaskForm!: FormGroup;
   isLoading: boolean = false;
   selectedFilter: string = '';
@@ -44,13 +44,29 @@ export class DashboardComponent {
       priority: [null],
       dueDate: [null],
       taskStatus: [null],
-      employeeName: [null]
+      employeeName: [null],
+      categoryNames: [[]] // Added categoryNames field
+
     });
     this.getTask();
     this.applyFilter();
     this.filterOverdueTasks();
-
+    this.getAllCategories(); // Fetch categories when the component loads
   }
+
+  // Fetch all categories name only  from the backend
+  getAllCategories() {
+    this.service.getAllCategories().subscribe(
+      (categories: string[]) => {
+        this.allCategories = categories; // Store categories in the array
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
+  }
+
+
   getTask(): void {
     this.isLoading = true;
     this.service.getAllTask().subscribe({
@@ -60,7 +76,8 @@ export class DashboardComponent {
         // Add "time ago" calculation here
         this.listOfTasks = tasks.map((task: any) => ({
           ...task,
-          timeAgo: this.getTimeAgo(task.assignedDate) // Add a new field `timeAgo`
+          timeAgo: this.getTimeAgo(task.assignedDate),
+        //  statusClass: this.getTaskStatusClass(task.taskStatus) // Assign the class dynamically
         }));
 
 
@@ -72,7 +89,7 @@ export class DashboardComponent {
       }
     });
   }
-
+ 
   getTimeAgo(taskDate: string): string {
     const duration = moment.duration(moment().diff(moment(taskDate)));
     return duration.humanize().replace("a day", "1 day") + " ago";
@@ -117,7 +134,9 @@ export class DashboardComponent {
         // Apply timeAgo calculation here as well
         this.listOfTasks = tasks.map((task: any) => ({
           ...task,
-          timeAgo: this.getTimeAgo(task.assignedDate)
+          timeAgo: this.getTimeAgo(task.assignedDate),
+          statusClass: this.getTaskStatusClass(task.taskStatus), // Assign the class dynamically
+          priorityClass: this.getPriorityClass(task.priority,task.taskStatus) ,// Map priority to class
         }));
         this.isLoading = false;
       },
@@ -142,7 +161,10 @@ export class DashboardComponent {
       next: (tasks) => {
         this.listOfTasks = tasks.map((task: any) => ({
           ...task,
-          timeAgo: this.getTimeAgo(task.assignedDate)
+          timeAgo: this.getTimeAgo(task.assignedDate),
+          statusClass: this.getTaskStatusClass(task.taskStatus), // Assign the class dynamically
+          priorityClass: this.getPriorityClass(task.priority,task.taskStatus), // Map priority to class
+
         }));
         this.isLoading = false;
         // Hide the custom date range picker
@@ -154,8 +176,6 @@ export class DashboardComponent {
       }
     });
   }
-
-
 
 
   // Open the confirmation dialog before deleting a task
@@ -210,14 +230,26 @@ export class DashboardComponent {
       ? this.formatDateWithoutTimezone(new Date(formValues.dueDate))
       : undefined;
 
+    // const categoryNames: string[] | undefined = formValues?.categoryNames
+    //   ? (Array.isArray(formValues.categoryNames) ? formValues.categoryNames : [formValues.categoryNames])
+    //   : undefined;
 
-    console.log('Filter values:', { title, priority, dueDate, taskStatus, employeeName });
-    this.service.filterTasks(priority, title, dueDate, taskStatus, employeeName).subscribe(
+
+     // Ensure categoryNames is always an array (never undefined)
+  const categoryNames: string[] = formValues?.categoryNames && Array.isArray(formValues.categoryNames)
+  ? formValues.categoryNames
+  : [];
+
+    console.log('Filter values:', { title, priority, dueDate, taskStatus, employeeName, categoryNames });
+    this.service.filterTasks(priority, title, dueDate, taskStatus, employeeName, categoryNames).subscribe(
       (res) => {
-       this.listOfTasks = res.map((task: any) => ({
-        ...task,
-        timeAgo: this.getTimeAgo(task.assignedDate)  // Apply time ago conversion
-      }));
+        this.listOfTasks = res.map((task: any) => ({
+          ...task,
+          timeAgo: this.getTimeAgo(task.assignedDate),
+          // statusClass: this.getTaskStatusClass(task.taskStatus),              // Assign the class dynamically
+          //  priorityClass: this.getPriorityClass(task.priority,task.taskStatus)      // Map priority to class
+       
+        }));
         console.log('Filtered Tasks:', res);
       },
       (err) => {
@@ -266,4 +298,44 @@ export class DashboardComponent {
       console.error('Error loading overdue tasks', error);
     })
   }
+
+
+ // Function to return the CSS class based on task status
+ getTaskStatusClass(status: string): string {
+  switch (status.toUpperCase()) {
+    case 'COMPLETED':
+      return 'completed-task';
+    case 'PENDING':
+      return 'pending-task';
+    case 'INPROGRESS':
+      return 'in-progress-task';
+    case 'CANCELLED':
+      return 'canceled-task';
+    case 'DEFERRED':
+      return 'deferred-task';
+
+    default:
+      return '';
+  }
+}
+
+getPriorityClass(priority: string, status: string): string {
+  // Only apply priority class if the task status is not 'canceled'
+  if (status === 'CANCELLED' || status ==='COMPLETED') {
+    return '';  // No class if the task is canceled
+  }
+
+  switch (priority) {
+    case 'HIGH':
+      return 'high-priority';
+  
+    case 'VERY-HIGH':
+      return 'very-high-priority';
+  
+    default:
+      return '';
+  }
+}
+
+
 }

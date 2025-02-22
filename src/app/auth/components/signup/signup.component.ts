@@ -10,8 +10,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
-
-
   signupForm!:FormGroup;
   hidePassword: boolean = true;
 
@@ -20,43 +18,46 @@ export class SignupComponent {
   ngOnInit() {
     this.signupForm = this.fb.group({
       name: [null, [Validators.required]],
-      password: [null, [Validators.required]],//,Validators.minLength(8)
-      ConfirmPassword: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required,Validators.minLength(8)]],//,
+      confirmPassword: ['', Validators.required]  // ✅ Make sure it's included here
+      
     })
   }
-
- 
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword; 
   }
 
-
   signup() {
 
+    if (this.signupForm.valid) {
+      console.log(this.signupForm.value);
+    }
     const password = this.signupForm.get("password")?.value;
-    const ConfirmPassword = this.signupForm.get("ConfirmPassword")?.value;
+    const confirmPassword = this.signupForm.get("confirmPassword")?.value;
 
-    if (password !== ConfirmPassword) {
-      this.snackbar.open("password do not match!.", "close", { duration: 5000, panelClass: 'error-snackbar' });
+    if (password !== confirmPassword) {
+      this.snackbar.open("Passwords do not match!", "Close", { duration: 5000, panelClass: 'error-snackbar' });
       return;
     }
+ 
+    this.authService.signUp(this.signupForm.value).subscribe({
+      next: (res) => {
+        if (res.id != null) {
+          this.snackbar.open("Signup successful!", "Close", { duration: 5000, panelClass: 'success-snackbar' });
+          this.router.navigateByUrl("/login");
+        }
+      },
+      error: (err) => {
+        console.log("Signup Error:", err);
 
-    console.log(this.signupForm.value);
-    this.authService.signUp(this.signupForm.value).subscribe((res) => {
-      console.log(res);
-      if (res.id != null) {
-        this.snackbar.open("Signup successfull", "close", { duration: 5000, panelClass: 'error-snackbar' });
-        this.router.navigateByUrl("/login")
-      }else{
-        this.snackbar.open("SignUp faild.try again","close",{duration:5000,panelClass:'error-snackbar'});
+      if (err.status === 406 && err.error) {
+        this.snackbar.open(err.error, "Close", { duration: 5000, panelClass: 'error-snackbar' });
+
+        } else {
+          this.snackbar.open("Signup failed. Please try again.", "Close", { duration: 5000, panelClass: 'error-snackbar' });
+        }
       }
     });
-
-
-
-
   }
-
-
 }

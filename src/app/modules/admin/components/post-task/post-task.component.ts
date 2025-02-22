@@ -33,7 +33,7 @@ export class PostTaskComponent {
   imagePreview: string | ArrayBuffer | null = null;
   voiceFile: File | null = null;
   postTaskForm !: FormGroup;
- 
+
   listOfPriorities: any = ["LOW", "HIGH", "MEDIUM", "VERY-HIGH", "VERY_LOW"];
   animationState = 'hidden'; // Animation state
   listofEmployees: any = [];
@@ -55,7 +55,8 @@ export class PostTaskComponent {
       priority: [null, [Validators.required]],
       image: [null],
       categoryId: [null], // Can be null initially
-      categoryName: ['']
+      categoryName: [''],
+      location: ['']  // <-- New Field for Location
     })
     this.getUsers();
     this.loadCategories();
@@ -155,6 +156,7 @@ export class PostTaskComponent {
 
   startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+
       this.mediaRecorder = new MediaRecorder(stream);
       this.mediaRecorder.start();
       this.isRecording = true;
@@ -181,13 +183,38 @@ export class PostTaskComponent {
       this.isRecording = false;
     }
   }
+  
   deleteVoice() {
     this.audioUrl = null;
     this.voiceFile = null;
   }
 
 
-
+  openMap() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          
+          // Set location in form
+          this.postTaskForm.patchValue({
+            location: `${latitude},${longitude}`
+          });
+  
+          // Open Google Maps
+          window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, '_blank');
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          alert("Unable to fetch location. Please enable location services.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+  
 }
 // postTask() {
 //   this.adminService.postTask(this.postTaskForm.value).subscribe((res) => {

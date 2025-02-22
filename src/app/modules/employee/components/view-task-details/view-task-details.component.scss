@@ -141,8 +141,8 @@ width: 100%;
 }
 
 .task-image {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 120px;
+    max-height: 120px;
     border-radius: 8px;
     object-fit: cover;
 }
@@ -153,3 +153,21 @@ width: 100%;
     align-items: flex-start;
 }
 
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.blinking-text {
+
+    animation: blink 1s infinite;
+    color: red;
+    font-weight: bold;
+}
+// .blinking-text{
+//     width: 10px;
+//     height: 10px;
+//     background-color: red;
+//     border-radius: 50%;
+//     margin-right: 10px;
+//     animation: blink 1s infinite;
+// }

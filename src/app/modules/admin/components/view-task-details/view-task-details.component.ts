@@ -15,6 +15,8 @@ taskId:number =this.activeRoute.snapshot.params['id'];
 commentForm!:FormGroup;
 taskData:any;
 comments:any;
+audioUrl: string = ''; // Path of voice message from backend
+transcript: string = ''; // Stores converted text
 
 constructor(private service: AdminService,private activeRoute :ActivatedRoute,private fb : FormBuilder,private snackbar:MatSnackBar){}
 
@@ -55,11 +57,49 @@ publishComment(){
 
 }
 
-getCommentsTaskId(){
-  this.service.getCommentsByTaskId(this.taskId).subscribe((res)=>{
-    this.comments=res;
+// getCommentsTaskId(){
+//   this.service.getCommentsByTaskId(this.taskId).subscribe((res)=>{
+//     this.comments=res;
 
-  })
+//   })
+// }
+getCommentsTaskId() {
+  this.service.getCommentsByTaskId(this.taskId).subscribe((res) => {
+    this.comments = res.map((comment: any) => {
+      if (comment.imageName && !comment.imageName.startsWith("http")) {
+        comment.imageName = `http://localhost:8080/api/files/comment/images/${comment.imageName}`;
+      }
+      if (comment.voiceName && !comment.voiceName.startsWith("http")) {
+        comment.voiceName = `http://localhost:8080/api/files/comment/voice/${comment.voiceName}`;
+      }
+      return comment;
+    });
+  });
+}
+downloadImage(imageUrl: string): void {
+  fetch(imageUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.blob(); // Convert response to blob
+    })
+    .then(blob => {
+      const blobUrl = window.URL.createObjectURL(blob); // Create a blob URL
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = this.extractFileName(imageUrl); // Extract the file name
+      document.body.appendChild(link);
+      link.click(); // Trigger the download
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl); // Cleanup memory
+    })
+    .catch(error => console.error('Image download failed:', error));
+}
+
+// Function to extract file name from URL
+extractFileName(url: string): string {
+  return url.substring(url.lastIndexOf('/') + 1);
 }
 
 

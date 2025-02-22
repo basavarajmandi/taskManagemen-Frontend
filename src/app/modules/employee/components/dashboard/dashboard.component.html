@@ -1,3 +1,4 @@
+
 <div class="filter-list">
     <mat-expansion-panel hideToggle class="filter-panel" [(expanded)]="isPanelExpanded">
         <mat-expansion-panel-header>
@@ -55,7 +56,6 @@
 
 </div>
 
-
 <div class="task-list">
     <mat-card class="task-card" *ngFor="let task of listOfTasks">
         <div class="task-details">
@@ -112,7 +112,6 @@
                     <button mat-menu-item (click)="updateStatus(task.id,'INPROGRESS')">INPROGRESS</button>
                     <button mat-menu-item (click)="updateStatus(task.id,'COMPLETED')">COMPLETED</button>
                     <button mat-menu-item (click)="updateStatus(task.id,'PANDING')">PANDING</button>
-
                 </mat-menu>
             </div>
         </div>

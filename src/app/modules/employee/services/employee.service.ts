@@ -22,6 +22,17 @@ export class EmployeeService {
       headers: this.createAuthorizationHeader()
     });
   }
+//   getTaskByUserId(title: string, taskStatus: string[], priority: string[], dueDate: string): Observable<any> {
+//     return this.httpClient.get(BASE_URL + `api/employee/task/user/${StorageService.getUserId()}`, {
+//         params: {
+//             title: title || '',
+//             taskStatus: taskStatus.join(',') || '', // Convert array to comma-separated string
+//             priority: priority.join(',') || '',
+//             dueDate: dueDate || ''
+//         },
+//         headers: this.createAuthorizationHeader()
+//     });
+// }
 
 
   getTaskById(id:number):Observable<any>{
@@ -36,17 +47,23 @@ export class EmployeeService {
     });
   }
 
-  createComment(id:number, content:string):Observable<any>{
-    const params={
-      taskId:id,
-      postedBy:StorageService.getUserId()
-     
-    }
-    return this.httpClient.post(BASE_URL + `api/employee/task/comment`,content,{
-      params :params,
+  // createComment(id:number, content:string):Observable<any>{
+  //   const params={
+  //     taskId:id,
+  //     postedBy:StorageService.getUserId()
+  //   }
+  //   return this.httpClient.post(BASE_URL + `api/employee/task/comment`,content,{
+  //     params :params,
+  //     headers: this.createAuthorizationHeader()
+  //   });
+  // }
+
+  createComment(formData: FormData): Observable<any> {
+    return this.httpClient.post(BASE_URL + `api/employee/task/comment`, formData, {
       headers: this.createAuthorizationHeader()
     });
   }
+
   getCommentsByTaskId(id:number):Observable<any>{
      return this.httpClient.get(BASE_URL+`api/employee/task/${id}/comments`,{
       headers: this.createAuthorizationHeader()

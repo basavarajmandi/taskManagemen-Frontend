@@ -53,8 +53,6 @@
 </div>
 
 
-
-
 <div class="filter-list">
   <mat-expansion-panel hideToggle class="filter-panel" [(expanded)]="isPanelExpanded">
     <mat-expansion-panel-header>
@@ -96,6 +94,16 @@
           <mat-option value="VERY-LOW">VERY-LOW</mat-option>
         </mat-select>
       </mat-form-field>
+      
+      <mat-form-field appearance="fill" class="filter-input">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryNames" multiple>
+          <mat-option *ngFor="let category of allCategories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
 
       <mat-form-field appearance="fill" class="filter-input">
         <mat-label>Due Date</mat-label>
@@ -128,7 +136,14 @@
 </div>
 
 <div class="task-list" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">
-  <mat-card class="task-card" *ngFor="let task of listOfTasks" cdkDrag>
+  <mat-card class="task-card" *ngFor="let task of listOfTasks" cdkDrag   [ngClass]="task.statusClass"   >
+
+  <!-- Status Badge (Ribbon at the Top) -->
+  <div class="task-status-label" [ngClass]="task.statusClass">
+    {{ task.taskStatus }}
+  </div>
+  
+
     <div class="task-details" cdkDropList>
 
          <!-- Flex container for title and posted time -->
@@ -155,7 +170,7 @@
         </div>
         <div class="info-row">
           <span class="info-label">Priority:</span>
-          <span class="info-value">{{task.priority}}</span>
+          <span class="info-value" [ngClass]="task.priorityClass">{{task.priority}}</span>
         </div>
 
         <div class="info-row">

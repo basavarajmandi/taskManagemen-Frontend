@@ -41,6 +41,16 @@
     }
   }
   
+  .primary-icon {
+    color: #007BFF !important; /* Industry-standard blue */
+  }
+
+
+  canvas {
+    display: block;
+    background: black;
+    border-radius: 5px;
+  }
   .category-icon {
     font-size: 20px; /* Adjust the icon size */
     color: #108ee9; /* Optional: Adjust icon color */
@@ -134,4 +144,50 @@ color:#108ee9;
       background: rgb(220, 50, 50); /* Darker red for hover state */
     }
   }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+}
+
+.blinking-text {
+
+    animation: blink 1s infinite;
+    color: red;
+    font-weight: bold;
+}
+
+/* Voice Preview Container */
+.audio-preview-container {
+  background: #f8f9fa;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+}
+
+/* Header - Title and Delete Button */
+.audio-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Delete Button */
+.audio-preview-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Audio Player */
+audio {
+  width: 99%;
+  margin-top: 5px;
+}
+
 /* Footer Actions */

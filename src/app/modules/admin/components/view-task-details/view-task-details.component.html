@@ -13,7 +13,6 @@
                         <span class="info-value">{{taskData.dueDate | date:'MMM dd,y'}}</span>
                     </div>
 
-
                     <div class="info-row">
                         <span class="info-label">EmployeeName:</span>
                         <span class="info-value">{{taskData.employeeName}}</span>
@@ -55,6 +54,7 @@
                                 <source [src]="taskData.voiceName" type="audio/mpeg">
                                 Your browser does not support the audio element.
                             </audio>
+                            
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -70,10 +70,12 @@
             <div>
                 <form [formGroup]="commentForm">
 
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill"  class="full-width">
 
                         <mat-label>Content</mat-label>
-                        <textarea matInput formControlName="content"></textarea>
+                        <textarea matInput formControlName="content" >
+
+                        </textarea>
                     </mat-form-field>
                     <button mat-raised-button color="primary" style="float: right;" [disabled]="!commentForm.valid"
                         (click)="publishComment()">Publish Comment</button>
@@ -93,12 +95,32 @@
             </mat-card-header>
             <mat-card-content>
                 {{comment.content}}
+
+                <div class="comment-media">
+                    <!-- Display Image if exists -->
+                    <div *ngIf="comment.imageName" class="comment-image-container">
+                        <div class="image-wrapper">
+                            <a [href]="comment.imageName" target="_blank">
+                                <img [src]="comment.imageName" alt="Comment Image" class="comment-image" />
+                            </a>
+                
+                            <!-- Download Button (Closer to the Image) -->
+                            <button mat-icon-button matTooltip="Download"  class="download-button" (click)="downloadImage(comment.imageName)">
+                                <mat-icon>download</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                
+                    <!-- Display Voice Message if exists -->
+                    <div *ngIf="comment.voiceName" class="comment-voice-container">
+                        <h4>Voice Message</h4>
+                        <audio controls>
+                            <source [src]="comment.voiceName" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+
             </mat-card-content>
         </mat-card>>
-
-
     </div>
-
-
-
-</div>

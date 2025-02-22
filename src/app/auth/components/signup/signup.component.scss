@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-   background-image: url('/assets/img/dashboard.jpg');
+  // background-image: url('/assets/img/dashboard.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -13,10 +13,12 @@
 mat-card {
     max-width: 400px;
     width: 100%;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* More depth */
+    border-radius: 15px;
+    background: white; /* Ensure visibility */
 }
+
 
 mat-card-title {
     text-align: center;
@@ -46,22 +48,55 @@ button mat-icon {
     font-size: 20px;
 }
 
+// button.signup-button {
+//     width: 100%;
+//     font-size: 16px;
+//     padding: 12px;
+//     margin-top: 20px;
+// }
+
 button.signup-button {
     width: 100%;
-    font-size: 16px;
-    padding: 12px;
+    font-size: 18px;
+    padding: 14px;
     margin-top: 20px;
+    background-color: #3f51b5;
+    color: white;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button.signup-button:hover {
+    background-color: #303f9f;
 }
 
 @media screen and (max-width: 500px) {
+    mat-card {
+        width: 90%; /* Make the form card fit smaller screens */
+    }
+
     mat-card-title {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     mat-form-field {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 }
-.error-snackbar{
-    background-color: red !important;
+
+
+.error-snackbar {
+    background-color: #f44336 !important; /* Bright Red */
+    color: white !important;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+}
+
+.success-snackbar {
+    background-color: #4caf50 !important; /* Green */
+    color: white !important;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
 }

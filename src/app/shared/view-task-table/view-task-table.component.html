@@ -42,11 +42,21 @@
 
           <mat-form-field appearance ="fill" class="filter-input">
               <mat-label>Due Date</mat-label>
-              <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate"
+            <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate"
                   placeholder="Choose a DueDate ">
               <mat-datepicker #DueDatePicker></mat-datepicker>
               <mat-datepicker-toggle [for]="DueDatePicker" matSuffix />
           </mat-form-field>
+
+          <mat-form-field appearance="fill" class="filter-input">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="categoryNames" multiple>
+              <mat-option *ngFor="let category of allCategories" [value]="category">
+                {{ category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
 
           <div class="filter-buttons">
               <button mat-flat-button matTooltip="Search" color="primary" class="apply-filter-btn" (click)="applyFilter()">
@@ -134,7 +144,6 @@
       [pageSize]="pageSize"
       [pageIndex]="pageIndex"
       (page)="paginate($event)">
-
     </mat-paginator>
   </div>
   

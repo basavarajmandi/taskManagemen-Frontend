@@ -148,14 +148,10 @@ getTaskById(id: number): Observable<any> {
     map((task: any) => {
 
       if (task.imageName && !task.imageName.startsWith('http')) {
-        task.imageName = `${BASE_URL}api/files/images/${task.imageName}`;
-      }
-
+        task.imageName = `${BASE_URL}api/files/images/${task.imageName}`; }
       if(task.voiceName && !task.voiceName.startsWith('http')){
         task.voiceName= `${BASE_URL}api/files/voice/${task.voiceName}`;
       }
-
-
       return task;
     })
   );
@@ -195,18 +191,42 @@ getCommentsByTaskId(id:number):Observable<any>{
   )
 }
 
-filterTasks(priority?: string[] | string, title?:string, dueDate?:string,taskStatus?: string[] | string,employeeName?:string):Observable<any> {
-  let params:any={};
+// filterTasks(priority?: string[] | string, title?:string, dueDate?:string,taskStatus?: string[] | string,employeeName?:string,categoryNames?: string[]):Observable<any> {
+//   let params:any={};
 
-  if (priority) params['priority'] = Array.isArray(priority) ? priority.join(',') : priority;
-  if(title) params['title']=title;
-  if(dueDate) params['dueDate']=dueDate;
-  if (taskStatus) params['taskStatus'] = Array.isArray(taskStatus) ? taskStatus.join(',') : taskStatus;
-  if(employeeName) params['employeeName']=employeeName;
+//   if (priority) params['priority'] = Array.isArray(priority) ? priority.join(',') : priority;
+//   if(title) params['title']=title;
+//   if(dueDate) params['dueDate']=dueDate;
+//   if (taskStatus) params['taskStatus'] = Array.isArray(taskStatus) ? taskStatus.join(',') : taskStatus;
+//   if(employeeName) params['employeeName']=employeeName;
+//   if (categoryNames) params['categoryNames'] = categoryNames.join(',');
+//   return this.httpClient.get(BASE_URL + 'api/admin/tasks/filter',{
+//     params:params,
+//     headers:this.createAuthorizationHeader()
+//   });
+// }
+filterTasks(priority?: string[], title?: string, dueDate?: string, taskStatus?: string[], employeeName?: string, categoryNames?: string[]): Observable<any> {
+  let params: any = {};
 
-  return this.httpClient.get(BASE_URL + 'api/admin/tasks/filter',{
-    params:params,
-    headers:this.createAuthorizationHeader()
+  if (priority) params['priority'] = priority; 
+  if (title) params['title'] = title;
+  if (dueDate) params['dueDate'] = dueDate;
+  if (taskStatus) params['taskStatus'] = taskStatus;  
+  if (employeeName) params['employeeName'] = employeeName;
+  if (categoryNames) params['categoryNames'] = categoryNames;
+
+  return this.httpClient.get(BASE_URL + 'api/admin/tasks/filter', {
+    params: params,
+    headers: this.createAuthorizationHeader()
+  });
+}
+
+
+
+
+getAllCategories(): Observable<string[]> {
+  return this.httpClient.get<string[]>(BASE_URL + 'api/admin/filter/categories', {
+    headers: this.createAuthorizationHeader(),
   });
 }
 

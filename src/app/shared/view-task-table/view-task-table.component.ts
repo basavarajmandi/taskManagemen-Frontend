@@ -24,6 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ViewTaskTableComponent implements OnInit {
   //dataSource:TaskDTO[]=[];
+  allCategories: string[] = []; // Store existing category names
     animationState = 'hidden'; 
     isFilterPanelOpen: any;
     isPanelExpanded = false; 
@@ -59,8 +60,20 @@ export class ViewTaskTableComponent implements OnInit {
   ngOnInit(): void {
     this.fetchTasks(); // Initial fetch of tasks
     this.initializeForm();
+    this.getAllCategories();
   }
 
+  // Fetch all categories name only  from the backend
+getAllCategories() {
+  this.adminService.getAllCategories().subscribe(
+    (categories: string[]) => {
+      this.allCategories = categories; // Store categories in the array
+    },
+    (error) => {
+      console.error('Error fetching categories:', error);
+    }
+  );
+}
   ngAfterViewInit(): void {
     // Update sorting on user interaction
     this.animationState = 'visible';
@@ -80,6 +93,7 @@ export class ViewTaskTableComponent implements OnInit {
     taskStatus: [''],
     priority: [''],
     dueDate: [''],
+    categoryNames: [[]] // Added categoryNames field
   });
 }
 //  Fetch Tasks (Default & After Filtering) 
@@ -126,10 +140,14 @@ export class ViewTaskTableComponent implements OnInit {
      const dueDate: string | undefined = formValues.dueDate? new Date(formValues.dueDate.getTime() - new Date().getTimezoneOffset() * 60000)
          .toISOString()
          .split('T')[0] : undefined;
+
+         const categoryNames: string[] | undefined = formValues?.categoryNames
+         ? (Array.isArray(formValues.categoryNames) ? formValues.categoryNames : [formValues.categoryNames])
+         : undefined;
+       
     
-      
       console.log('Filter values:', { title, priority, dueDate, taskStatus,employeeName });
-      this.adminService.filterTasks(priority, title, dueDate,taskStatus,employeeName).subscribe(
+      this.adminService.filterTasks(priority, title, dueDate,taskStatus,employeeName, categoryNames).subscribe(
         (res: TaskDTO[]) => {
          // this.listOfTasks = res;
          this.dataSource.data=res;

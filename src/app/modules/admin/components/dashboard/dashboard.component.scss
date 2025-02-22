@@ -1,44 +1,50 @@
-
-
-.filter-list{
+.filter-list {
     padding: 15px;
-   
+
 }
+
 .filter-panel {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 17px;
-  }
+}
+
 .filter-form {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 0,13,12px;
+    padding: 0, 13, 12px;
     background-color: #fff;
 
 }
 
-.filter-input{
+.filter-input {
     flex: 10px;
     max-width: 500px;
     margin: 0;
     border-radius: 0;
-   
+
 }
 
 .filter-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center; /* Center buttons horizontally */
-    align-items: center; /* Align them properly */
-    margin: 10px auto; /* Add spacing around */
-    max-width: 80%; /* Prevents too wide spacing */
+    justify-content: center;
+    /* Center buttons horizontally */
+    align-items: center;
+    /* Align them properly */
+    margin: 10px auto;
+    /* Add spacing around */
+    max-width: 80%;
+    /* Prevents too wide spacing */
     position: relative;
-    left: 1%; /* Moves buttons slightly to the right */
+    left: 1%;
+    /* Moves buttons slightly to the right */
 }
 
 .filter-buttons button {
-    background-color: #007bff; /* Default Blue */
+    background-color: #007bff;
+    /* Default Blue */
     color: white;
     border: none;
     padding: 10px 15px;
@@ -51,22 +57,26 @@
 }
 
 .filter-buttons button:hover {
-    background-color: #064991; /* Darker blue on hover */
-    transform: scale(1.05); /* Slight increase in size */
+    background-color: #064991;
+    /* Darker blue on hover */
+    transform: scale(1.05);
+    /* Slight increase in size */
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.filter-buttons button:active, 
+.filter-buttons button:active,
 .filter-buttons button.active {
-    background-color: #32a84e; /* Green when clicked */
-    transform: scale(1); /* Reset scaling */
+    background-color: #32a84e;
+    /* Green when clicked */
+    transform: scale(1);
+    /* Reset scaling */
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 
-.check-icon{
-color: black !important;
-font-size: 16px;
+.check-icon {
+    color: black !important;
+    font-size: 16px;
 }
 
 /* Background overlay when custom filter is selected */
@@ -76,45 +86,48 @@ font-size: 16px;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5); /* Dim background */
+    background: rgba(0, 0, 0, 0.5);
+    /* Dim background */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
+}
 
 
-  
-  
-  /* Centered Date Range Box */
-  .date-range-box {
+
+
+/* Centered Date Range Box */
+.date-range-box {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    width: 320px; /* Smaller width */
+    width: 320px;
+    /* Smaller width */
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Smaller Input Fields */
-  .small-input {
+}
+
+/* Smaller Input Fields */
+.small-input {
     width: 100%;
-    max-width: 250px; /* Smaller size */
+    max-width: 250px;
+    /* Smaller size */
     margin-bottom: 10px;
-  }
-  
-  /* Buttons inside the Date Picker */
-  .button-group {
+}
+
+/* Buttons inside the Date Picker */
+.button-group {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
-  }
-  
-  .button-group button {
+}
+
+.button-group button {
     padding: 5px 10px;
     font-size: 14px;
-  }
-  
+}
+
 
 
 
@@ -123,11 +136,15 @@ font-size: 16px;
 
 .apply-filter-btn {
     background-color: rgb(94, 94, 240);
-    color: white; /* Ensures the icon is visible on blue background */
-    border-radius: 4px; /* Optional: Makes corners slightly rounded */
-    padding: 8px; /* Adds some spacing inside the button */
+    color: white;
+    /* Ensures the icon is visible on blue background */
+    border-radius: 4px;
+    /* Optional: Makes corners slightly rounded */
+    padding: 8px;
+    /* Adds some spacing inside the button */
 }
-.overdue-filter-btn{
+
+.overdue-filter-btn {
     padding: 2px;
 }
 
@@ -135,7 +152,8 @@ font-size: 16px;
 
 .clear-filter-btn {
     background-color: rgb(207, 62, 62);
-    color: white; /* Ensures the icon is visible on red background */
+    color: white;
+    /* Ensures the icon is visible on red background */
     border-radius: 3px;
     padding: 6px;
 }
@@ -149,7 +167,7 @@ font-size: 16px;
     .search-input {
         width: 300px;
         margin-right: 15px;
-      
+
         input {
             padding-right: 40px;
         }
@@ -157,13 +175,14 @@ font-size: 16px;
 
     button {
         cursor: pointer;
-      }
+    }
 }
 
 
 .task-header {
     display: flex;
-    justify-content: space-between; /* Puts title on the left and posted time on the right */
+    justify-content: space-between;
+    /* Puts title on the left and posted time on the right */
     align-items: center;
 }
 
@@ -179,29 +198,249 @@ font-size: 16px;
 
 .task-list {
     display: flex;
-   // background-color: #f7f1f1;
+    // background-color: #f7f1f1;
     padding: 10px;
     min-height: 37vh;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: stretch;
     border-radius: 10px;
-    gap:23px;
-  
-  
+    gap: 23px;
+
+
     .task-card {
-        width: calc(33.33% - 20px); /* Each card takes 1/3 of the row */
+        width: calc(33.33% - 20px);
+        /* Each card takes 1/3 of the row */
         margin-bottom: 20px;
         border-radius: 10px;
-      //  min-width: 300px; /* Ensures cards do not become too small */
+        //  min-width: 300px; /* Ensures cards do not become too small */
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation for hover */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Smooth animation for hover */
 
         &:hover {
-            transform: translateY(-9px); /* Slight lift on hover */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow effect */
-            background-color: #f4f4f4; /* Optional background color change on hover */
+            transform: translateY(-9px);
+            /* Slight lift on hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            /* Enhanced shadow effect */
+            background-color: #f4f4f4;
+            /* Optional background color change on hover */
         }
+
+
+
+
+        .deferred-task {
+            background-color: #d6eaff !important;
+            /* Light Blue */
+            border-left: 5px solid #007bff;
+        }
+
+        /* Status-Based Background Colors */
+        .completed-task {
+            background-color: #cff0d7 !important;
+            /* Light Green */
+            border-left: 5px solid #28a745;
+        }
+
+        .pending-task {
+            background-color: #a5a1a1 !important;
+            /* Light Red */
+            border-left: 9px solid #f14d5d;
+        }
+
+        .in-progress-task {
+            background-color: #c97b2d !important;
+            /* Light Yellow */
+            border-left: 8px solid #dfc167;
+        }
+
+        .canceled-task {
+            background-color: #b8babd !important;
+            /* Light Gray */
+            border-left: 5px solid #6c757d;
+        }
+
+        /* Status Label (Ribbon) */
+        .task-status-label {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            padding: 5px 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* Status Label Colors */
+        .completed-task .task-status-label {
+            background-color: #28a745;
+        }
+
+        .pending-task .task-status-label {
+            background-color: #dc3545;
+        }
+
+        .in-progress-task .task-status-label {
+            background-color: #f8f5ee;
+            color: black;
+        }
+
+        .canceled-task .task-status-label {
+            background-color: #6c757d;
+        }
+
+        /* Status Label for Deferred */
+        .deferred-task .task-status-label {
+            background-color: #007bff;
+            /* Blue */
+            color: white;
+        }
+
+
+
+        /* Colored Text Inside Status Row */
+        .info-value.completed-task {
+            color: #28a745;
+        }
+
+        .info-value.pending-task {
+            color: #fa2fbd;
+        }
+
+        .info-value.in-progress-task {
+            color: #ffc107;
+        }
+
+        .info-value.canceled-task {
+            color: #6c757d;
+        }
+
+        /* Colored Text Inside Status Row */
+        .info-value.deferred-task {
+            color: #007bff;
+        }
+
+
+        /* Priority-Based Background Colors */
+        .high-priority {
+            background-color: #f8d7da !important;
+            /* Light Red */
+            border-left: 5px solid #dc3545;
+        }
+
+        .medium-priority {
+            background-color: #fff3cd !important;
+            /* Light Yellow */
+            border-left: 5px solid #ffc107;
+        }
+
+        .very-high-priority {
+            background-color: #f16f6f !important;
+            /* Bright Yellow */
+            border-left: 5px solid #f30808;
+        }
+
+
+
+        /* Priority Label (Ribbon) */
+        .task-priority-label {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            padding: 5px 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+        }
+
+        /* Priority Label Colors */
+        .high-priority .task-priority-label {
+            background-color: #dc3545;
+        }
+
+        .very-high-priority .task-priority-label {
+            background-color: #fd0404;
+        }
+
+
+        /* Colored Text Inside Priority Row */
+        .info-value.high-priority {
+            color: #dc3545;
+        }
+
+        .info-value.very-high-priority {
+            color: #f30505;
+        }
+
+
+
+
+        /* Priority-Based Background Colors */
+        .high-priority {
+           // background-color: #09d6f1 !important;
+            /* Light Red */
+            border-left: 5px solid #dc3545;
+            font-weight: bold;
+            /* Ensures text stands out */
+        }
+
+        .very-high-priority {
+            background-color: #f8d445 !important;
+            /* Bright Yellow */
+            border-left: 7px solid #f85624;
+            font-weight: bold;
+        }
+
+
+        /* Priority Label (Ribbon) */
+        .task-priority-label {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            padding: 5px 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        /* Priority Label Colors */
+        .high-priority .task-priority-label {
+            background-color: #dc3545;
+        }
+
+        .very-high-priority .task-priority-label {
+            background-color: #f39c12;
+        }
+
+
+        /* Colored Text Inside Priority Row */
+        .info-value.high-priority {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+
+        .info-value.very-high-priority {
+            color: #f10707;
+            font-weight: bold;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         .task-details {
             padding: 20px;
@@ -210,15 +449,15 @@ font-size: 16px;
                 display: flex;
                 justify-content: right;
                 margin-bottom: 10px;
-              }
-              
-              .task-image {
+            }
+
+            .task-image {
                 width: 80px;
                 height: 80px;
                 border-radius: 50%;
                 object-fit: cover;
                 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-              } 
+            }
 
 
             .task-name {
@@ -226,7 +465,7 @@ font-size: 16px;
                 font-weight: bold;
                 color: #108ee9;
                 margin: bottom 10px;
-              
+
             }
 
             .task-description {
@@ -244,12 +483,16 @@ font-size: 16px;
                     display: flex;
                     align-items: center;
                     margin-bottom: 8px;
-                    gap: 5px; /* Adds space between the icon and text */
+                    gap: 5px;
+                    /* Adds space between the icon and text */
 
                     .category-icon {
-                        font-size: 20px; /* Adjust the icon size */
-                        color: #108ee9; /* Optional: Adjust icon color */
+                        font-size: 20px;
+                        /* Adjust the icon size */
+                        color: #108ee9;
+                        /* Optional: Adjust icon color */
                     }
+
                     .info-label {
                         font-weight: 10px;
                         margin-right: 5px;
@@ -275,34 +518,17 @@ font-size: 16px;
                     margin-right: 10px;
                     color: rgb(37, 109, 59);
                 }
-                .delete-button{
+
+                .delete-button {
                     color: rgb(240, 46, 46);
                 }
-                
-                
+
+
             }
 
         }
     }
+
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
