@@ -123,12 +123,12 @@ color:#108ee9;
     .delete-btn {
       position: absolute;
       top: 5px; /* Adjusted position for better alignment */
-      right: 5px;
-      background: rgb(250, 66, 66);
+      right: 2px;
+      background: rgb(253, 93, 93);
       color: white;
       border: none;
       border-radius: 50%; /* Made the button fully circular */
-      width: 30px;
+      width: 32px;
       height: 30px;
       display: flex;
       align-items: center;
@@ -189,5 +189,7 @@ audio {
   width: 99%;
   margin-top: 5px;
 }
+
+
 
 /* Footer Actions */

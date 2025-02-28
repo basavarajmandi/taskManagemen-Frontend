@@ -30,10 +30,22 @@
                     </div>
 
                     <div class="info-row">
-                        <mat-icon>loyalty</mat-icon>
-                        <span class="info-label">Category:</span>
+                        <mat-icon class="category-icon">loyalty</mat-icon>
+                        <span class="info-label" >Category:</span>
                         <span class="info-value">{{taskData.categoryName}}</span>
                     </div>
+
+                    <div class="info-row" *ngIf="taskData.links && taskData.links.length">
+                        <mat-icon class="category-icon">link</mat-icon>
+                        <span class="info-label">Links:</span>
+
+                        <div class="link-list">
+                            <div *ngFor="let link of taskData.links">
+                                <a [href]="link.url" target="_blank">{{ link.url }}</a>
+                            </div>
+                        </div>
+                    </div>
+
                     <mat-card>
                         <mat-card-content>
                             <div class="media-container">
@@ -56,7 +68,6 @@
                                     </div>
                                 </div>
 
-
                                 <!-- Voice Message Section -->
                                 <div class="voice-section" *ngIf="taskData?.voiceName">
                                     <h4>Voice Message</h4>
@@ -71,6 +82,7 @@
                     </mat-card>
                 </div>
 
+                
                 <mat-card class="comment-card">
                     <mat-card-content>
                         <h4>Publish your Comment</h4>
@@ -106,75 +118,68 @@
                                 <button mat-icon-button (click)="startRecording()" matTooltip="Start Recording"
                                     *ngIf="!isRecording" [ngStyle]="{'color': 'black'}">
                                     <mat-icon>mic</mat-icon>
-                                    </button>
-                                    <button mat-icon-button (click)="stopRecording()" matTooltip="Stop Recording"
-                                        *ngIf="isRecording" [ngStyle]="{'color': 'red'}">
-                                        <mat-icon>mic_off</mat-icon>
-                                    </button>
+                                </button>
+                                <button mat-icon-button (click)="stopRecording()" matTooltip="Stop Recording"
+                                    *ngIf="isRecording" [ngStyle]="{'color': 'red'}">
+                                    <mat-icon>mic_off</mat-icon>
+                                </button>
 
-                                    <!-- Recording Indicator -->
-                                    <div *ngIf="isRecording" class="blinking-text">
-                                        <span class="blinking-dot"></span> Recording...
+                                <!-- Recording Indicator -->
+                                <div *ngIf="isRecording" class="blinking-text">
+                                    <span class="blinking-dot"></span> Recording...
+                                </div>
+
+
+                                <!-- Waveform Animation + Playback -->
+                                <div *ngIf="voicePreviewUrl" style="margin-top: 10px;">
+                                    <p>Recorded Voice ({{ recordingDuration }}s):</p> <!-- Show duration -->
+
+                                    <div #waveform
+                                        style="width: 100%; height: 80px; background: #eee; border-radius: 5px;">
                                     </div>
 
-                                    <!-- // Voice Preview -->
-                                    <!-- <div *ngIf="voicePreviewUrl" style="position: relative; margin-top: 10px;">
-                                    <p>Recorded Voice:</p>
-                                    <audio controls>
-                                        <source [src]="voicePreviewUrl" type="audio/webm" />
-                                        Your browser does not support the audio element.
-                                    </audio>
-                                    <button mat-icon-button (click)="clearVoice()" matTooltip="Remove Voice"
-                                        style="position: absolute; top: 0; right: 0; background: white;">
-                                        <mat-icon color="warn">close</mat-icon>
+                                    <button mat-icon-button (click)="playWaveform()" matTooltip="Play/Pause">
+                                        <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
                                     </button>
-                                </div> -->
-                                    <!-- Waveform Animation + Playback -->
-                                    <div *ngIf="voicePreviewUrl" style="margin-top: 10px;">
-                                        <p>Recorded Voice ({{ recordingDuration }}s):</p> <!-- Show duration -->
 
-                                        <div #waveform
-                                            style="width: 100%; height: 80px; background: #eee; border-radius: 5px;">
-                                        </div>
-
-                                        <button mat-icon-button (click)="playWaveform()" matTooltip="Play/Pause">
-                                            <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
-                                        </button>
-
-                                        <button mat-icon-button (click)="clearRecording()"
-                                            matTooltip="Remove Voice Message">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </div>
+                                    <button mat-icon-button (click)="clearRecording()"
+                                        matTooltip="Remove Voice Message">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
 
                             </form>
                         </div>
 
                     </mat-card-content>
                 </mat-card>
+         
 
                 <div style="margin-top: 10px;">
                     <h4>Comments</h4>
-                    <mat-card *ngFor="let comment of comments" style="margin-top: 10px;">
-
+                    <mat-card *ngFor="let comment of comments" class="comment-card">
                         <mat-card-header>
                             <div mat-card-avatar class="example-header-imagee"></div>
-                            <mat-card-title>{{comment.postedUserName}}</mat-card-title>
-                            <mat-card-subtitle>{{comment.createdAt | date:'medium'}}</mat-card-subtitle>
+                            <mat-card-title>{{ comment.postedUserName }}</mat-card-title>
+                            <mat-card-subtitle>{{ comment.createdAt | date: 'medium' }}</mat-card-subtitle>
                         </mat-card-header>
-                        <mat-card-content>
-                            {{comment.content}}
-                            <audio *ngIf="comment.voiceName" controls>
-                                <source [src]="'http://localhost:8080/api/files/comment/voice/' + comment.voiceName"
-                                    type="audio/webm" />
-                            </audio>
-
+                        <mat-card-content class="comment-content">
+                            <div class="text-section">
+                                {{ comment.content }}
+                            </div>
+                            <div class="voice-section" *ngIf="comment.voiceName">
+                                <audio controls>
+                                    <source [src]="'http://localhost:8080/api/files/comment/voice/' + comment.voiceName" type="audio/webm" />
+                                </audio>
+                            </div>
                         </mat-card-content>
-
                     </mat-card>
                 </div>
+                
 
-                <!-- <div style="margin-top: 10px;">
+            </div>
+
+            <!-- <div style="margin-top: 10px;">
         <h4>Comments</h4>
         <mat-card *ngFor="let comment of comments" style="margin-top: 10px;">
             <mat-card-header>
@@ -197,5 +202,3 @@
         </mat-card>
     </div>
      -->
-
-            </div>

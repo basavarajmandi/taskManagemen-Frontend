@@ -282,3 +282,10 @@
 .full-width {
     width: 100%;
 }
+
+.link-list a {
+    display: block; /* Ensures each link is on a new line */
+    color: blue; 
+    text-decoration: underline;
+    margin-top: 5px;
+}

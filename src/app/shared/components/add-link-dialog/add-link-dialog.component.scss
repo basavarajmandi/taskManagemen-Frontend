@@ -1,0 +1,56 @@
+::ng-deep .mat-dialog-container {
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+  }
+  
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 300px; 
+    overflow-y: auto;
+  
+    .input-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    
+        .form-field {
+          flex-grow: 1; // Ensures input takes up available space
+        }
+    
+        .add-button {
+          flex-shrink: 0; // Prevents the button from shrinking
+        }
+      }
+    
+      .link-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            background-color: #f9f9f9;
+  
+        button {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+  }
+  

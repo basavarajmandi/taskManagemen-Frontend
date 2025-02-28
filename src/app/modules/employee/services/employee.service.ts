@@ -17,24 +17,32 @@ export class EmployeeService {
       'Authorization', 'Bearer ' + StorageService.getToken())
   }
 
-  getTaskByUserId(): Observable<any> {
-    return this.httpClient.get(BASE_URL + `api/employee/task/user/${StorageService.getUserId()}`, {
-      headers: this.createAuthorizationHeader()
+
+  getFilteredTasksByUserId(
+    title?: string,
+    priorities?: string[],
+    taskStatuses?: string[],
+    dueDate?: string,
+    categoryNames?: string[], // <-- Added categoryNames parameter
+  ): Observable<any> {
+    let params = new HttpParams();
+    if (title) params = params.append('title', title);
+    if (priorities) priorities.forEach(priority => params = params.append('priorities', priority));
+    if (taskStatuses) taskStatuses.forEach(status => params = params.append('taskStatuses', status));
+    if (categoryNames) categoryNames.forEach(category => params = params.append('categoryNames', category)); // <-- Append categories
+    if (dueDate) params = params.append('dueDate', dueDate);
+    return this.httpClient.get(BASE_URL + `api/employee/tasks/user/${StorageService.getUserId()}`, {
+      headers: this.createAuthorizationHeader(),
+      params: params
     });
   }
-//   getTaskByUserId(title: string, taskStatus: string[], priority: string[], dueDate: string): Observable<any> {
-//     return this.httpClient.get(BASE_URL + `api/employee/task/user/${StorageService.getUserId()}`, {
-//         params: {
-//             title: title || '',
-//             taskStatus: taskStatus.join(',') || '', // Convert array to comma-separated string
-//             priority: priority.join(',') || '',
-//             dueDate: dueDate || ''
-//         },
-//         headers: this.createAuthorizationHeader()
-//     });
-// }
-
-
+  
+  getAllCategories(): Observable<string[]> {
+    return this.httpClient.get<string[]>(BASE_URL + 'api/employee/filter/categories', {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+  
   getTaskById(id:number):Observable<any>{
     return this.httpClient.get(BASE_URL+`api/employee/task/${id}`,{
       headers:this.createAuthorizationHeader()
@@ -46,17 +54,6 @@ export class EmployeeService {
       headers:this.createAuthorizationHeader()
     });
   }
-
-  // createComment(id:number, content:string):Observable<any>{
-  //   const params={
-  //     taskId:id,
-  //     postedBy:StorageService.getUserId()
-  //   }
-  //   return this.httpClient.post(BASE_URL + `api/employee/task/comment`,content,{
-  //     params :params,
-  //     headers: this.createAuthorizationHeader()
-  //   });
-  // }
 
   createComment(formData: FormData): Observable<any> {
     return this.httpClient.post(BASE_URL + `api/employee/task/comment`, formData, {
@@ -84,3 +81,25 @@ export class EmployeeService {
   }
 
 }
+  // createComment(id:number, content:string):Observable<any>{
+  //   const params={
+  //     taskId:id,
+  //     postedBy:StorageService.getUserId()
+  //   }
+  //   return this.httpClient.post(BASE_URL + `api/employee/task/comment`,content,{
+  //     params :params,
+  //     headers: this.createAuthorizationHeader()
+  //   });
+  // }
+
+  //   getTaskByUserId(title: string, taskStatus: string[], priority: string[], dueDate: string): Observable<any> {
+//     return this.httpClient.get(BASE_URL + `api/employee/task/user/${StorageService.getUserId()}`, {
+//         params: {
+//             title: title || '',
+//             taskStatus: taskStatus.join(',') || '', // Convert array to comma-separated string
+//             priority: priority.join(',') || '',
+//             dueDate: dueDate || ''
+//         },
+//         headers: this.createAuthorizationHeader()
+//     });
+// }

@@ -91,7 +91,6 @@ getTasksByCustomRange(startDate: Date, endDate: Date): Observable<TaskDTO[]> {
   });
 }
 
-
  getCategories(): Observable<any> {
   return this.httpClient.get(BASE_URL + "api/admin/categories", {
     headers: this.createAuthorizationHeader(),
@@ -113,7 +112,6 @@ postTask(taskData: any, file?: File, voiceFile?: File  ): Observable<any> {
     formData.append('voice', voiceFile);
   }
 
-
   return this.httpClient.post(BASE_URL + "api/admin/savetask", formData, {
     headers: this.createAuthorizationHeaderWithoutJSON(),
   });
@@ -133,7 +131,6 @@ getAllTaskWithPagination(params: any): Observable<PaginatedResponse> {
     }
   );
 }
-
 
 
 deleteTask(id:number):Observable<any>{
@@ -220,8 +217,6 @@ filterTasks(priority?: string[], title?: string, dueDate?: string, taskStatus?: 
     headers: this.createAuthorizationHeader()
   });
 }
-
-
 
 
 getAllCategories(): Observable<string[]> {

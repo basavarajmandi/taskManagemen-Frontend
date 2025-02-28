@@ -29,9 +29,10 @@ export class ViewTaskDetailsComponent {
   commentForm!: FormGroup;
   taskData: any;
   comments: any;
-
+  stream!: MediaStream;
 
   @ViewChild('waveform', { static: false }) waveformRef!: ElementRef;
+ 
   constructor(private service: EmployeeService, private activeRoute: ActivatedRoute, private fb: FormBuilder, private snackbar: MatSnackBar) { }
 
   ngAfterViewInit() {
@@ -56,6 +57,9 @@ export class ViewTaskDetailsComponent {
   getTaskById() {
     this.service.getTaskById(this.taskId).subscribe((res) => {
       this.taskData = res;
+
+
+      
       // Ensure taskData is defined and imageName exists
       if (this.taskData && this.taskData.imageName && !this.taskData.imageName.startsWith("http")) {
         this.taskData.imageName = `http://localhost:8080/api/files/images/${this.taskData.imageName}`;
@@ -82,8 +86,8 @@ export class ViewTaskDetailsComponent {
       this.recordingDuration++;
     }, 1000);
 
-
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      this.stream = stream; // Store stream to stop later
       this.mediaRecorder = new MediaRecorder(stream);
       this.mediaRecorder.start();
 
@@ -112,7 +116,14 @@ export class ViewTaskDetailsComponent {
     if (this.mediaRecorder) {
       this.mediaRecorder.stop();
       this.isRecording = false;
-      clearInterval(this.recordingInterval); // Stop the timer
+      clearInterval(this.recordingInterval); // Stop the timer while it 
+
+
+      // ✅ Stop the microphone stream to remove the red dot in search bar
+      if (this.stream) {
+        this.stream.getTracks().forEach(track => track.stop());
+      }
+
   
       setTimeout(() => {
         if (this.recordedChunks.length > 0) {
@@ -134,7 +145,7 @@ export class ViewTaskDetailsComponent {
             cursorWidth: 1,
             height: 60, // Set height for better visibility
          //   responsive: true,
-          });
+          }); 
   
           // Load the recorded audio into WaveSurfer
           this.waveSurfer.load(this.voicePreviewUrl);
@@ -172,7 +183,6 @@ export class ViewTaskDetailsComponent {
       this.isPlaying = !this.isPlaying; // Toggle play state
     }
   }
-
 
   downloadImage(imageUrl: string) {
     fetch(imageUrl)
@@ -283,16 +293,13 @@ export class ViewTaskDetailsComponent {
     });
   }
 
-
   getCommentsTaskId() {
     this.service.getCommentsByTaskId(this.taskId).subscribe((res) => {
       this.comments = res;
       console.log(res);
-
     })
   }
  
-
   resetForm() {
     this.commentForm.reset(); // Reset the form fields
     this.selectedImageFile = null; // Clear selected image file

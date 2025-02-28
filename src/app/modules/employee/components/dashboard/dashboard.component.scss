@@ -1,41 +1,132 @@
-
-.filter-list{
-    padding: 10px;
- 
+.filter-list {
+    padding: 15px;
 }
+
 .filter-panel {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 17px;
-  }
+}
+
 .filter-form {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 0,13,12px;
+    padding: 0, 13, 12px;
     background-color: #fff;
+}
 
-}
-.filter-input{
-    flex: none;
-    max-width: none;
+.filter-input {
+    flex: 10px;
+    max-width: 500px;
     margin: 0;
+    border-radius: 0;
 }
-.filter-buttons{
+
+.filter-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+    /* Center buttons horizontally */
     align-items: center;
-    
+    /* Align them properly */
+    margin: 10px auto;
+    /* Add spacing around */
+    max-width: 80%;
+    /* Prevents too wide spacing */
+    position: relative;
+    left: 1%;
+    /* Moves buttons slightly to the right */
+}
+
+.filter-buttons button {
+    background-color: #007bff;
+    /* Default Blue */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.filter-buttons button:hover {
+    background-color: #064991;
+    /* Darker blue on hover */
+    transform: scale(1.05);
+    /* Slight increase in size */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.filter-buttons button:active,
+.filter-buttons button.active {
+    background-color: #32a84e;
+    /* Green when clicked */
+    transform: scale(1);
+    /* Reset scaling */
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+
+.check-icon {
+    color: black !important;
+    font-size: 16px;
+}
+
+/* Centered Date Range Box */
+.date-range-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    /* Smaller width */
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Smaller Input Fields */
+.small-input {
+    width: 100%;
+    max-width: 250px;
+    /* Smaller size */
+    margin-bottom: 10px;
+}
+
+/* Buttons inside the Date Picker */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.button-group button {
+    padding: 5px 10px;
+    font-size: 14px;
 }
 
 .apply-filter-btn {
-    background-color: rgb(75, 75, 233);
-    color: white; /* Ensures the icon is visible on blue background */
-    border-radius: 4px; /* Optional: Makes corners slightly rounded */
-    padding: 8px; /* Adds some spacing inside the button */
+    background-color: rgb(94, 94, 240);
+    color: white;
+    /* Ensures the icon is visible on blue background */
+    border-radius: 4px;
+    /* Optional: Makes corners slightly rounded */
+    padding: 8px;
+    /* Adds some spacing inside the button */
 }
+
+.overdue-filter-btn {
+    padding: 2px;
+}
+
+
+
 .clear-filter-btn {
     background-color: rgb(207, 62, 62);
-    color: white; /* Ensures the icon is visible on red background */
+    color: white;
+    /* Ensures the icon is visible on red background */
     border-radius: 3px;
     padding: 6px;
 }
@@ -49,21 +140,25 @@
     .search-input {
         width: 300px;
         margin-right: 15px;
-      
 
         input {
             padding-right: 40px;
         }
     }
+
+    button {
+        cursor: pointer;
+    }
 }
 
 .task-list {
     display: flex;
-    background-color: #f8f8f8;
+    background-color: #fffefe;
     padding: 20px;
     min-height: 37vh;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 27px;
 
     .task-card {
         width: calc(33.33% - 20px);

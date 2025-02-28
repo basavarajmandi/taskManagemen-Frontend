@@ -6,13 +6,14 @@ import { UpdateDialogComponent } from './components/update-dialog/update-dialog.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
+import { AddLinkDialogComponent } from './components/add-link-dialog/add-link-dialog.component';
 
 @NgModule({
   declarations: [
      ConfirmDialogComponent,
      UpdateDialogComponent, 
      FooterComponent, 
-     CategoryDialogComponent,
+     CategoryDialogComponent, AddLinkDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +27,8 @@ import { CategoryDialogComponent } from './components/category-dialog/category-d
     ConfirmDialogComponent,
     UpdateDialogComponent,
     FooterComponent, 
-    CategoryDialogComponent// Export this all components to use in other modules
+    CategoryDialogComponent,
+    AddLinkDialogComponent// Export this all components to use in other modules
  
    ]
 })

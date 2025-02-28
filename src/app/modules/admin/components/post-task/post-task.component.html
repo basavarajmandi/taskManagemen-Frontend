@@ -61,7 +61,15 @@
     </div>
 
     <div class="actions-section">
+<!-- Wrapper to ensure single-line display -->
 
+  <button mat-icon-button (click)="openAddLinkDialog()" matTooltip="Add Link">
+    <mat-icon class="primary-icon">link</mat-icon>
+  </button>
+  <span *ngIf="links.length === 1" class="small-text">1 link added</span>
+  <span *ngIf="links.length > 1" class="small-text">{{ links.length }} links added</span>
+
+  
       <!-- File Upload -->
       <input type="file" #fileInput (change)="onImageUpload($event)" hidden />
       <button mat-icon-button (click)="fileInput.click()" matTooltip="Upload Image">
@@ -103,7 +111,7 @@
         <img [src]="imagePreview" alt="Preview" />
 
         <button type="button" class="delete-btn" (click)="deleteImage()" matTooltip="Delete Image">
-          <mat-icon>delete</mat-icon>
+              <mat-icon >delete</mat-icon>
         </button>
       </div>
     </div>

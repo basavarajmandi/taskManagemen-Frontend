@@ -1,4 +1,3 @@
-
 <div class="filter-list">
     <mat-expansion-panel hideToggle class="filter-panel" [(expanded)]="isPanelExpanded">
         <mat-expansion-panel-header>
@@ -16,7 +15,7 @@
 
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>TaskStatus</mat-label>
-                <mat-select formControlName="taskStatus">
+                <mat-select formControlName="taskStatus" multiple>
                     <mat-option value="PENDING">IN PENDING</mat-option>
                     <mat-option value="INPROGRESS">IN PROGRESS</mat-option>
                     <mat-option value="COMPLETED">COMPLETED</mat-option>
@@ -27,13 +26,21 @@
 
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>Priority</mat-label>
-                <mat-select formControlName="priority">
+                <mat-select formControlName="priority" multiple>
                     <mat-option value="LOW">low</mat-option>
                     <mat-option value="MEDIUM">Medium</mat-option>
                     <mat-option value="HIGH">High</mat-option>
                 </mat-select>
             </mat-form-field>
-
+            <!-- ✅ Added Category Dropdown -->
+            <mat-form-field appearance="fill" class="filter-input">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="categoryNames" multiple>
+                    <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+         
+              
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>Due Date</mat-label>
                 <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate"
@@ -53,7 +60,6 @@
             </div>
         </form>
     </mat-expansion-panel>
-
 </div>
 
 <div class="task-list">

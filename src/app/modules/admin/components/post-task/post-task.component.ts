@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CategoryDialogComponent } from 'src/app/shared/components/category-dialog/category-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { AddLinkDialogComponent } from 'src/app/shared/components/add-link-dialog/add-link-dialog.component';
 
 @Component({
   selector: 'app-post-task',
@@ -21,9 +21,10 @@ import { MatDialog } from '@angular/material/dialog';
       ])
     ])
   ],
-
 })
 export class PostTaskComponent {
+
+  links: string[] = [];
 
   audioUrl: string | null = null;
   isRecording = false;
@@ -33,7 +34,6 @@ export class PostTaskComponent {
   imagePreview: string | ArrayBuffer | null = null;
   voiceFile: File | null = null;
   postTaskForm !: FormGroup;
-
   listOfPriorities: any = ["LOW", "HIGH", "MEDIUM", "VERY-HIGH", "VERY_LOW"];
   animationState = 'hidden'; // Animation state
   listofEmployees: any = [];
@@ -81,11 +81,10 @@ export class PostTaskComponent {
     });
   }
  
-
   postTask() {
     if (this.postTaskForm.invalid) return;
-  
-    const taskData = { ...this.postTaskForm.value };
+
+    const taskData = { ...this.postTaskForm.value,links:this.links };
   
     if (taskData.dueDate) {
       const dueDate = new Date(taskData.dueDate); // Convert form input to Date object
@@ -108,7 +107,6 @@ export class PostTaskComponent {
     });
   }
 
-
   openCategoryDialog() {
     const dialogRef = this.dialog.open(CategoryDialogComponent, {
       width: '400px',
@@ -129,6 +127,18 @@ export class PostTaskComponent {
     });
   }
 
+  openAddLinkDialog(): void {
+    const dialogRef = this.dialog.open(AddLinkDialogComponent, {
+      width: '400px',
+      data: { links: [...this.links] }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.links = result; // Update the links
+      }
+    });
+  }
 
   onImageUpload(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -141,8 +151,6 @@ export class PostTaskComponent {
       reader.readAsDataURL(file);
     }
   }
-  
-
   clearFields() {
     this.postTaskForm.reset();
     this.imagePreview = null;

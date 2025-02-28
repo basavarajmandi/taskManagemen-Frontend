@@ -34,6 +34,18 @@
                         <span class="info-label">Category:</span>
                         <span class="info-value">{{ taskData.categoryName }}</span>
                     </div>
+
+                    <div class="info-row" *ngIf="taskData.links && taskData.links.length">
+                        <mat-icon class="category-icon">link</mat-icon>
+                        <span class="info-label">Links:</span>
+
+                        <div class="link-list">
+                            <div *ngFor="let link of taskData.links">
+                                <a [href]="link.url" target="_blank">{{ link.url }}</a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
 
@@ -54,7 +66,7 @@
                                 <source [src]="taskData.voiceName" type="audio/mpeg">
                                 Your browser does not support the audio element.
                             </audio>
-                            
+
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -70,10 +82,10 @@
             <div>
                 <form [formGroup]="commentForm">
 
-                    <mat-form-field appearance="fill"  class="full-width">
+                    <mat-form-field appearance="fill" class="full-width">
 
                         <mat-label>Content</mat-label>
-                        <textarea matInput formControlName="content" >
+                        <textarea matInput formControlName="content">
 
                         </textarea>
                     </mat-form-field>
@@ -103,14 +115,15 @@
                             <a [href]="comment.imageName" target="_blank">
                                 <img [src]="comment.imageName" alt="Comment Image" class="comment-image" />
                             </a>
-                
+
                             <!-- Download Button (Closer to the Image) -->
-                            <button mat-icon-button matTooltip="Download"  class="download-button" (click)="downloadImage(comment.imageName)">
+                            <button mat-icon-button matTooltip="Download" class="download-button"
+                                (click)="downloadImage(comment.imageName)">
                                 <mat-icon>download</mat-icon>
                             </button>
                         </div>
                     </div>
-                
+
                     <!-- Display Voice Message if exists -->
                     <div *ngIf="comment.voiceName" class="comment-voice-container">
                         <h4>Voice Message</h4>

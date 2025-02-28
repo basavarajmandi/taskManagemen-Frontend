@@ -53,6 +53,12 @@
                     align-items: center;
                     margin-bottom: 8px;
 
+                    
+                    .category-icon {
+                        font-size: 20px;
+                        color: #108ee9;
+                    }
+
                     .info-label {
                         font-weight: 10px;
                         margin-right: 5px;
@@ -101,7 +107,6 @@ padding: 10px;
 }
 
 
-
 mat-card-content{
     margin-top: 10px;
 }
@@ -114,9 +119,6 @@ mat-card-footer{
     object-fit: cover;
 }
 
-.comment-card{
-    margin-top: 20px;
-}
 
 mat-form-field{
 width: 100%;
@@ -128,11 +130,6 @@ width: 100%;
     gap: 20px; /* Space between image and voice message */
 }
 
-.image-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 .image-actions {
     display: flex;
@@ -147,11 +144,7 @@ width: 100%;
     object-fit: cover;
 }
 
-.voice-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
+
 
 @keyframes blink {
     50% { opacity: 0; }
@@ -171,3 +164,40 @@ width: 100%;
 //     margin-right: 10px;
 //     animation: blink 1s infinite;
 // }
+.comment-card {
+    margin-top: 20px;
+
+    mat-card-header {
+        display: flex;
+        align-items: center;
+    }
+
+    .comment-content {
+        display: flex;
+        flex-direction: column; /* Stack text and voice vertically */
+        gap: 8px; /* Space between text and audio player */
+        margin-top: 10px;
+    }
+
+    .text-section {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .voice-section {
+        display: flex;
+        align-items: center;
+
+        audio {
+            width: 100%; /* Ensures audio player takes full width */
+            max-width: 300px; /* Limits audio player width */
+        }
+    }
+}
+
+.link-list a {
+    display: block; /* Ensures each link is on a new line */
+    color: blue; 
+    text-decoration: underline;
+    margin-top: 5px;
+}

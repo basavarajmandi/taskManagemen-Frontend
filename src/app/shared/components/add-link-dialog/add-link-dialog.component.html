@@ -1,0 +1,33 @@
+
+<h2 mat-dialog-title>Add Links for your Task</h2>
+<mat-dialog-content class="mat-dialog-content">
+  
+  <form [formGroup]="linkForm">
+    <div class="input-container">
+      <mat-form-field class="form-field">
+        <mat-label>Add a Link</mat-label>
+        <input matInput formControlName="newLink" placeholder="Enter a valid URL">
+        <mat-error *ngIf="linkForm.get('newLink')?.hasError('required')">Field is required</mat-error>
+        <mat-error *ngIf="linkForm.get('newLink')?.hasError('pattern')">Invalid URL format</mat-error>
+      </mat-form-field>
+
+      <button mat-mini-fab color="primary" matTooltip="addlink" (click)="addLink()" [disabled]="linkForm.invalid">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </form>
+
+  <ul class="link-list" *ngIf="links.length > 0">
+    <li class="link-item" *ngFor="let link of links; let i = index">
+      {{ link }}
+      <button mat-icon-button matTooltip="removeLink" color="warn" (click)="removeLink(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </li>
+  </ul>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matTooltip="close" (click)="closeDialog()">Cancel</button>
+  <button mat-button matTooltip="Save" color="primary" (click)="saveLinks()">Save Links</button>
+</mat-dialog-actions>

@@ -33,6 +33,10 @@ getTaskById(){
   this.service.getTaskById(this.taskId).subscribe((res)=>{
     this.taskData=res;
 
+
+    console.log("Task Data:", this.taskData); // Debugging
+    console.log("Links Data:", JSON.stringify(this.taskData.links)); // Check the exact structure
+
        //  addming this in today Ensure the image URL is formatted correctly if it's not already a full URL
        if (this.taskData && this.taskData.imageName && !this.taskData.imageName.startsWith("http")) {
         this.taskData.imageName = `http://localhost:8080/api/files/images/${this.taskData.imageName}`;
