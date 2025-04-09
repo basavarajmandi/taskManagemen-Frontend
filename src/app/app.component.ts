@@ -10,7 +10,7 @@ import { filter, map } from 'rxjs';
 })
 export class AppComponent {
   title = 'task-management16';
-
+  loggedInUserId: string | null = null;
   isAdminLoggedIn: boolean = StorageService.isAdminLoggedIn();
   isEmployeeLoggedIn: boolean = StorageService.isEmployeeLoggedIn();
   employeeName: string = ''; // variable to hold logged-in employee
@@ -47,10 +47,12 @@ export class AppComponent {
     this.router.events.subscribe(evnt => {
       this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
       this.isEmployeeLoggedIn = StorageService.isEmployeeLoggedIn();
-      if(this.isEmployeeLoggedIn){
-        this.employeeName= StorageService.getuserName();
+      
+      if (this.isEmployeeLoggedIn) {
+        this.employeeName = StorageService.getuserName();
+        this.loggedInUserId = StorageService.getUserId() ? String(StorageService.getUserId()) : null; // Convert number to string
       }
-    })
+    });
   }
 
   logout() {
@@ -73,6 +75,11 @@ export class AppComponent {
 
  ViewSettings(){
    this.router.navigateByUrl("/Admin-view-table");
+ }
+
+
+ EmployeeViewSettings(){
+  this.router.navigateByUrl("/Employee-view-table");
  }
 }
 

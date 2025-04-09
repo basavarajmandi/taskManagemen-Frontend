@@ -34,14 +34,14 @@
     <mat-form-field appearance="outline" class="small-input">
       <mat-label>Start Date</mat-label>
       <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
-      <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle class="primary-icon"  matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
       <mat-datepicker #startPicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="small-input">
       <mat-label>End Date</mat-label>
       <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
-      <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle class="primary-icon" matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
       <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
 
@@ -107,8 +107,8 @@
 
       <mat-form-field appearance="fill" class="filter-input">
         <mat-label>Due Date</mat-label>
-        <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate" placeholder="Choose a DueDate ">
-        <mat-datepicker #DueDatePicker></mat-datepicker>
+        <input matInput   [matDatepicker]="DueDatePicker" formControlName="dueDate" placeholder="Choose a DueDate ">
+        <mat-datepicker  class="primary-icon"#DueDatePicker></mat-datepicker>
         <mat-datepicker-toggle [for]="DueDatePicker" matSuffix />
       </mat-form-field>
 
@@ -130,12 +130,14 @@
     </form>
   </mat-expansion-panel>
 </div>
-<!-- Loading Spinner -->
-<div *ngIf="isLoading" class="loading-spinner">
-  <mat-spinner></mat-spinner>
-</div>
+   
+    
 
 <div class="task-list" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">
+   <!-- Loading Spinner -->
+   <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
   <mat-card class="task-card" *ngFor="let task of listOfTasks" cdkDrag   [ngClass]="task.statusClass"   >
 
   <!-- Status Badge (Ribbon at the Top) -->
@@ -145,12 +147,13 @@
   
 
     <div class="task-details" cdkDropList>
-
          <!-- Flex container for title and posted time -->
     <div class="task-header">
       <h2 class="task-name">{{ task.title }}</h2>
-
+      <div class="time-info">
+      <mat-icon class="time-icon">alarm</mat-icon>
       <span class="posted-time">{{ task.timeAgo }}</span> 
+      </div>
     </div>
 
     <p class="task-description">{{ task.description }}</p>
@@ -169,13 +172,13 @@
           <span class="info-value">{{task.employeeName}}</span>
         </div>
         <div class="info-row">
-          <span class="info-label">Priority:</span>
+          <span class="info-label"> ⚡Priority:</span>
           <span class="info-value" [ngClass]="task.priorityClass">{{task.priority}}</span>
         </div>
         
 
         <div class="info-row">
-          <span class="info-label">Status:</span>
+          <span class="info-label"> 📌Status:</span>
           <span class="info-value">{{task.taskStatus}}</span>
         </div>
 
@@ -185,12 +188,18 @@
           <span class="info-value">{{ task.categoryName }}</span>
         </div>
       
-      
       </div>
 
-      <mat-divider></mat-divider>
+      <mat-divider>
+
+      </mat-divider>
 
       <div class="actions">
+
+        <div *ngIf="isTaskOverdue(task)" class="overdue-task-badge">
+          <mat-icon class="overdue-icon">warning</mat-icon>
+          <span class="overdue-text">Overdue</span>
+      </div>
         <button mat-icon-button color="warn" matTooltip="Go to View" class="view-button"
           routerLink="/admin/task/{{task.id}}/view">
           <mat-icon>visibility</mat-icon>
@@ -215,7 +224,6 @@
 <!-- <mat-paginator 
 [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
 </mat-paginator> -->
-
 
 
 <!-- <div class="task-list-container" cdkDropList (cdkDropListDropped)="onTaskDropped($event)">

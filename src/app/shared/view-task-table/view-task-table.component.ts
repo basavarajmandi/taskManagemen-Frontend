@@ -13,49 +13,49 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './view-task-table.component.html',
   styleUrls: ['./view-task-table.component.scss'],
   animations: [
-      trigger('slideInFromRight', [
-        state('hidden', style({ transform: 'translateX(100%)', opacity: 0 })),
-        state('visible', style({ transform: 'translateX(0)', opacity: 1 })),
-        transition('hidden => visible', [
-          animate('0.5s ease-in-out')
-        ])
+    trigger('slideInFromRight', [
+      state('hidden', style({ transform: 'translateX(100%)', opacity: 0 })),
+      state('visible', style({ transform: 'translateX(0)', opacity: 1 })),
+      transition('hidden => visible', [
+        animate('0.5s ease-in-out')
       ])
-    ],
+    ])
+  ],
 })
 export class ViewTaskTableComponent implements OnInit {
   //dataSource:TaskDTO[]=[];
   allCategories: string[] = []; // Store existing category names
-    animationState = 'hidden'; 
-    isFilterPanelOpen: any;
-    isPanelExpanded = false; 
-    searchTaskForm!: FormGroup;// Animation state
+  animationState = 'hidden';
+  isFilterPanelOpen: any;
+  isPanelExpanded = false;
+  searchTaskForm!: FormGroup;// Animation state
   displayedColumns: string[] =
+
     ['id',
-      'employeeId', 
       'employeeName',
-      'title', 
+      'title',
       'description',
-      'priority', 
-      'dueDate', 
+      'priority',
+      'dueDate',
       'taskStatus',
       'categoryName',
     ];
 
   dataSource = new MatTableDataSource<TaskDTO>([]);
   totalTasks: number = 0;
-  pageSize: number = 5; 
-  pageIndex: number = 0; 
-  sortField: string = 'id'; 
-  sortDirection: string = 'asc'; 
+  pageSize: number = 5;
+  pageIndex: number = 0;
+  sortField: string = 'id';
+  sortDirection: string = 'asc';
 
-  
-  @ViewChild(MatPaginator, { static: false}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   //service: any;
   //listOfTasks: any = [];
-  
 
-  constructor(private adminService: AdminService ,private snackbar :MatSnackBar,private fb: FormBuilder) { }
+  constructor(private adminService: AdminService, 
+    private snackbar: MatSnackBar, 
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.fetchTasks(); // Initial fetch of tasks
@@ -64,16 +64,17 @@ export class ViewTaskTableComponent implements OnInit {
   }
 
   // Fetch all categories name only  from the backend
-getAllCategories() {
-  this.adminService.getAllCategories().subscribe(
-    (categories: string[]) => {
-      this.allCategories = categories; // Store categories in the array
-    },
-    (error) => {
-      console.error('Error fetching categories:', error);
-    }
-  );
-}
+  getAllCategories() {
+    this.adminService.getAllCategories().subscribe(
+      (categories: string[]) => {
+        this.allCategories = categories; // Store categories in the array
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
+  }
+
   ngAfterViewInit(): void {
     // Update sorting on user interaction
     this.animationState = 'visible';
@@ -85,18 +86,19 @@ getAllCategories() {
       this.fetchTasks();
     });
   }
- /** 🔹 1. Initialize Form */
- initializeForm(): void {
-  this.searchTaskForm = this.fb.group({
-    employeeName: [''],
-    title: [''],
-    taskStatus: [''],
-    priority: [''],
-    dueDate: [''],
-    categoryNames: [[]] // Added categoryNames field
-  });
-}
-//  Fetch Tasks (Default & After Filtering) 
+
+  /** 🔹 1. Initialize Form */
+  initializeForm(): void {
+    this.searchTaskForm = this.fb.group({
+      employeeName: [''],
+      title: [''],
+      taskStatus: [''],
+      priority: [''],
+      dueDate: [''],
+      categoryNames: [[]] // Added categoryNames field
+    });
+  }
+  //  Fetch Tasks (Default & After Filtering) 
   fetchTasks(): void {
     const params = {
       page: this.pageIndex,
@@ -118,82 +120,77 @@ getAllCategories() {
     );
   }
 
-    // Apply filter to tasks
-    applyFilter(): void {
-      const formValues = this.searchTaskForm.value;
-      // const priority: string | undefined = formValues.priority || undefined;
-      const priority: string[] | undefined = 
-      formValues.priority && Array.isArray(formValues.priority) ? formValues.priority : 
-      formValues.priority ? [formValues.priority] : undefined;
-
-      const title: string | undefined = formValues.title || undefined;
-      const employeeName:string | undefined = formValues.employeeName || undefined;
-      // const taskStatus: string | undefined = formValues.taskStatus || undefined; for onlu single
-
-
-    // Ensure that taskStatus is always an array
-    const taskStatus: string[] | undefined = 
-    formValues.taskStatus && Array.isArray(formValues.taskStatus) ? formValues.taskStatus : 
-    formValues.taskStatus ? [formValues.taskStatus] : undefined;
-
-     // Ensure dueDate is sent in YYYY-MM-DD format to match backend expectations
-     const dueDate: string | undefined = formValues.dueDate? new Date(formValues.dueDate.getTime() - new Date().getTimezoneOffset() * 60000)
-         .toISOString()
-         .split('T')[0] : undefined;
-
-         const categoryNames: string[] | undefined = formValues?.categoryNames
-         ? (Array.isArray(formValues.categoryNames) ? formValues.categoryNames : [formValues.categoryNames])
-         : undefined;
-       
-    
-      console.log('Filter values:', { title, priority, dueDate, taskStatus,employeeName });
-      this.adminService.filterTasks(priority, title, dueDate,taskStatus,employeeName, categoryNames).subscribe(
-        (res: TaskDTO[]) => {
-         // this.listOfTasks = res;
-         this.dataSource.data=res;
-          console.log('Filtered Tasks:', res);
-        },
-        (err: any) => {
-          console.error('Error applying filters:', err);
-          this.snackbar.open('Error applying filters. Please try again!', 'Close', { duration: 5000 });
-        }
-      );
-    }
-  
-    clearFilter(): void {
-      this.searchTaskForm.reset();
-      this.fetchTasks();
-    }
- 
-
   paginate(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.fetchTasks(); // Fetch tasks with updated page and pageSize
   }
 
+  // Apply filter to tasks
+  applyFilter(): void {
+    const formValues = this.searchTaskForm.value;
+    // const priority: string | undefined = formValues.priority || undefined;
+    const priority: string[] | undefined =
+      formValues.priority && Array.isArray(formValues.priority) ? formValues.priority :
+        formValues.priority ? [formValues.priority] : undefined;
+
+    const title: string | undefined = formValues.title || undefined;
+    const employeeName: string | undefined = formValues.employeeName || undefined;
+    // const taskStatus: string | undefined = formValues.taskStatus || undefined; for onlu single
+
+    // Ensure that taskStatus is always an array
+    const taskStatus: string[] | undefined =
+      formValues.taskStatus && Array.isArray(formValues.taskStatus) ? formValues.taskStatus :
+        formValues.taskStatus ? [formValues.taskStatus] : undefined;
+
+    // Ensure dueDate is sent in YYYY-MM-DD format to match backend expectations
+    const dueDate: string | undefined = formValues.dueDate ? new Date(formValues.dueDate.getTime() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .split('T')[0] : undefined;
+
+    const categoryNames: string[] | undefined = formValues?.categoryNames
+      ? (Array.isArray(formValues.categoryNames) ? formValues.categoryNames : [formValues.categoryNames])
+      : undefined;
+
+    console.log('Filter values:', { title, priority, dueDate, taskStatus, employeeName });
+    this.adminService.filterTasks(priority, title, dueDate, taskStatus, employeeName, categoryNames).subscribe(
+      (res: TaskDTO[]) => {
+        // this.listOfTasks = res;
+        this.dataSource.data = res;
+        console.log('Filtered Tasks:', res);
+      },
+      (err: any) => {
+        console.error('Error applying filters:', err);
+        this.snackbar.open('Error applying filters. Please try again!', 'Close', { duration: 5000 });
+      }
+    );
+  }
+
+  clearFilter(): void {
+    this.searchTaskForm.reset();
+    this.fetchTasks();
+  }
+
 }
-  // exportToExcel(): void { first writing this method in her later i put this export to excel method in footerdelogcompunent 
-  //   this.adminService.exportToExcel().subscribe(
-  //     (blob) => {
-  //       const url = window.URL.createObjectURL(blob);
-  //       const a = document.createElement('a');
-  //       a.href = url;
-  //       a.download = 'tasks.xlsx';
-  //       document.body.appendChild(a);
-  //       a.click();
-  //       document.body.removeChild(a);
-  //     },
-  //     (error) => {
-  //       console.error('Error exporting to Excel:', error);
-  //       this.snackbar.open('Failed to export tasks!', 'Close', {
-  //         duration: 3000,
-  //       });
-  //     }
-  //   );
-  // }
-
-
+// exportToExcel(): void { first writing this method in her later i put this export to excel method in footerdelogcompunent 
+//   this.adminService.exportToExcel().subscribe(
+//     (blob) => {
+//       const url = window.URL.createObjectURL(blob);
+//       const a = document.createElement('a');
+//       a.href = url;
+//       a.download = 'tasks.xlsx';
+//       document.body.appendChild(a);
+//       a.click();
+//       document.body.removeChild(a);
+//     },
+//     (error) => {
+//       console.error('Error exporting to Excel:', error);
+//       this.snackbar.open('Failed to export tasks!', 'Close', {
+//         duration: 3000,
+//       });
+//     }
+//   );
+// }
 
 
 // fetchTasks():void {

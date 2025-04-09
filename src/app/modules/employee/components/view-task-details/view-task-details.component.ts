@@ -22,7 +22,6 @@ export class ViewTaskDetailsComponent {
   isPlaying = false; // Track playback state
   recordingDuration: number = 0;  // New property to track recording duration
   recordingInterval: any;  // Variable to store the interval ID
-
   selectedImageFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   taskId: number = this.activeRoute.snapshot.params['id'];
@@ -30,7 +29,6 @@ export class ViewTaskDetailsComponent {
   taskData: any;
   comments: any;
   stream!: MediaStream;
-
   @ViewChild('waveform', { static: false }) waveformRef!: ElementRef;
  
   constructor(private service: EmployeeService, private activeRoute: ActivatedRoute, private fb: FormBuilder, private snackbar: MatSnackBar) { }
@@ -46,7 +44,6 @@ export class ViewTaskDetailsComponent {
     });
   }
 
-
   ngOnInit() {
     this.getCommentsTaskId();
     this.getTaskById();
@@ -58,8 +55,6 @@ export class ViewTaskDetailsComponent {
     this.service.getTaskById(this.taskId).subscribe((res) => {
       this.taskData = res;
 
-
-      
       // Ensure taskData is defined and imageName exists
       if (this.taskData && this.taskData.imageName && !this.taskData.imageName.startsWith("http")) {
         this.taskData.imageName = `http://localhost:8080/api/files/images/${this.taskData.imageName}`;
@@ -68,14 +63,10 @@ export class ViewTaskDetailsComponent {
       if (this.taskData && this.taskData.voiceName && !this.taskData.voiceName.startsWith("http")) {
         this.taskData.voiceName = `http://localhost:8080/api/files/voice/${this.taskData.voiceName}`;
       }
-
     })
-
 
   }
 
-
-  
   startRecording() {
     this.recordedChunks = [];
     this.isRecording = true;
@@ -124,7 +115,6 @@ export class ViewTaskDetailsComponent {
         this.stream.getTracks().forEach(track => track.stop());
       }
 
-  
       setTimeout(() => {
         if (this.recordedChunks.length > 0) {
           const audioBlob = new Blob(this.recordedChunks, { type: 'audio/webm' });

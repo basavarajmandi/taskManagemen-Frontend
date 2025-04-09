@@ -4,7 +4,6 @@
     </button>
     <h2>update Task </h2>
 
-
     <form [formGroup]="updateTaskForm" (ngSubmit)="updateTask()">
 
         <mat-form-field appearance="outline" class="form-field">
@@ -12,7 +11,6 @@
             <input matInput type="text" placeholder="Title" formControlName="title" />
             <mat-error *ngIf="updateTaskForm.get('title')?.hasError('required')"> This Input Is Required</mat-error>
         </mat-form-field>
-
 
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Description</mat-label>
@@ -25,13 +23,14 @@
             <mat-label>Due Date</mat-label>
             <input matInput [matDatepicker]="dueDatePicker" placeholder="choose a due date" formControlName="dueDate">
             <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle class="primary-icon"  matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
             <mat-error *ngIf="updateTaskForm.get('dueDate')?.hasError('required')">This Input is Required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Select priority</mat-label>
+            <mat-icon matPrefix class="primary-icon">flag</mat-icon>
             <mat-select formControlName="priority" name="priority">
                 <mat-option *ngFor="let priority of listOfPriorities" [value]="priority">
                     {{priority}}</mat-option>
@@ -48,34 +47,110 @@
             <mat-error *ngIf="updateTaskForm.get('status')?.hasError('required')"> this Input is Required</mat-error>
         </mat-form-field>
 
-<div  class="row-container"> 
-        <mat-form-field appearance="outline" class="form-field half-width">
-            <mat-label>Select The Employee</mat-label>
-            <mat-select formControlName="employeeId" name="employeeId">
+        <div class="row-container">
+            <mat-form-field appearance="outline" class="form-field half-width">
+                <mat-label>Select The Employee</mat-label>
+                <mat-select formControlName="employeeId" name="employeeId">
 
-                <mat-option *ngFor="let employee of listofEmployees" [value]="employee.id">
-                    {{employee.name | uppercase}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="updateTaskForm.get('employeeId')?.hasError('required')"> this Input is
-                Required</mat-error>
-        </mat-form-field>
+                    <mat-option *ngFor="let employee of listofEmployees" [value]="employee.id">
+                        {{employee.name | uppercase}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="updateTaskForm.get('employeeId')?.hasError('required')"> this Input is
+                    Required</mat-error>
+            </mat-form-field>
 
-        <!-- Category Selection -->
-        <mat-form-field appearance="outline" class="form-field half-width">
-            <mat-label>Category</mat-label>
-            <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()"
-                style="cursor: pointer;">loyalty</mat-icon>
-            <input matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()">
-        </mat-form-field>
-    </div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid">Update Task</button>
+            <!-- Category Selection -->
+            <mat-form-field appearance="outline" class="form-field half-width">
+                <mat-label>Category</mat-label>
+                <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()"
+                    style="cursor: pointer;">loyalty</mat-icon>
+                <input matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()">
+            </mat-form-field>
+        </div>
 
+
+
+        <!-- File Upload Input -->
+        <div class="file-upload-container">
+            <label class="upload-label">Update image</label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+        </div>
+
+        <div class="media-preview-container">
+            <!-- Image Preview -->
+            <div class="image-preview-container">
+                <img *ngIf="imagePreview; else existingImage" [src]="imagePreview" alt="Selected Image"
+                class="task-thumbnail">
+                <!-- If no new image is selected, show existing image -->
+                <ng-template #existingImage>
+                    <img *ngIf="existingImageUrl" [src]="existingImageUrl" alt="Existing Image" class="image-preview">
+                </ng-template>
+
+             
+            </div>
+            <!-- Recorded Voice Preview -->
+            <div class="voice-preview-container">
+                <audio *ngIf="voicePreview" controls>
+                    <source [src]="voicePreview" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+
+                <!-- If no new recording, show existing voice message -->
+                <!-- Recording Indicator -->
+                <div *ngIf="isRecording" class="blinking-text">
+                    <span class="blinking-dot"></span> Recording...
+                </div>
+
+                <ng-template #existingVoice>
+                    <audio *ngIf="existingVoiceUrl" controls>
+                        <source [src]="existingVoiceUrl" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </ng-template>
+            </div>
+
+        </div>
+
+        <!-- Voice Recording Section -->
+        <div class="voice-recording-container">
+
+            <div class="link-container">
+                <!-- Add Link Button -->
+                <button mat-icon-button type="button" (click)="openAddLinkDialog()" matTooltip="Add Link">
+                    <mat-icon class="primary-icon">link</mat-icon>
+                </button>
+
+                <!-- Link Added Message Below the Link Button -->
+                <div *ngIf="links.length > 0" class="link-message">
+                    <span *ngIf="links.length === 1" class="small-text">1 link added</span>
+                    <span *ngIf="links.length > 1" class="small-text">{{ links.length }} links added</span>
+                </div>
+            </div>
+
+            <div class="recording-buttons">
+                <!-- Start & Stop Recording Buttons -->
+                <button mat-icon-button type="button" (click)="startRecording()" matTooltip="Start Recording"
+                    [disabled]="isRecording">
+                    <mat-icon class="primary-icon">mic</mat-icon>
+                </button>
+
+                <button mat-icon-button type="button" (click)="stopRecording()" matTooltip="Stop Recording"
+                    [disabled]="!isRecording">
+                    <mat-icon class="primary-icon">mic_off</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid">Update
+            Task</button>
     </form>
-
-   <!-- <mat-dialog-actions align="end" class="sticky-footer">
-    <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid" (click)="updateTask()">
-        Update Task
-    </button>
-</mat-dialog-actions> -->
-
 </div>
+
+<!-- <ul *ngIf="links.length > 0">
+            <li *ngFor="let link of links; let i = index">
+              <a [href]="link.url" target="_blank">{{ link.url }}</a> 
+              <button mat-icon-button color="warn" (click)="removeLink(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </li>
+          </ul> -->

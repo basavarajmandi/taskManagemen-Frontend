@@ -150,6 +150,31 @@
         cursor: pointer;
     }
 }
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    /* Puts title on the left and posted time on the right */
+    align-items: center;
+}
+
+.time-info {
+    display: flex;
+    align-items: center;  /* Aligns alarm icon and text in the same line */
+    gap: 5px;  /* Adds spacing between the icon and time */
+}
+
+
+.time-icon {
+    font-size: 18px;
+    color: #ff9800;  /* Makes it stand out */
+}
+.posted-time {
+    font-size: 14px;
+    color: gray;
+    font-weight: 500;
+    text-align: right;
+}
+
 
 .task-list {
     display: flex;
@@ -261,4 +286,68 @@
         z-index: 10; /* Ensures it's on top */
     }
 
+
+    .high-priority-today {
+        border: 3px solid red; /* Red border for high-priority tasks */
+        background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+        animation: blink 1s infinite alternate; /* Optional: Blinking effect */
+    }
+    
+    @keyframes blink {
+        from { background-color: rgba(255, 0, 0, 0.1); }
+        to { background-color: rgba(255, 0, 0, 0.3); }
+    }
+    
+    .urgent-task-badge {
+        display: flex;
+        align-items: center;
+        background-color: red;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    
+    .urgent-icon {
+        margin-right: 4px;
+    }
+    
+
 }
+.status-pending {
+    color: #ff9800;
+    font-weight: bold;
+}
+.status-inprogress {
+    color: #2196F3;
+    font-weight: bold;
+}
+.status-completed {
+    color: #4CAF50;
+    font-weight: bold;
+}
+.status-cancelled{
+    color: rgb(92, 91, 91);
+    font-weight: bold;
+
+}
+.overdue-task-badge {
+    position: absolute;  /* Makes it float on the card */
+    bottom: 10px;          /* Position near the top */
+    left: 10px;         /* Align to the left side */
+    background-color: rgba(255, 69, 0, 0.8); /* Bright Red */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  }
+  
+  .overdue-icon {
+    font-size: 14px !important; /* Smaller icon */
+    margin-right: 4px;
+  }
+  

@@ -21,7 +21,6 @@ import * as moment from 'moment';
 })
 export class DashboardComponent {
 
-
   isFilterPanelOpen: any;
   isPanelExpanded = false;
   listOfTasks: any = [];
@@ -70,9 +69,7 @@ export class DashboardComponent {
   getTask(): void {
     this.isLoading = true;
     this.service.getAllTask().subscribe({
-
       next: (tasks: any) => {
-
         // Add "time ago" calculation here
         this.listOfTasks = tasks.map((task: any) => ({
           ...task,
@@ -80,6 +77,10 @@ export class DashboardComponent {
         //  statusClass: this.getTaskStatusClass(task.taskStatus) // Assign the class dynamically
         }));
 
+              // Sort tasks so that the most recent one appears at the top
+      this.listOfTasks.sort((a: any, b: any) => 
+        new Date(b.assignedDate).getTime() - new Date(a.assignedDate).getTime()
+      );
 
         this.isLoading = false;
       },
@@ -136,7 +137,7 @@ export class DashboardComponent {
           ...task,
           timeAgo: this.getTimeAgo(task.assignedDate),
           statusClass: this.getTaskStatusClass(task.taskStatus), // Assign the class dynamically
-          priorityClass: this.getPriorityClass(task.priority,task.taskStatus) ,// Map priority to class
+          priorityClass: this.getPriorityClass(task.priority,task.taskStatus),// Map priority to class
         }));
         this.isLoading = false;
       },
@@ -183,7 +184,6 @@ export class DashboardComponent {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       position: { top: '30px', right: '500px' },  // Adjust top and right as needed
       width: '500px'
-
     });
     // Open the confirmation dialog
     dialogRef.afterClosed().subscribe(result => {
@@ -290,15 +290,20 @@ export class DashboardComponent {
   }
 
   filterOverdueTasks(): void {
-    this.service.getAllOverdueTask().subscribe((Task) => {
-      //this.overdueTasks=Task;
-      this.listOfTasks = Task;
-      console.log(Task);
-    }, (error) => {
-      console.error('Error loading overdue tasks', error);
-    })
+    this.service.getAllOverdueTask().subscribe(
+      (tasks) => {
+        this.listOfTasks = tasks.map(task => ({
+          ...task,
+          timeAgo: this.getTimeAgo(task.assignedDate)
+        }));
+        console.log(this.listOfTasks);
+      },
+      (error) => {
+        console.error('Error loading overdue tasks', error);
+      }
+    );
   }
-
+  
 
  // Function to return the CSS class based on task status
  getTaskStatusClass(status: string): string {
@@ -336,6 +341,12 @@ getPriorityClass(priority: string, status: string): string {
       return '';
   }
 }
+isTaskOverdue(task: any): boolean {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const taskDueDate = new Date(task.dueDate).setHours(0, 0, 0, 0);
+  return taskDueDate < today && task.taskStatus !== 'COMPLETED' && task.taskStatus !=='CANCELLED';
+}
+
 
 
 }

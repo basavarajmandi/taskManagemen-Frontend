@@ -2,8 +2,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/auth/services/storage/storage.service';
+import { PaginatedResponse } from 'src/app/shared/models/paginated-response';
 
-const BASE_URL="http://localhost:8080/";
+// const BASE_URL="http://localhost:8080/"; it local and below is production
+const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/";
 @Injectable({
   providedIn: 'root'
 })
@@ -11,12 +13,11 @@ export class EmployeeService {
 
   constructor(private httpClient :HttpClient) { 
   }
-
+  
   private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set(
       'Authorization', 'Bearer ' + StorageService.getToken())
   }
-
 
   getFilteredTasksByUserId(
     title?: string,
@@ -36,7 +37,8 @@ export class EmployeeService {
       params: params
     });
   }
-  
+
+
   getAllCategories(): Observable<string[]> {
     return this.httpClient.get<string[]>(BASE_URL + 'api/employee/filter/categories', {
       headers: this.createAuthorizationHeader(),
@@ -79,6 +81,51 @@ export class EmployeeService {
       headers: this.createAuthorizationHeader()
     });
   }
+
+  getPaginatedTasksByUserId(
+    page: number, 
+    size: number, 
+    sortField: string, 
+    sortDirection: string
+  ): Observable<PaginatedResponse> {
+    let userId = StorageService.getUserId(); // Get logged-in user's ID
+
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sortField', sortField)
+      .set('sortDirection', sortDirection);
+      console.log(`Fetching tasks for userId=${userId} with Page=${page}, Size=${size}, Sort=${sortField}, Direction=${sortDirection}`);
+
+    return this.httpClient.get<PaginatedResponse>(
+      `${BASE_URL}api/employee/tasks/paginated/user/${userId}`,
+      { headers: this.createAuthorizationHeader(), params }
+    );
+  }
+
+
+  exportToExcelByUserId(userId: number): Observable<Blob> {
+    return this.httpClient.get(`${BASE_URL}api/employee/tasks/export/${userId}`, {
+      headers: this.createAuthorizationHeader(),
+      responseType: 'blob' // Expecting binary data (Excel file)
+    });
+  }
+  
+
+  // exportToExcelByUserId(userId: number, page: number = 0, size: number = 5, sortField: string = 'id', sortDirection: string = 'asc'): Observable<Blob> {
+  //   const params = new HttpParams()
+  //     .set('page', page.toString())
+  //     .set('size', size.toString())
+  //     .set('sortField', sortField)
+  //     .set('sortDirection', sortDirection);
+  
+  //   return this.httpClient.get(`${BASE_URL}/api/employee/tasks/export/user/${userId}`, {
+  //     headers: this.createAuthorizationHeader(),
+  //     responseType: 'blob', // Important for file download
+  //     params: params
+  //   });
+  // }
+  
 
 }
   // createComment(id:number, content:string):Observable<any>{

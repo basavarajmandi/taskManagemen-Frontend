@@ -35,6 +35,13 @@
                         <span class="info-value">{{ taskData.categoryName }}</span>
                     </div>
 
+                    <div class="info-row">
+                        <span class="info-label">Subscribers:</span>
+                        <span class="info-value">{{ taskData.keepInLoopUsers}}</span>
+                       <!-- // <span class="info-value">{{taskData.keepInLoopUsers}} </span> -->
+                    </div>
+                  
+                
                     <div class="info-row" *ngIf="taskData.links && taskData.links.length">
                         <mat-icon class="category-icon">link</mat-icon>
                         <span class="info-label">Links:</span>
@@ -135,5 +142,5 @@
                 </div>
 
             </mat-card-content>
-        </mat-card>>
+        </mat-card>
     </div>

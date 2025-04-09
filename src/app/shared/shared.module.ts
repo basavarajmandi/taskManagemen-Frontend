@@ -8,12 +8,13 @@ import { FooterComponent } from './footer/footer.component';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 import { AddLinkDialogComponent } from './components/add-link-dialog/add-link-dialog.component';
 
+
 @NgModule({
   declarations: [
      ConfirmDialogComponent,
      UpdateDialogComponent, 
      FooterComponent, 
-     CategoryDialogComponent, AddLinkDialogComponent,
+     CategoryDialogComponent, AddLinkDialogComponent, 
   ],
   imports: [
     CommonModule,

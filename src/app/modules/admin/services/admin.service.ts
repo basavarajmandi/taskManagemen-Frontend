@@ -5,7 +5,9 @@ import { StorageService } from 'src/app/auth/services/storage/storage.service';
 import { PaginatedResponse } from 'src/app/shared/models/paginated-response';
 import { TaskDTO } from 'src/app/shared/models/task-dto';
 
-const BASE_URL="http://localhost:8080/";
+// const BASE_URL="http://localhost:8080/";
+const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/"; // forProduction from elasticbeanstalk 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,7 @@ export class AdminService {
   
   constructor(private httpClient :HttpClient) {
   }
-
+  
   private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set(
       'Authorization',
@@ -38,6 +40,67 @@ headers:this.createAuthorizationHeader()
     headers:this.createAuthorizationHeader()
   })
 }
+
+getTaskById(id: number): Observable<any> {
+  return this.httpClient.get(BASE_URL + `api/admin/task/${id}`, {
+    headers: this.createAuthorizationHeader(),
+  }).pipe(
+    map((task: any) => {
+
+      if (task.imageName && !task.imageName.startsWith('http')) {
+        task.imageName = `${BASE_URL}api/files/images/${task.imageName}`; }
+      if(task.voiceName && !task.voiceName.startsWith('http')){
+        task.voiceName= `${BASE_URL}api/files/voice/${task.voiceName}`;
+      }
+      return task;
+    })
+  );
+}
+
+postTask(taskData: any, file?: File, voiceFile?: File  ): Observable<any> {
+  const formData = new FormData();
+  Object.keys(taskData).forEach(key => {
+    if (taskData[key] !== null) {
+      formData.append(key, taskData[key]);
+    }
+  });
+
+  if (file) {
+    formData.append('image', file);
+  }
+  if (voiceFile) {
+    formData.append('voice', voiceFile);
+  }
+
+  return this.httpClient.post(BASE_URL + "api/admin/savetask", formData, {
+    headers: this.createAuthorizationHeaderWithoutJSON(),
+  });
+}
+
+updateTask(id: number, taskDto: any, image?: File,voice?: File): Observable<any> {
+  const formData = new FormData();
+
+  // Convert taskDto to a JSON string and append to FormData
+  formData.append('taskDto', new Blob([JSON.stringify(taskDto)], { type: 'application/json' }));
+
+  // Append image if provided
+  if (image) {
+    formData.append('image', image);
+  }
+  // Append voice file if provided
+  if (voice) {
+    formData.append('voice', voice);
+  }
+  return this.httpClient.put(BASE_URL + `api/admin/task/${id}`, formData, {
+    headers: this.createAuthorizationHeaderWithoutJSON(), // No 'Content-Type' for FormData
+  });
+}
+getCategories(): Observable<any> {
+  return this.httpClient.get(BASE_URL + "api/admin/categories", {
+    headers: this.createAuthorizationHeader(),
+  });
+}
+
 getTasksDueToday(): Observable<TaskDTO[]> {
   return this.httpClient.get<TaskDTO[]>(BASE_URL + "api/admin/tasks/today", {
     headers: this.createAuthorizationHeader(),
@@ -91,33 +154,6 @@ getTasksByCustomRange(startDate: Date, endDate: Date): Observable<TaskDTO[]> {
   });
 }
 
- getCategories(): Observable<any> {
-  return this.httpClient.get(BASE_URL + "api/admin/categories", {
-    headers: this.createAuthorizationHeader(),
-  });
-}
-
-postTask(taskData: any, file?: File, voiceFile?: File  ): Observable<any> {
-  const formData = new FormData();
-  Object.keys(taskData).forEach(key => {
-    if (taskData[key] !== null) {
-      formData.append(key, taskData[key]);
-    }
-  });
-
-  if (file) {
-    formData.append('image', file);
-  }
-  if (voiceFile) {
-    formData.append('voice', voiceFile);
-  }
-
-  return this.httpClient.post(BASE_URL + "api/admin/savetask", formData, {
-    headers: this.createAuthorizationHeaderWithoutJSON(),
-  });
-}
-
-
 getAllTaskWithPagination(params: any): Observable<PaginatedResponse> {
   let httpParams = new HttpParams()
     .set('page', params.page)
@@ -132,31 +168,9 @@ getAllTaskWithPagination(params: any): Observable<PaginatedResponse> {
   );
 }
 
-
 deleteTask(id:number):Observable<any>{
   return this.httpClient.delete(BASE_URL+`api/admin/task/${id}`,{
     headers:this.createAuthorizationHeader()
-  })
-}
-getTaskById(id: number): Observable<any> {
-  return this.httpClient.get(BASE_URL + `api/admin/task/${id}`, {
-    headers: this.createAuthorizationHeader(),
-  }).pipe(
-    map((task: any) => {
-
-      if (task.imageName && !task.imageName.startsWith('http')) {
-        task.imageName = `${BASE_URL}api/files/images/${task.imageName}`; }
-      if(task.voiceName && !task.voiceName.startsWith('http')){
-        task.voiceName= `${BASE_URL}api/files/voice/${task.voiceName}`;
-      }
-      return task;
-    })
-  );
-}
-
-updateTask(id:number,taskDto: any):Observable<any>{
-  return this.httpClient.put(BASE_URL+`api/admin/task/${id}`,taskDto,{
-    headers: this.createAuthorizationHeader()
   })
 }
 
@@ -181,6 +195,7 @@ createComment(id:number, content:string):Observable<any>{
     headers: this.createAuthorizationHeader()
   });
 }
+
 getCommentsByTaskId(id:number):Observable<any>{
   return this.httpClient.get(BASE_URL+`api/admin/task/${id}/comments`,{
     headers: this.createAuthorizationHeader()
@@ -202,6 +217,7 @@ getCommentsByTaskId(id:number):Observable<any>{
 //     headers:this.createAuthorizationHeader()
 //   });
 // }
+
 filterTasks(priority?: string[], title?: string, dueDate?: string, taskStatus?: string[], employeeName?: string, categoryNames?: string[]): Observable<any> {
   let params: any = {};
 
@@ -277,5 +293,13 @@ exportToExcel(): Observable<Blob> {
 // getAllTaskwithtable(): Observable<TaskDTO[]> {
 //   return this.httpClient.get<TaskDTO[]>(BASE_URL + 'api/admin/tasks', {
 //     headers:this.createAuthorizationHeader()
+//   });
+// }
+
+
+
+// updateTask(id: number, formData: FormData): Observable<any> {
+//   return this.httpClient.put(BASE_URL + `api/admin/task/${id}`, formData, {
+//     headers: this.createAuthorizationHeaderWithoutJSON(), // Do not set 'Content-Type', Angular will handle it
 //   });
 // }

@@ -28,7 +28,6 @@ ngOnInit(){
   })
 }
 
-
 getTaskById(){
   this.service.getTaskById(this.taskId).subscribe((res)=>{
     this.taskData=res;

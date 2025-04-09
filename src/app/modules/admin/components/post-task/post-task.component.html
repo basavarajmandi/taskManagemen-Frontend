@@ -10,7 +10,9 @@
 
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Description</mat-label>
-      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+      <textarea matInput placeholder="Description" formControlName="description">
+
+      </textarea>
       <mat-error *ngIf="postTaskForm.get('description')?.hasError('required')"> This Input Is Required</mat-error>
     </mat-form-field>
 
@@ -18,7 +20,7 @@
       <mat-label>Due Date</mat-label>
       <input matInput [matDatepicker]="dueDatePicker" placeholder="choose a due date" formControlName="dueDate">
       <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle class="primary-icon" matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>
       <mat-error *ngIf="postTaskForm.get('dueDate')?.hasError('required')">This Input is Required</mat-error>
     </mat-form-field>
@@ -27,7 +29,7 @@
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Select priority</mat-label>
       <!-- Icon Inside the Field -->
-      <mat-icon matPrefix class="priority-icon">flag</mat-icon>
+      <mat-icon matPrefix class="primary-icon">flag</mat-icon>
       <mat-select formControlName="priority" name="priority">
         <mat-option *ngFor="let priority of listOfPriorities" [value]="priority">
           {{priority}}</mat-option>
@@ -39,7 +41,6 @@
     <!-- Employee and Category (Side by Side) -->
     <div class="row-container">
       <!-- Select Employee -->
-
       <mat-form-field appearance="outline" class="form-field half-width">
         <mat-label>Select The Employee</mat-label>
         <mat-select formControlName="employeeId" name="employeeId">
@@ -51,7 +52,7 @@
 
       <!-- Display Selected Category -->
       <mat-form-field appearance="outline" class="form-field half-width">
-        <mat-label>Category</mat-label>
+        <mat-label>Tag</mat-label>
 
         <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()"
           style="cursor: pointer;">loyalty</mat-icon>
@@ -59,17 +60,32 @@
       </mat-form-field>
 
     </div>
+    <!-- Select Users to Keep in Loop -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Select Users to Keep in Loop</mat-label>
+      <mat-select formControlName="keepInLoopUsers" multiple>
+        <mat-option *ngFor="let user of listOfUsers" [value]="user.id">
+          {{ user.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Task Location</mat-label>
+      <input matInput formControlName="location" placeholder="Latitude, Longitude">
+    </mat-form-field>
 
     <div class="actions-section">
-<!-- Wrapper to ensure single-line display -->
+      <!-- Wrapper to ensure single-line display -->
 
-  <button mat-icon-button (click)="openAddLinkDialog()" matTooltip="Add Link">
-    <mat-icon class="primary-icon">link</mat-icon>
-  </button>
-  <span *ngIf="links.length === 1" class="small-text">1 link added</span>
-  <span *ngIf="links.length > 1" class="small-text">{{ links.length }} links added</span>
+      <button mat-icon-button (click)="openAddLinkDialog()" matTooltip="Add Link">
+        <mat-icon class="primary-icon">link</mat-icon>
+      </button>
 
-  
+      <span *ngIf="links.length === 1" class="small-text">1 link added</span>
+      <span *ngIf="links.length > 1" class="small-text">{{ links.length }} links added</span>
+
       <!-- File Upload -->
       <input type="file" #fileInput (change)="onImageUpload($event)" hidden />
       <button mat-icon-button (click)="fileInput.click()" matTooltip="Upload Image">
@@ -77,22 +93,22 @@
       </button>
 
       <button mat-icon-button (click)="startRecording()" matTooltip="Start Recording" [disabled]="isRecording">
-        <mat-icon class="primary-icon" >mic</mat-icon>
+        <mat-icon class="primary-icon">mic</mat-icon>
       </button>
 
       <button mat-icon-button (click)="stopRecording()" matTooltip="Stop Recording" [disabled]="!isRecording">
-        <mat-icon class="primary-icon" >mic_off</mat-icon>
+        <mat-icon class="primary-icon">mic_off</mat-icon>
       </button>
+
       <button mat-icon-button (click)="openMap()" matTooltip="Send Location">
-        <mat-icon color="primary">location_on</mat-icon>
+        <mat-icon class="primary-icon">location_on</mat-icon>
       </button>
 
       <!-- Recording Indicator -->
       <div *ngIf="isRecording" class="blinking-text">
         <span class="blinking-dot"></span> Recording...
-    </div>
+      </div>
       <canvas #audioVisualizer width="300" height="60" *ngIf="isRecording"></canvas>
-
       <div class="audio-preview-container" *ngIf="audioUrl">
         <div class="audio-preview-header">
           <p>🎵 Voice Preview</p>
@@ -111,20 +127,11 @@
         <img [src]="imagePreview" alt="Preview" />
 
         <button type="button" class="delete-btn" (click)="deleteImage()" matTooltip="Delete Image">
-              <mat-icon >delete</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
     </div>
   </form>
-
 </div>
 <app-footer (saveClicked)="postTask()" [disabled]="postTaskForm.invalid" (clerClicked)="clearFields()">
 </app-footer>
-
-
-<!-- Save Button -->
-<!-- <button mat-raised-button color="accent" matTooltip="Save Data"  (click)="postTask()" type="submit" [disabled]="postTaskForm.invalid">
-    <i class="material-icons">save</i> Save
-  </button>
-
--->

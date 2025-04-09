@@ -17,15 +17,13 @@ import { AddLinkDialogComponent } from 'src/app/shared/components/add-link-dialo
       state('hidden', style({ transform: 'translateX(100%)', opacity: 0 })),
       state('visible', style({ transform: 'translateX(0)', opacity: 1 })),
       transition('hidden => visible', [
-        animate('0.5s ease-in-out')
-      ])
+        animate('0.5s ease-in-out')])
     ])
   ],
 })
 export class PostTaskComponent {
 
   links: string[] = [];
-
   audioUrl: string | null = null;
   isRecording = false;
   mediaRecorder: MediaRecorder | null = null;
@@ -41,6 +39,7 @@ export class PostTaskComponent {
   selectedCategoryName = '';
   selectedCategoryId: number | null = null;
   newCategoryName: string = '';
+  listOfUsers: any[] = []; // Added for keep-in-loop users
 
   constructor(private adminService: AdminService,
     private fb: FormBuilder, private router: Router, private snackbar: MatSnackBar,private dialog: MatDialog) {
@@ -52,16 +51,17 @@ export class PostTaskComponent {
       title: [null, [Validators.required]],
       dueDate: [null, [Validators.required]],
       description: [null, [Validators.required]],
-      priority: [null, [Validators.required]],
+      priority: ['HIGH', [Validators.required]],
       image: [null],
       categoryId: [null], // Can be null initially
       categoryName: [''],
-      location: ['']  // <-- New Field for Location
+      location: [''] , // <-- New Field for Location
+      keepInLoopUsers: [[]] // Added field for selected users
     })
     this.getUsers();
     this.loadCategories();
+    this.getKeepInLoopUsers();
 
-    // Trigger the animation after the component initializes
     setTimeout(() => {
       this.animationState = 'visible';
     }, 0);
@@ -72,6 +72,11 @@ export class PostTaskComponent {
       this.listofEmployees = res;
       console.log(res);
     }))
+  }
+  getKeepInLoopUsers() {
+    this.adminService.getUsers().subscribe((res) => {
+      this.listOfUsers = res; // Fetching users to show in dropdown
+    });
   }
 
   loadCategories() {
@@ -85,7 +90,13 @@ export class PostTaskComponent {
     if (this.postTaskForm.invalid) return;
 
     const taskData = { ...this.postTaskForm.value,links:this.links };
-  
+
+
+     // Ensure priority is set to HIGH if user didn't select one
+  if (!taskData.priority) {
+    taskData.priority = 'HIGH';
+  }
+
     if (taskData.dueDate) {
       const dueDate = new Date(taskData.dueDate); // Convert form input to Date object
 
@@ -93,7 +104,6 @@ export class PostTaskComponent {
     const year = dueDate.getFullYear();
     const month = String(dueDate.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit format
     const day = String(dueDate.getDate()).padStart(2, '0'); // Ensure 2-digit format
-
     taskData.dueDate = `${year}-${month}-${day}`; // Store as YYYY-MM-DD (No Timezone shift)
   }
   
@@ -161,15 +171,12 @@ export class PostTaskComponent {
     this.imageFile=null;
   }
 
-
   startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-
       this.mediaRecorder = new MediaRecorder(stream);
       this.mediaRecorder.start();
       this.isRecording = true;
       this.recordedChunks = [];
-
       this.mediaRecorder.ondataavailable = event => {
         if (event.data.size > 0) {
           this.recordedChunks.push(event.data);
@@ -196,16 +203,17 @@ export class PostTaskComponent {
     this.audioUrl = null;
     this.voiceFile = null;
   }
-
-
   openMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          
-          // Set location in form
+  
+          // Fetch Address using Reverse Geocoding API
+          this.getAddressFromCoordinates(latitude, longitude);
+  
+          // Set Coordinates in the Form
           this.postTaskForm.patchValue({
             location: `${latitude},${longitude}`
           });
@@ -222,6 +230,55 @@ export class PostTaskComponent {
       alert("Geolocation is not supported by this browser.");
     }
   }
+  
+  getAddressFromCoordinates(lat: number, lng: number) {
+    const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your API Key
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'OK' && data.results.length > 0) {
+          const address = data.results[0].formatted_address;
+          
+          // Save the address in the form
+          this.postTaskForm.patchValue({
+            address: address
+          });
+  
+          console.log("Address:", address);
+        } else {
+          console.error("No address found");
+        }
+      })
+      .catch(error => console.error("Error fetching address:", error));
+  }
+  
+
+  // openMap() {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const latitude = position.coords.latitude;
+  //         const longitude = position.coords.longitude;
+          
+  //         // Set location in form
+  //         this.postTaskForm.patchValue({
+  //           location: `${latitude},${longitude}`
+  //         });
+  
+  //         // Open Google Maps
+  //         window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, '_blank');
+  //       },
+  //       (error) => {
+  //         console.error("Error getting location:", error);
+  //         alert("Unable to fetch location. Please enable location services.");
+  //       }
+  //     );
+  //   } else {
+  //     alert("Geolocation is not supported by this browser.");
+  //   }
+  // }
   
 }
 // postTask() {

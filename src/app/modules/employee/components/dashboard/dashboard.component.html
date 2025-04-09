@@ -8,6 +8,7 @@
         </mat-expansion-panel-header>
 
         <form [formGroup]="searchTaskForm" class="filter-form">
+            
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>title</mat-label>
                 <input matInput formControlName="title" placeholder="search by title">
@@ -30,17 +31,19 @@
                     <mat-option value="LOW">low</mat-option>
                     <mat-option value="MEDIUM">Medium</mat-option>
                     <mat-option value="HIGH">High</mat-option>
+                    <mat-option value="VERY_LOW">VERY-LOW</mat-option>
+                    <mat-option value="VERY-HIGH">VERY-HIGH</mat-option>
                 </mat-select>
             </mat-form-field>
-            <!-- ✅ Added Category Dropdown -->
+            
+            <!--  Added Category Dropdown -->
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>Category</mat-label>
                 <mat-select formControlName="categoryNames" multiple>
                     <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
                 </mat-select>
             </mat-form-field>
-         
-              
+                     
             <mat-form-field appearance="fill" class="filter-input">
                 <mat-label>Due Date</mat-label>
                 <input matInput [matDatepicker]="DueDatePicker" formControlName="dueDate"
@@ -54,6 +57,7 @@
                     (click)="applyFilter()">
                     <mat-icon>search</mat-icon>
                 </button>
+                
                 <button mat-mini-fab matTooltip="clear!" color="warn" class="clear-filter-btn " (click)="clearFilter()">
                     <mat-icon>clear_all</mat-icon>
                 </button>
@@ -63,47 +67,75 @@
 </div>
 
 <div class="task-list">
-    <mat-card class="task-card" *ngFor="let task of listOfTasks">
+    <mat-card class="task-card"
+    [ngClass]="{'high-priority-today': isHighPriorityDueToday(task)}"
+    *ngFor="let task of listOfTasks">
         <div class="task-details">
 
+            <div class="task-header">
             <h2 class="task-name">{{task.title}}</h2>
+          
+            <div *ngIf="isHighPriorityDueToday(task)" class="urgent-task-badge">
+                <mat-icon class="urgent-icon">notifications_active</mat-icon>
+                <span class="urgent-text">Urgent</span>
+            </div>
+
+            <div class="time-info">
+                <mat-icon class="time-icon">alarm</mat-icon>
+                <span class="posted-time">{{ task.timeAgo }}</span> 
+            </div>
+
+        </div>
 
             <p class="task-description">{{task.description}}</p>
 
             <div class="task-info">
+
                 <div class="info-row">
-                    <span class="info-label">Due Date</span>
+                    <span class="info-label"> Due Date</span>
                     <span class="info-value">{{task.dueDate | date:'MMM dd, Y'}}</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Employee:</span>
+                    <span class="info-label">  Employee:</span>
                     <span class="info-value">{{task.employeeName}}</span>
                 </div>
+
                 <div class="info-row">
-                    <span class="info-label">Priority:</span>
+                    <span class="info-label"> ⚡Priority:</span>
                     <span class="info-value">{{task.priority}}</span>
                 </div>
 
                 <div class="info-row">
-                    <span class="info-label">Status:</span>
-                    <span class="info-value">{{task.taskStatus}}</span>
+                    <span class="info-label"> 📌Status:</span>
+                    <span class="info-value" [ngClass]="getStatusClass(task.taskStatus)">
+                        {{ task.taskStatus }}
+                    </span>
                 </div>
+
                 <div class="info-row">
                     <mat-icon class="category-icon">loyalty</mat-icon>
                     <span class="info-label">Category </span>
                     <span class="info-value">{{task.categoryName}}</span>
                 </div>
-                <mat-divider></mat-divider>
+                <mat-divider>
+                </mat-divider>
             </div>
+            
+            <mat-divider>
 
-            <mat-divider></mat-divider>
-
+            </mat-divider>
             <div class="actions">
 
+                <div *ngIf="isTaskOverdue(task)" class="overdue-task-badge">
+                    <mat-icon class="overdue-icon">warning</mat-icon>
+                    <span class="overdue-text">Overdue</span>
+                </div>
+
                 <a *ngIf="task.imageName" [href]="task.imageName" target="_blank">
-                    <img [src]="task.imageName" alt="Task Image" class="task-thumbnail" />
+                    <img [src]="task.imageName" alt="Task Image" class="task-thumbnail"/>
                 </a>
+
                 <button mat-icon-button color="warn" matTooltip="Go to View" class="view-button"
                     routerLink="/employee/task-details/{{task.id}}">
                     <mat-icon>visibility</mat-icon>
@@ -115,12 +147,11 @@
                 </button>
 
                 <mat-menu #statusMenu="matMenu">
+                   
                     <button mat-menu-item (click)="updateStatus(task.id,'INPROGRESS')">INPROGRESS</button>
                     <button mat-menu-item (click)="updateStatus(task.id,'COMPLETED')">COMPLETED</button>
-                    <button mat-menu-item (click)="updateStatus(task.id,'PANDING')">PANDING</button>
                 </mat-menu>
             </div>
         </div>
     </mat-card>
-
 </div>

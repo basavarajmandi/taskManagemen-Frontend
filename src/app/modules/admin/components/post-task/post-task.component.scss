@@ -1,159 +1,189 @@
 .container {
-    max-width: 500px;
-    margin: 20px auto; /* Slightly increased margin for spacing */
-    padding: 20px; /* Reduced padding for compact look */
-    border-radius: 10px;
-   // background-color: rgb(249, 252, 252);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+  max-width: 500px;
+  margin: 20px auto;
+  /* Slightly increased margin for spacing */
+  padding: 20px;
+  /* Reduced padding for compact look */
+  border-radius: 10px;
+  // background-color: rgb(249, 252, 252);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Added subtle shadow for depth */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  /* Adjusted spacing */
+  color: #4156d1;
+  font-size: 1.5rem;
+  /* Increased font size for prominence */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  mat-form-field {
+    margin-top: 10px;
+    /* Added more spacing between form fields */
+    width: 100%;
   }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 15px; /* Adjusted spacing */
-    color: #4156d1;
-    font-size: 1.5rem; /* Increased font size for prominence */
+
+  button {
+    align-self: center;
+    margin-top: 20px;
+    /* Adjusted spacing from top */
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+    /* Adjusted padding for smaller screens */
   }
 
   form {
-    display: flex;
-    flex-direction: column;
-  
     mat-form-field {
-      margin-top: 10px; /* Added more spacing between form fields */
-      width: 100%;
-    }
-  
-    button {
-      align-self: center;
-      margin-top: 20px; /* Adjusted spacing from top */
+      margin-bottom: 10px;
     }
   }
-  
-  @media (max-width: 600px) {
-    .container {
-      padding: 15px; /* Adjusted padding for smaller screens */
-    }
-  
-    form {
-      mat-form-field {
-        margin-bottom: 10px;
-      }
-    }
-  }
-  
-  .primary-icon {
-    color: #007BFF !important; /* Industry-standard blue */
-  }
-
-
-  canvas {
-    display: block;
-    background: black;
-    border-radius: 5px;
-  }
-  .category-icon {
-    font-size: 20px; /* Adjust the icon size */
-    color: #108ee9; /* Optional: Adjust icon color */
 }
-.priority-icon{
-color:#108ee9;
+
+.primary-icon {
+  color: #0059ff !important;
+  /* Industry-standard blue */
+}
+
+canvas {
+  display: block;
+  background: black;
+  border-radius: 5px;
+}
+
+.category-icon {
+  font-size: 20px;
+  /* Adjust the icon size */
+  color: #0693f8;
+  /* Optional: Adjust icon color */
 }
 
 /* Employee & Category Fields Side by Side */
 .row-container {
   display: flex;
-  gap: 10px; /* Spacing between fields */
+  gap: 10px;
+  /* Spacing between fields */
   width: 100%;
 }
 
 .half-width {
-  flex: 1; /* Makes sure both fields take equal space */
+  flex: 1;
+  /* Makes sure both fields take equal space */
 }
-  .form-field {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Increased spacing between elements */
-    flex-wrap: nowrap; /* Prevents wrapping of items */
+
+.form-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Increased spacing between elements */
+  flex-wrap: nowrap;
+  /* Prevents wrapping of items */
+}
+
+.form-field input[type="file"] {
+  display: none;
+  /* Hides the default file input */
+}
+
+.form-field button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4156d1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* Added subtle shadow */
+  transition: transform 0.2s ease;
+  /* Added hover animation */
+}
+
+.form-field button:hover {
+  transform: scale(1.1);
+}
+
+audio {
+  width: 100%;
+  /* Ensures audio player fits the container */
+  margin-top: 10px;
+  /* Added spacing above audio player */
+}
+
+// .priority-icon {
+//   color: #ff9800; /* Orange color for visibility */
+//   margin-right: 8px;
+// }
+
+.image-preview-container {
+  position: relative;
+  display: inline-block;
+
+  img {
+    width: 100px;
+    /* Increased preview image size */
+    height: auto;
+    border-radius: 8px;
+    /* Rounded corners */
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
   }
-  
-  .form-field input[type="file"] {
-    display: none; /* Hides the default file input */
-  }
-  
-  .form-field button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #4156d1;
+
+  .delete-btn {
+    position: absolute;
+    top: 5px;
+    /* Adjusted position for better alignment */
+    right: 2px;
+    background: rgb(253, 93, 93);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    /* Made the button fully circular */
+    width: 32px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
-    transition: transform 0.2s ease; /* Added hover animation */
-  }
-  
-  .form-field button:hover {
-    transform: scale(1.1); 
-  }
-  
-  audio {
-    width: 100%; /* Ensures audio player fits the container */
-    margin-top: 10px; /* Added spacing above audio player */
-  }
-  // .priority-icon {
-  //   color: #ff9800; /* Orange color for visibility */
-  //   margin-right: 8px;
-  // }
-  
-  .image-preview-container {
-    position: relative;
-    display: inline-block;
-  
-    img {
-      width: 100px; /* Increased preview image size */
-      height: auto;
-      border-radius: 8px; /* Rounded corners */
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    }
-  
-    .delete-btn {
-      position: absolute;
-      top: 5px; /* Adjusted position for better alignment */
-      right: 2px;
-      background: rgb(253, 93, 93);
-      color: white;
-      border: none;
-      border-radius: 50%; /* Made the button fully circular */
-      width: 32px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added shadow */
-      transition: transform 0.2s ease; /* Added hover animation */
-    }
-  
-    .delete-btn:hover {
-      transform: scale(1.1); /* Slight zoom on hover */
-      background: rgb(220, 50, 50); /* Darker red for hover state */
-    }
+    font-size: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Added shadow */
+    transition: transform 0.2s ease;
+    /* Added hover animation */
   }
 
-  @keyframes blink {
-    50% { opacity: 0; }
+  .delete-btn:hover {
+    transform: scale(1.1);
+    /* Slight zoom on hover */
+    background: rgb(220, 50, 50);
+    /* Darker red for hover state */
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .blinking-text {
 
-    animation: blink 1s infinite;
-    color: red;
-    font-weight: bold;
+  animation: blink 1s infinite;
+  color: red;
+  font-weight: bold;
 }
 
 /* Voice Preview Container */
