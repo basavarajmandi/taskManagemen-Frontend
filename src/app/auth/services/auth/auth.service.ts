@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 
 // const BASE_URL="http://localhost:8080/";
-const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/";
+ const BASE_URL="http://localhost:5000/";
+// const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/";
 @Injectable({
   providedIn: 'root'
 })

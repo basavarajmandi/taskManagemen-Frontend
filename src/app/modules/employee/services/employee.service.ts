@@ -5,7 +5,8 @@ import { StorageService } from 'src/app/auth/services/storage/storage.service';
 import { PaginatedResponse } from 'src/app/shared/models/paginated-response';
 
 // const BASE_URL="http://localhost:8080/"; it local and below is production
-const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/";
+const BASE_URL="http://localhost:5000/";
+// const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/";
 @Injectable({
   providedIn: 'root'
 })
@@ -37,7 +38,6 @@ export class EmployeeService {
       params: params
     });
   }
-
 
   getAllCategories(): Observable<string[]> {
     return this.httpClient.get<string[]>(BASE_URL + 'api/employee/filter/categories', {
@@ -103,7 +103,6 @@ export class EmployeeService {
     );
   }
 
-
   exportToExcelByUserId(userId: number): Observable<Blob> {
     return this.httpClient.get(`${BASE_URL}api/employee/tasks/export/${userId}`, {
       headers: this.createAuthorizationHeader(),
@@ -126,7 +125,6 @@ export class EmployeeService {
   //   });
   // }
   
-
 }
   // createComment(id:number, content:string):Observable<any>{
   //   const params={
@@ -139,7 +137,7 @@ export class EmployeeService {
   //   });
   // }
 
-  //   getTaskByUserId(title: string, taskStatus: string[], priority: string[], dueDate: string): Observable<any> {
+//   getTaskByUserId(title: string, taskStatus: string[], priority: string[], dueDate: string): Observable<any> {
 //     return this.httpClient.get(BASE_URL + `api/employee/task/user/${StorageService.getUserId()}`, {
 //         params: {
 //             title: title || '',

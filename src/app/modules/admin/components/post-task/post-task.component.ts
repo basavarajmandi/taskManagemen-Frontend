@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { HostListener } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,6 +8,11 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { CategoryDialogComponent } from 'src/app/shared/components/category-dialog/category-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLinkDialogComponent } from 'src/app/shared/components/add-link-dialog/add-link-dialog.component';
+import { HotkeyService } from 'src/app/shared/hotkey.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MatDatepicker } from '@angular/material/datepicker';
+
 
 @Component({
   selector: 'app-post-task',
@@ -22,7 +28,10 @@ import { AddLinkDialogComponent } from 'src/app/shared/components/add-link-dialo
   ],
 })
 export class PostTaskComponent {
+  @ViewChild('dueDateInput') dueDateInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('dueDatePicker') dueDatePicker!: MatDatepicker<Date>;
 
+  private unsubscribe$ = new Subject<void>();
   links: string[] = [];
   audioUrl: string | null = null;
   isRecording = false;
@@ -42,7 +51,11 @@ export class PostTaskComponent {
   listOfUsers: any[] = []; // Added for keep-in-loop users
 
   constructor(private adminService: AdminService,
-    private fb: FormBuilder, private router: Router, private snackbar: MatSnackBar,private dialog: MatDialog) {
+    private fb: FormBuilder,
+    private router: Router,
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog,
+    private hotkeyService: HotkeyService) {
   }
 
   ngOnInit() {
@@ -55,16 +68,82 @@ export class PostTaskComponent {
       image: [null],
       categoryId: [null], // Can be null initially
       categoryName: [''],
-      location: [''] , // <-- New Field for Location
+      location: [''], // <-- New Field for Location
       keepInLoopUsers: [[]] // Added field for selected users
     })
+
+    this.hotkeyService.openAddLink$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.snackbar.open('Opening Link Dialog (Ctrl + K)', 'Close', { duration: 2000 });
+        this.openAddLinkDialog(); // Your existing method
+      });
+
+    this.hotkeyService.openImage$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+        this.snackbar.open('Opening image (Ctrl + i)', 'Close', { duration: 2000 });
+        if (fileInput) {
+          fileInput.click(); // Triggers the file dialog
+        }
+      });
+
+
+    this.hotkeyService.openMicStart$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        if (!this.isRecording) {
+          this.startRecording();
+        }
+      });
+
+    this.hotkeyService.openMicStop$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        if (this.isRecording) {
+          this.stopRecording();
+        }
+      });
+
+
+    this.hotkeyService.focusDueDate$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        setTimeout(() => {
+          // Focus the input
+          this.dueDateInput?.nativeElement?.focus();
+          // Open the calendar
+          this.dueDatePicker?.open();
+        }, 0); // Delay to ensure rendering is stable
+      });
+
+    this.hotkeyService.focusCategoryDialog$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.openCategoryDialog();
+      });
+
+
+      this.hotkeyService.openLocation$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(()=>{
+        this.openMap();
+      })
+
     this.getUsers();
     this.loadCategories();
     this.getKeepInLoopUsers();
 
+
     setTimeout(() => {
       this.animationState = 'visible';
     }, 0);
+
+  }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   getUsers() {
@@ -85,28 +164,26 @@ export class PostTaskComponent {
       console.log(categories);
     });
   }
- 
+
   postTask() {
     if (this.postTaskForm.invalid) return;
 
-    const taskData = { ...this.postTaskForm.value,links:this.links };
-
-
-     // Ensure priority is set to HIGH if user didn't select one
-  if (!taskData.priority) {
-    taskData.priority = 'HIGH';
-  }
+    const taskData = { ...this.postTaskForm.value, links: this.links };
+    // Ensure priority is set to HIGH if user didn't select one
+    if (!taskData.priority) {
+      taskData.priority = 'HIGH';
+    }
 
     if (taskData.dueDate) {
       const dueDate = new Date(taskData.dueDate); // Convert form input to Date object
 
-    // Extract only the local date (YYYY-MM-DD) to avoid timezone issues
-    const year = dueDate.getFullYear();
-    const month = String(dueDate.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit format
-    const day = String(dueDate.getDate()).padStart(2, '0'); // Ensure 2-digit format
-    taskData.dueDate = `${year}-${month}-${day}`; // Store as YYYY-MM-DD (No Timezone shift)
-  }
-  
+      // Extract only the local date (YYYY-MM-DD) to avoid timezone issues
+      const year = dueDate.getFullYear();
+      const month = String(dueDate.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit format
+      const day = String(dueDate.getDate()).padStart(2, '0'); // Ensure 2-digit format
+      taskData.dueDate = `${year}-${month}-${day}`; // Store as YYYY-MM-DD (No Timezone shift)
+    }
+
     this.adminService.postTask(taskData, this.imageFile ?? undefined, this.voiceFile ?? undefined).subscribe(res => {
       if (res.id != null) {
         this.router.navigateByUrl("admin/dashboard");
@@ -122,7 +199,7 @@ export class PostTaskComponent {
       width: '400px',
       data: { categories: this.categories }
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (result.categoryId) {
@@ -150,6 +227,17 @@ export class PostTaskComponent {
     });
   }
 
+  //   @HostListener('window:keydown', ['$event'])
+  // handleHotKey(event: KeyboardEvent): void {
+  //   if (event.ctrlKey && event.key.toLowerCase() === 'k') {
+  //     event.preventDefault(); // prevent default browser link behavior
+  //     this.snackbar.open('opening Link Dialog( Ctrl + K)','Close',{duration:2000});
+  //     this.openAddLinkDialog(); // open the existing dialog
+  //   }
+  // }
+
+
+
   onImageUpload(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
@@ -161,14 +249,15 @@ export class PostTaskComponent {
       reader.readAsDataURL(file);
     }
   }
+
   clearFields() {
     this.postTaskForm.reset();
     this.imagePreview = null;
     this.imageFile = null;
   }
-  deleteImage(){
-    this.imagePreview=null;
-    this.imageFile=null;
+  deleteImage() {
+    this.imagePreview = null;
+    this.imageFile = null;
   }
 
   startRecording() {
@@ -198,7 +287,7 @@ export class PostTaskComponent {
       this.isRecording = false;
     }
   }
-  
+
   deleteVoice() {
     this.audioUrl = null;
     this.voiceFile = null;
@@ -209,15 +298,15 @@ export class PostTaskComponent {
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-  
+
           // Fetch Address using Reverse Geocoding API
           this.getAddressFromCoordinates(latitude, longitude);
-  
+
           // Set Coordinates in the Form
           this.postTaskForm.patchValue({
             location: `${latitude},${longitude}`
           });
-  
+
           // Open Google Maps
           window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, '_blank');
         },
@@ -230,22 +319,22 @@ export class PostTaskComponent {
       alert("Geolocation is not supported by this browser.");
     }
   }
-  
+
   getAddressFromCoordinates(lat: number, lng: number) {
     const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your API Key
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
-  
+
     fetch(url)
       .then(response => response.json())
       .then(data => {
         if (data.status === 'OK' && data.results.length > 0) {
           const address = data.results[0].formatted_address;
-          
+
           // Save the address in the form
           this.postTaskForm.patchValue({
             address: address
           });
-  
+
           console.log("Address:", address);
         } else {
           console.error("No address found");
@@ -253,7 +342,7 @@ export class PostTaskComponent {
       })
       .catch(error => console.error("Error fetching address:", error));
   }
-  
+
 
   // openMap() {
   //   if (navigator.geolocation) {
@@ -261,12 +350,12 @@ export class PostTaskComponent {
   //       (position) => {
   //         const latitude = position.coords.latitude;
   //         const longitude = position.coords.longitude;
-          
+
   //         // Set location in form
   //         this.postTaskForm.patchValue({
   //           location: `${latitude},${longitude}`
   //         });
-  
+
   //         // Open Google Maps
   //         window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, '_blank');
   //       },
@@ -279,7 +368,7 @@ export class PostTaskComponent {
   //     alert("Geolocation is not supported by this browser.");
   //   }
   // }
-  
+
 }
 // postTask() {
 //   this.adminService.postTask(this.postTaskForm.value).subscribe((res) => {

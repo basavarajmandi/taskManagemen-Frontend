@@ -18,9 +18,9 @@
 
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Due Date</mat-label>
-      <input matInput [matDatepicker]="dueDatePicker" placeholder="choose a due date" formControlName="dueDate">
+      <input #dueDateInput id="dueDate" matInput [matDatepicker]="dueDatePicker"   placeholder="choose a due date" formControlName="dueDate">
       <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle class="primary-icon" matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle class="primary-icon" matSuffix [for]="dueDatePicker" matTooltip="Calendar (Ctrl + d)"  ></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>
       <mat-error *ngIf="postTaskForm.get('dueDate')?.hasError('required')">This Input is Required</mat-error>
     </mat-form-field>
@@ -54,9 +54,9 @@
       <mat-form-field appearance="outline" class="form-field half-width">
         <mat-label>Tag</mat-label>
 
-        <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()"
+        <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()" matTooltip="Tag (Ctrl + Shift + C)"
           style="cursor: pointer;">loyalty</mat-icon>
-        <input matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()">
+        <input  id="" matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()">
       </mat-form-field>
 
     </div>
@@ -79,28 +79,29 @@
     <div class="actions-section">
       <!-- Wrapper to ensure single-line display -->
 
-      <button mat-icon-button (click)="openAddLinkDialog()" matTooltip="Add Link">
+      <button mat-icon-button (click)="openAddLinkDialog()" matTooltip="Add Link (Ctrl + k)">
         <mat-icon class="primary-icon">link</mat-icon>
+
       </button>
 
       <span *ngIf="links.length === 1" class="small-text">1 link added</span>
       <span *ngIf="links.length > 1" class="small-text">{{ links.length }} links added</span>
 
       <!-- File Upload -->
-      <input type="file" #fileInput (change)="onImageUpload($event)" hidden />
-      <button mat-icon-button (click)="fileInput.click()" matTooltip="Upload Image">
+      <input type="file" id="fileInput" #fileInput (change)="onImageUpload($event)" hidden />
+      <button mat-icon-button (click)="fileInput.click()" matTooltip="Upload Image (Ctrl + i)">
         <mat-icon class="primary-icon">folder</mat-icon>
       </button>
 
-      <button mat-icon-button (click)="startRecording()" matTooltip="Start Recording" [disabled]="isRecording">
+      <button mat-icon-button (click)="startRecording()" matTooltip="Start Recording (Ctrl + m) " [disabled]="isRecording">
         <mat-icon class="primary-icon">mic</mat-icon>
       </button>
 
-      <button mat-icon-button (click)="stopRecording()" matTooltip="Stop Recording" [disabled]="!isRecording">
+      <button mat-icon-button (click)="stopRecording()" matTooltip="Stop Recording (Ctrl + s) " [disabled]="!isRecording">
         <mat-icon class="primary-icon">mic_off</mat-icon>
       </button>
 
-      <button mat-icon-button (click)="openMap()" matTooltip="Send Location">
+      <button mat-icon-button (click)="openMap()" matTooltip="Send Location (Ctrl + l)">
         <mat-icon class="primary-icon">location_on</mat-icon>
       </button>
 

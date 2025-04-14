@@ -7,11 +7,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './add-link-dialog.component.html',
   styleUrls: ['./add-link-dialog.component.scss']
 })
-export class AddLinkDialogComponent {    
-
+export class AddLinkDialogComponent {
 
   linkForm: FormGroup;
-//   newLink: string = '';
   links: string[] = [];
 
   constructor(
@@ -24,7 +22,7 @@ export class AddLinkDialogComponent {
       newLink: new FormControl('', [
         Validators.required,
         Validators.pattern(/^(https?:\/\/)?([\w\d@#.-]+\.)+[a-zA-Z]{2,6}(\/.*)?$/)
-            ])
+      ])
     });
   }
 
@@ -49,3 +47,4 @@ export class AddLinkDialogComponent {
   }
 
 }
+//   newLink: string = '';

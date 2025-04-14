@@ -5,8 +5,9 @@ import { StorageService } from 'src/app/auth/services/storage/storage.service';
 import { PaginatedResponse } from 'src/app/shared/models/paginated-response';
 import { TaskDTO } from 'src/app/shared/models/task-dto';
 
-// const BASE_URL="http://localhost:8080/";
-const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/"; // forProduction from elasticbeanstalk 
+//  const BASE_URL="http://localhost:8080/";
+  const BASE_URL="http://localhost:5000/";
+//const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/"; // forProduction from elasticbeanstalk 
 
 @Injectable({
   providedIn: 'root'
