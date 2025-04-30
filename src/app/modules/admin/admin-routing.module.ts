@@ -10,7 +10,6 @@ const routes: Routes = [
   {path:"Maindashboard",component:MainDashboardComponent ,data: { hideFooter: true }},
   {path:"dashboard" ,component:DashboardComponent},
   {path:"task",component:PostTaskComponent ,data: { hideFooter: true }},
- 
   {path:"task/:id/edit",component:UpdateTaskComponent},
   {path:"task/:id/view",component:ViewTaskDetailsComponent}
 ];

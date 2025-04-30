@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/auth/services/storage/storage.service';
 import { PaginatedResponse } from 'src/app/shared/models/paginated-response';
+import { environment } from 'src/environments/environment';
 
 // const BASE_URL="http://localhost:8080/"; it local and below is production
-const BASE_URL="http://localhost:5000/";
-// const BASE_URL="http://task-management-app-env.eba-xp9q7my3.eu-north-1.elasticbeanstalk.com/";
+// const BASE_URL="http://localhost:5000/";
+// const BASE_URL="http://task-management-app-env-1.eba-zbqsymrq.eu-north-1.elasticbeanstalk.com/";
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
+
+   private BASE_URL = environment.BASE_URL;
 
   constructor(private httpClient :HttpClient) { 
   }
@@ -33,51 +36,51 @@ export class EmployeeService {
     if (taskStatuses) taskStatuses.forEach(status => params = params.append('taskStatuses', status));
     if (categoryNames) categoryNames.forEach(category => params = params.append('categoryNames', category)); // <-- Append categories
     if (dueDate) params = params.append('dueDate', dueDate);
-    return this.httpClient.get(BASE_URL + `api/employee/tasks/user/${StorageService.getUserId()}`, {
+    return this.httpClient.get(this.BASE_URL + `api/employee/tasks/user/${StorageService.getUserId()}`, {
       headers: this.createAuthorizationHeader(),
       params: params
     });
   }
 
   getAllCategories(): Observable<string[]> {
-    return this.httpClient.get<string[]>(BASE_URL + 'api/employee/filter/categories', {
+    return this.httpClient.get<string[]>(this.BASE_URL + 'api/employee/filter/categories', {
       headers: this.createAuthorizationHeader(),
     });
   }
   
   getTaskById(id:number):Observable<any>{
-    return this.httpClient.get(BASE_URL+`api/employee/task/${id}`,{
+    return this.httpClient.get(this.BASE_URL+`api/employee/task/${id}`,{
       headers:this.createAuthorizationHeader()
     })
   }
 
   updateTask(id:number,status:string):Observable<any>{
-    return this.httpClient.put(BASE_URL+`api/employee/task/${id}/${status}`,{},{
+    return this.httpClient.put(this.BASE_URL+`api/employee/task/${id}/${status}`,{},{
       headers:this.createAuthorizationHeader()
     });
   }
 
   createComment(formData: FormData): Observable<any> {
-    return this.httpClient.post(BASE_URL + `api/employee/task/comment`, formData, {
+    return this.httpClient.post(this.BASE_URL + `api/employee/task/comment`, formData, {
       headers: this.createAuthorizationHeader()
     });
   }
 
   getCommentsByTaskId(id:number):Observable<any>{
-     return this.httpClient.get(BASE_URL+`api/employee/task/${id}/comments`,{
+     return this.httpClient.get(this.BASE_URL+`api/employee/task/${id}/comments`,{
       headers: this.createAuthorizationHeader()
     })
   }
 
   // Fetch the employee's dashboard data
   getEmployeeTaskStatus(employeeId: number): Observable<any> {
-    return this.httpClient.get(`${BASE_URL}api/employee/dashboard?employeeId=${employeeId}`, {
+    return this.httpClient.get(`${this.BASE_URL}api/employee/dashboard?employeeId=${employeeId}`, {
       headers: this.createAuthorizationHeader()
     });
   }
 
   getTaskCountsByPriority(employeeId:number):Observable<any>{
-    return this.httpClient.get(`${BASE_URL}api/employee/${employeeId}/task-counts-by-priority`,{
+    return this.httpClient.get(`${this.BASE_URL}api/employee/${employeeId}/task-counts-by-priority`,{
       headers: this.createAuthorizationHeader()
     });
   }
@@ -98,13 +101,13 @@ export class EmployeeService {
       console.log(`Fetching tasks for userId=${userId} with Page=${page}, Size=${size}, Sort=${sortField}, Direction=${sortDirection}`);
 
     return this.httpClient.get<PaginatedResponse>(
-      `${BASE_URL}api/employee/tasks/paginated/user/${userId}`,
+      `${this.BASE_URL}api/employee/tasks/paginated/user/${userId}`,
       { headers: this.createAuthorizationHeader(), params }
     );
   }
 
   exportToExcelByUserId(userId: number): Observable<Blob> {
-    return this.httpClient.get(`${BASE_URL}api/employee/tasks/export/${userId}`, {
+    return this.httpClient.get(`${this.BASE_URL}api/employee/tasks/export/${userId}`, {
       headers: this.createAuthorizationHeader(),
       responseType: 'blob' // Expecting binary data (Excel file)
     });

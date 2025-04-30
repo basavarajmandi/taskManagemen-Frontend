@@ -255,6 +255,13 @@
     justify-content: center;
 }
 
+
+.comment-voice-media-card {
+    width: 70%;
+    text-align: center;
+ 
+}
+
 .image-wrapper {
     position: relative;
     display: inline-block;
@@ -297,3 +304,29 @@
     text-decoration: underline;
     margin-top: 5px;
 }
+
+/* Make the 'Keep In Loop Users' section look like other info fields */
+.info-row ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .info-row ul li {
+    font-size: 14px;
+    color: #0a0a0a;
+  }
+  /* Style for the list to display horizontally */
+.horizontal-list {
+    display: flex; /* Makes the list horizontal */
+    gap: 10px;     /* Adds some space between the list items */
+    padding: 0;     /* Removes default padding */
+    margin: 0;      /* Removes default margin */
+    list-style-type: none; /* Removes bullet points */
+  }
+  
+  .horizontal-list {
+    display: inline; /* Keep the names in a single line */
+    font-size: 15px;
+    color: #080808;
+    
+  }

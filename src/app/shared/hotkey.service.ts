@@ -66,6 +66,8 @@ export class HotkeyService {
             event.preventDefault();
             this.openLocationSubject.next();
             break;
+
+        
         }
        
       }

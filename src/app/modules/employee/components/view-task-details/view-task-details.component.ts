@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/auth/services/storage/storage.service';
 import WaveSurfer from 'wavesurfer.js';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-view-task-details',
@@ -12,6 +13,8 @@ import WaveSurfer from 'wavesurfer.js';
   styleUrls: ['./view-task-details.component.scss']
 })
 export class ViewTaskDetailsComponent {
+
+  BASE_URL = environment.BASE_URL; // ✅ Expose this to your template
 
   selectedVoiceFile: File | null = null;
   voicePreviewUrl: string | null = null;
@@ -57,11 +60,13 @@ export class ViewTaskDetailsComponent {
 
       // Ensure taskData is defined and imageName exists
       if (this.taskData && this.taskData.imageName && !this.taskData.imageName.startsWith("http")) {
-        this.taskData.imageName = `http://localhost:8080/api/files/images/${this.taskData.imageName}`;
+        // this.taskData.imageName = `http://localhost:8080/api/files/images/${this.taskData.imageName}`;
+          this.taskData.imageName = `${environment.BASE_URL}api/files/images/${this.taskData.imageName}`;
       }
 
       if (this.taskData && this.taskData.voiceName && !this.taskData.voiceName.startsWith("http")) {
-        this.taskData.voiceName = `http://localhost:8080/api/files/voice/${this.taskData.voiceName}`;
+        // this.taskData.voiceName = `http://localhost:8080/api/files/voice/${this.taskData.voiceName}`;
+         this.taskData.voiceName = `${environment.BASE_URL}api/files/voice/${this.taskData.voiceName}`;
       }
     })
 

@@ -11,7 +11,7 @@
                     <div class="info-row">
                         <span class="info-label">Due Date:</span>
                         <span class="info-value">{{taskData.dueDate | date:'MMM dd,y'}}</span>
-                    </div>
+                    </div> 
 
                     <div class="info-row">
                         <span class="info-label">EmployeeName:</span>
@@ -35,13 +35,15 @@
                         <span class="info-value">{{ taskData.categoryName }}</span>
                     </div>
 
-                    <div class="info-row">
-                        <span class="info-label">Subscribers:</span>
-                        <span class="info-value">{{ taskData.keepInLoopUsers}}</span>
-                       <!-- // <span class="info-value">{{taskData.keepInLoopUsers}} </span> -->
-                    </div>
-                  
-                
+                    <div class="info-row"  *ngIf="keepInLoopUsernames.length > 0">
+                        <span class="info-label">Keep In Loop Users:</span>
+                        <span class="horizontal-list">
+                            <ng-container *ngFor="let username of keepInLoopUsernames; let last = last">
+                              <span class="info-value" >{{ username }}</span><span *ngIf="!last">, </span> <!-- Add comma except for the last element -->
+                            </ng-container>
+                          </span>
+                      </div>
+
                     <div class="info-row" *ngIf="taskData.links && taskData.links.length">
                         <mat-icon class="category-icon">link</mat-icon>
                         <span class="info-label">Links:</span>
@@ -52,9 +54,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
 
                 <!-- Image & Voice Side by Side -->
                 <div class="media-container">
@@ -132,7 +132,7 @@
                     </div>
 
                     <!-- Display Voice Message if exists -->
-                    <div *ngIf="comment.voiceName" class="comment-voice-container">
+                    <div *ngIf="comment.voiceName" class="comment-voice-media-card">
                         <h4>Voice Message</h4>
                         <audio controls>
                             <source [src]="comment.voiceName" type="audio/mpeg">

@@ -168,8 +168,9 @@
                             </div>
                             <div class="voice-section" *ngIf="comment.voiceName">
                                 <audio controls>
-                                    <source [src]="'http://localhost:8080/api/files/comment/voice/' + comment.voiceName"
-                                        type="audio/webm" />
+                                    <!-- <source [src]="'http://localhost:8080/api/files/comment/voice/' + comment.voiceName"
+                                        type="audio/webm" />  it is for old code before deployee aws cloud-->
+                                        <source [src]="BASE_URL + 'api/files/comment/voice/' + comment.voiceName" type="audio/webm" />
                                 </audio>
                             </div>
                         </mat-card-content>

@@ -13,7 +13,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatDatepicker } from '@angular/material/datepicker';
 
-
 @Component({
   selector: 'app-post-task',
   templateUrl: './post-task.component.html',
@@ -106,7 +105,6 @@ export class PostTaskComponent {
         }
       });
 
-
     this.hotkeyService.focusDueDate$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
@@ -173,6 +171,7 @@ export class PostTaskComponent {
     if (!taskData.priority) {
       taskData.priority = 'HIGH';
     }
+  
 
     if (taskData.dueDate) {
       const dueDate = new Date(taskData.dueDate); // Convert form input to Date object
@@ -235,8 +234,6 @@ export class PostTaskComponent {
   //     this.openAddLinkDialog(); // open the existing dialog
   //   }
   // }
-
-
 
   onImageUpload(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -301,7 +298,6 @@ export class PostTaskComponent {
 
           // Fetch Address using Reverse Geocoding API
           this.getAddressFromCoordinates(latitude, longitude);
-
           // Set Coordinates in the Form
           this.postTaskForm.patchValue({
             location: `${latitude},${longitude}`
@@ -343,7 +339,18 @@ export class PostTaskComponent {
       .catch(error => console.error("Error fetching address:", error));
   }
 
-
+}
+// postTask() {
+//   this.adminService.postTask(this.postTaskForm.value).subscribe((res) => {
+//     console.log(res);
+//     if (res.id != null) {
+//       this.router.navigateByUrl("admin/dashboard");
+//       this.snackbar.open('Task Posted SuccessFully..', 'close', { duration: 5000 });
+//     } else {
+//       this.snackbar.open('Somthing went roung ..', 'close', { duration: 5000 });
+//     }
+//   })
+// }
   // openMap() {
   //   if (navigator.geolocation) {
   //     navigator.geolocation.getCurrentPosition(
@@ -368,16 +375,3 @@ export class PostTaskComponent {
   //     alert("Geolocation is not supported by this browser.");
   //   }
   // }
-
-}
-// postTask() {
-//   this.adminService.postTask(this.postTaskForm.value).subscribe((res) => {
-//     console.log(res);
-//     if (res.id != null) {
-//       this.router.navigateByUrl("admin/dashboard");
-//       this.snackbar.open('Task Posted SuccessFully..', 'close', { duration: 5000 });
-//     } else {
-//       this.snackbar.open('Somthing went roung ..', 'close', { duration: 5000 });
-//     }
-//   })
-// }

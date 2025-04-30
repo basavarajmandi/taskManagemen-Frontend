@@ -21,9 +21,9 @@
 
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Due Date</mat-label>
-            <input matInput [matDatepicker]="dueDatePicker" placeholder="choose a due date" formControlName="dueDate">
+            <input matInput [matDatepicker]="dueDatePicker" placeholder="choose a due date" formControlName="dueDate"  matTooltip="Calendar (Ctrl + d)">
             <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle class="primary-icon"  matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle class="primary-icon"  matSuffix [for]="dueDatePicker"   matTooltip="Calendar (Ctrl + d)" ></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
             <mat-error *ngIf="updateTaskForm.get('dueDate')?.hasError('required')">This Input is Required</mat-error>
         </mat-form-field>
@@ -62,18 +62,16 @@
             <!-- Category Selection -->
             <mat-form-field appearance="outline" class="form-field half-width">
                 <mat-label>Category</mat-label>
-                <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()"
+                <mat-icon matPrefix class="category-icon" (click)="openCategoryDialog()"  matTooltip="(Ctrl +shift +c)" 
                     style="cursor: pointer;">loyalty</mat-icon>
-                <input matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()">
+                <input matInput [value]="selectedCategoryName" readonly (click)="openCategoryDialog()" matTooltip="(Ctrl +shift +c)">
             </mat-form-field>
         </div>
 
-
-
-        <!-- File Upload Input -->
+        <!-- File Upload Input     id="fileInput" this is for hotkey purpose used-->
         <div class="file-upload-container">
             <label class="upload-label">Update image</label>
-            <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" class="file-input" matTooltip="(ctrl + i)">
         </div>
 
         <div class="media-preview-container">
@@ -86,7 +84,6 @@
                     <img *ngIf="existingImageUrl" [src]="existingImageUrl" alt="Existing Image" class="image-preview">
                 </ng-template>
 
-             
             </div>
             <!-- Recorded Voice Preview -->
             <div class="voice-preview-container">
@@ -116,7 +113,7 @@
 
             <div class="link-container">
                 <!-- Add Link Button -->
-                <button mat-icon-button type="button" (click)="openAddLinkDialog()" matTooltip="Add Link">
+                <button mat-icon-button type="button" (click)="openAddLinkDialog()" matTooltip="Add Link (Ctrl + k)">
                     <mat-icon class="primary-icon">link</mat-icon>
                 </button>
 
@@ -129,12 +126,12 @@
 
             <div class="recording-buttons">
                 <!-- Start & Stop Recording Buttons -->
-                <button mat-icon-button type="button" (click)="startRecording()" matTooltip="Start Recording"
+                <button mat-icon-button type="button" (click)="startRecording()" matTooltip="Start Recording (Ctrl + m)"
                     [disabled]="isRecording">
                     <mat-icon class="primary-icon">mic</mat-icon>
                 </button>
 
-                <button mat-icon-button type="button" (click)="stopRecording()" matTooltip="Stop Recording"
+                <button mat-icon-button type="button" (click)="stopRecording()" matTooltip="Stop Recording (Ctrl + s)"
                     [disabled]="!isRecording">
                     <mat-icon class="primary-icon">mic_off</mat-icon>
                 </button>

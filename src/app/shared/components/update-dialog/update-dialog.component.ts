@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,12 +6,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/modules/admin/services/admin.service';
 import { CategoryDialogComponent } from '../category-dialog/category-dialog.component';
 import { AddLinkDialogComponent } from '../add-link-dialog/add-link-dialog.component';
+import { HotkeyService } from '../../hotkey.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { MatDatepicker } from '@angular/material/datepicker';
 @Component({
   selector: 'app-update-dialog',
   templateUrl: './update-dialog.component.html',
   styleUrls: ['./update-dialog.component.scss']
 })
 export class UpdateDialogComponent {
+
+  private unsubscribe$ =new Subject<void>();
   id: number = this.route.snapshot.params['id'];
   updateTaskForm !: FormGroup;
   links: { url: string }[] = []; // Ensures links are objects with a 'url' property
@@ -33,6 +39,8 @@ export class UpdateDialogComponent {
   voicePreview: string | null = null;
   existingVoiceUrl: string | null = null;
   selectedVoice: File | null = null; // Declare for voice file
+  @ViewChild('dueDateInput') dueDateInput!: ElementRef<HTMLInputElement>; // this is  declare for hotlink puepose
+  @ViewChild('dueDatePicker') dueDatePicker!: MatDatepicker<Date>;
 
   constructor(
     private dialogRef: MatDialogRef<UpdateDialogComponent>,
@@ -42,7 +50,8 @@ export class UpdateDialogComponent {
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+  private hotkeyService:HotkeyService) { }
 
   ngOnInit() {
     this.updateTaskForm = this.fb.group({
@@ -89,6 +98,73 @@ export class UpdateDialogComponent {
         }
 
     });
+
+     this.hotkeyService.openAddLink$
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            this.snackbar.open('Opening Link Dialog (Ctrl + K)', 'Close', { duration: 2000 });
+            this.openAddLinkDialog(); // Your existing method
+          });
+    
+        this.hotkeyService.openImage$
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+            this.snackbar.open('Opening image (Ctrl + i)', 'Close', { duration: 2000 });
+            if (fileInput) {
+              fileInput.click(); // Triggers the file dialog
+            }
+          });
+    
+    
+        this.hotkeyService.openMicStart$
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            this.snackbar.open('Opening start-Recording (Ctrl + m)', 'Close', { duration: 2000 });
+            if (!this.isRecording) {
+              this.startRecording();
+            }
+          });
+    
+        this.hotkeyService.openMicStop$
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            this.snackbar.open('Opening Stop-Recording (Ctrl + s)', 'Close', { duration: 2000 });
+            if (this.isRecording) {
+              this.stopRecording();
+            }
+          });
+    
+    
+        this.hotkeyService.focusDueDate$
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            this.snackbar.open('Opening Calander DueDate (Ctrl + d)', 'Close', { duration: 2000 });
+            setTimeout(() => {
+              // Focus the input
+              this.dueDateInput?.nativeElement?.focus();
+              // Open the calendar
+              this.dueDatePicker?.open();
+            }, 0); // Delay to ensure rendering is stable
+          });
+    
+        this.hotkeyService.focusCategoryDialog$
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(() => {
+            this.snackbar.open('Opening CategoryDialog (Ctrl + shift + c)', 'Close', { duration: 2000 });
+            this.openCategoryDialog();
+          });
+    
+    
+          this.hotkeyService.openLocation$
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(()=>{
+            this.openMap();
+          })
+
+  }
+  openMap() {
+    throw new Error('Method not implemented.');
   }
  
 

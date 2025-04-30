@@ -3,6 +3,7 @@ import { EmployeeService } from '../../services/employee.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -49,7 +50,8 @@ getTask() {
         task.timeAgo = this.getTimeAgo(task.assignedDate);
 
         if (task.imageName && !task.imageName.startsWith("http")) {
-          task.imageName = `http://localhost:8080/api/files/images/${task.imageName}`;
+          // task.imageName = `http://localhost:8080/api/files/images/${task.imageName}`;
+          task.imageName = `${environment.BASE_URL}api/files/images/${task.imageName}`;
         }
 
         console.log("upload image url :",task.imageName);
@@ -119,7 +121,8 @@ getTask() {
 
           task.timeAgo = this.getTimeAgo(task.assignedDate);
           if (task.imageName && !task.imageName.startsWith("http")) {
-            task.imageName = `http://localhost:8080/api/files/images/${task.imageName}`;
+            // task.imageName = `http://localhost:8080/api/files/images/${task.imageName}`;
+             task.imageName = `${environment.BASE_URL}api/files/images/${task.imageName}`;
           }
           return task;
         });
