@@ -61,6 +61,7 @@ export class UpdateDialogComponent {
       description: [null, [Validators.required]],
       priority: [null, [Validators.required]],
       taskStatus: [null, [Validators.required]],
+      location :[null, [Validators.required]],
       image: [null],
       voice: [null],
       categoryId: [null],
@@ -77,12 +78,12 @@ export class UpdateDialogComponent {
       // Set initial category name
       this.getusers();
 
-
       if (res.links) {
         this.links = res.links.map((link: any) => typeof link === 'string' ? { url: link } : link);
       } else {
         this.links = [];
       }
+
       console.log("Formatted Links:", this.links); // Debugging
       // Ensure imagePreview is set correctly
       if (res.imageName) {
@@ -163,10 +164,7 @@ export class UpdateDialogComponent {
           })
 
   }
-  openMap() {
-    throw new Error('Method not implemented.');
-  }
- 
+
 
   getTaskById() {
     this.service.getTaskById(this.id).subscribe((res) => {
@@ -203,7 +201,6 @@ export class UpdateDialogComponent {
       }
     });
   }
-  
   
   
 
@@ -262,7 +259,6 @@ export class UpdateDialogComponent {
           this.audioChunks.push(event.data);
         }
       };
-  
       this.mediaRecorder.onstop = () => {
         const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
         this.voicePreview = URL.createObjectURL(audioBlob);
@@ -295,7 +291,6 @@ export class UpdateDialogComponent {
     }
 
     const taskUpdateData = {
-      
       ...formValue,
       
       dueDate: formattedDueDate, // Ensure dueDate is correctly formatted
@@ -314,6 +309,57 @@ export class UpdateDialogComponent {
         this.snackbar.open('Failed to update task', 'Close', { duration: 5000 });
       },
     });
+  }
+
+
+  openMap() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          // Fetch Address using Reverse Geocoding API
+          this.getAddressFromCoordinates(latitude, longitude);
+          // Set Coordinates in the Form
+          this.updateTaskForm.patchValue({
+            location: `${latitude},${longitude}`
+          });
+
+          // Open Google Maps
+          window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, '_blank');
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          alert("Unable to fetch location. Please enable location services.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  getAddressFromCoordinates(lat: number, lng: number) {
+    const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your API Key
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'OK' && data.results.length > 0) {
+          const address = data.results[0].formatted_address;
+
+          // Save the address in the form
+          this.updateTaskForm.patchValue({
+            address: address
+          });
+
+          console.log("Address:", address);
+        } else {
+          console.error("No address found");
+        }
+      })
+      .catch(error => console.error("Error fetching address:", error));
   }
 }
 

@@ -43,11 +43,11 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     })
   }
-  
+
   getUserById(id: number): Observable<any> {
-    return this.httpClient.get(`${environment.BASE_URL}api/users/${id}`,{
+    return this.httpClient.get(`${environment.BASE_URL}api/users/${id}`, {
       headers: this.createAuthorizationHeader()
-    }); 
+    });
 
     // adjust URL as per your backend
   }
@@ -197,6 +197,7 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     });
   }
+
   createComment(id: number, content: string): Observable<any> {
     const params = {
       taskId: id,
@@ -230,7 +231,7 @@ export class AdminService {
   //   });
   // }
 
-  filterTasks(priority?: string[], title?: string, dueDate?: string, taskStatus?: string[], employeeName?: string, categoryNames?: string[]): Observable<any> {
+  filterTasks(priority?: string[], title?: string, dueDate?: string, taskStatus?: string[], employeeName?: string,  categoryNames?: string[]): Observable<any> {
     let params: any = {};
 
     if (priority) params['priority'] = priority;
@@ -239,7 +240,7 @@ export class AdminService {
     if (taskStatus) params['taskStatus'] = taskStatus;
     if (employeeName) params['employeeName'] = employeeName;
     if (categoryNames) params['categoryNames'] = categoryNames;
-
+   
     return this.httpClient.get(this.BASE_URL + 'api/admin/tasks/filter', {
       params: params,
       headers: this.createAuthorizationHeader()
@@ -290,3 +291,4 @@ export class AdminService {
   }
 
 }
+  

@@ -39,6 +39,7 @@ export class ViewTaskTableComponent implements OnInit {
       'dueDate',
       'taskStatus',
       'categoryName',
+      'location'
     ];
 
   dataSource = new MatTableDataSource<TaskDTO>([]);
@@ -95,6 +96,7 @@ export class ViewTaskTableComponent implements OnInit {
       taskStatus: [''],
       priority: [''],
       dueDate: [''],
+      location:[''],
       categoryNames: [[]] // Added categoryNames field
     });
   }
@@ -136,6 +138,7 @@ export class ViewTaskTableComponent implements OnInit {
 
     const title: string | undefined = formValues.title || undefined;
     const employeeName: string | undefined = formValues.employeeName || undefined;
+
     // const taskStatus: string | undefined = formValues.taskStatus || undefined; for onlu single
 
     // Ensure that taskStatus is always an array
@@ -152,7 +155,7 @@ export class ViewTaskTableComponent implements OnInit {
       ? (Array.isArray(formValues.categoryNames) ? formValues.categoryNames : [formValues.categoryNames])
       : undefined;
 
-    console.log('Filter values:', { title, priority, dueDate, taskStatus, employeeName });
+    console.log('Filter values:', { title, priority, dueDate, taskStatus, employeeName});
     this.adminService.filterTasks(priority, title, dueDate, taskStatus, employeeName, categoryNames).subscribe(
       (res: TaskDTO[]) => {
         // this.listOfTasks = res;

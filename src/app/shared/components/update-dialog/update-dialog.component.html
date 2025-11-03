@@ -47,6 +47,15 @@
             <mat-error *ngIf="updateTaskForm.get('status')?.hasError('required')"> this Input is Required</mat-error>
         </mat-form-field>
 
+    
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Location</mat-label>
+            <input matInput type="text" placeholder="location" formControlName="location" />
+            <mat-error *ngIf="updateTaskForm.get('location')?.hasError('required')"> This Input Is Required</mat-error>
+        </mat-form-field>
+
+
+
         <div class="row-container">
             <mat-form-field appearance="outline" class="form-field half-width">
                 <mat-label>Select The Employee</mat-label>
@@ -135,11 +144,14 @@
                     [disabled]="!isRecording">
                     <mat-icon class="primary-icon">mic_off</mat-icon>
                 </button>
+                <button mat-icon-button (click)="openMap()" matTooltip="Send Location (Ctrl + l)">
+                    <mat-icon class="primary-icon">location_on</mat-icon>
+                  </button>
+            
             </div>
         </div>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid">Update
-            Task</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="updateTaskForm.invalid">Update Task</button>
     </form>
 </div>
 

@@ -318,7 +318,7 @@ export class DashboardComponent {
       return 'canceled-task';
     case 'DEFERRED':
       return 'deferred-task';
-
+  
     default:
       return '';
   }

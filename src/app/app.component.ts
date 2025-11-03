@@ -18,6 +18,7 @@ export class AppComponent {
   showExport:boolean=false;
   showFooterButtons: boolean = true; // New flag to control Save & Clear buttons
 
+  
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.router.events

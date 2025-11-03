@@ -1,91 +1,234 @@
+// .navbar {
+//     display: flex;
+//     align-items: center;
+//     padding: 0 16px;
+//     background-color: #3f51b5;
+//     color: white;
+//     position: static;
+//     border-bottom-right-radius: 25px;
+//     border-bottom-left-radius: 25px;
+// }
+// .navbar-brand {
+//     font-size: 20px;
+//     font-weight: 600;
+//     margin-right: 16px;
+// }
+// .space {
+//     flex: 1;
+// }
+// button {
+//     color: white !important;
+//     text-transform: uppercase;
+//     margin-left: 8px;
+// }
+
+// button.active {
+//     font-weight: 600;
+// }
+
+// .custom-toolbar {
+//     background-color: #ff000f;
+// }
+
+// .mat-icon.logout-icon {
+//     color: rgb(253, 83, 83);
+//     /* Specific color for logout icon */
+// }
+
+// /* Text styles for menu items */
+// .menu-text {
+//     font-size: 14px;
+//     /* Adjust text size */
+//     color: #636262;
+//     /* Neutral color for text */
+//     margin-left: 5px;
+//     /* Space between icon and text */
+//     font-weight: 500;
+//     /* Consistent font weight */
+// }
+
+// .footer-panel {
+//     position: relative;
+//     bottom: 0;
+//     width: calc(100% - 40px); /* Account for horizontal padding */
+//     margin: 0 20px; /* Center the footer with equal margins */
+//     padding: 10px 15px; /* Inner spacing */
+//     display: flex;
+//     justify-content: center; /* Align items to the right */
+//     align-items: center;
+//     gap: 100px; /* Space between buttons */
+//     background-size: cover; /* Ensure the background image covers */
+//     background-position: center; /* Center the background image */
+//     box-shadow: 0 -2px 5px rgba(14, 13, 13, 0.1); /* Subtle shadow */
+//     border-radius: 10px; /* Rounded corners */
+//     box-sizing: border-box; /* Include padding in width/height */
+//   }
+  
+//   .footer-panel button {
+//     display: flex;
+//     align-items: center; /* Align icon and text */
+//     gap: 5px; /* Space between icon and text */
+//     border-radius: 5px; /* Rounded corners */
+//     font-weight: bold; /* Emphasize button text */
+//     padding: 8px 12px; /* Provide consistent button padding */
+//     cursor: pointer; /* Show pointer on hover */
+//   }
+  
+//   .footer-panel button i {
+//     font-size: 20px; /* Icon size */
+//     line-height: 1; /* Align icon with text */
+//   }
+ 
+// header {
+//     flex: 0 0 auto; /* Navbar takes up only as much space as needed */
+//   }
+  
+//   main {
+//     flex: 1 0 auto; /* Main content area grows to fill available space */
+//     padding: 20px;  /* Optional: Add padding for content */
+//   }
+
 .navbar {
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    background-color: #3f51b5;
-    color: white;
-    position: static;
-    border-bottom-right-radius: 25px;
-    border-bottom-left-radius: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: #3f51b5;
+  color: white;
+  position: static;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
+
 .navbar-brand {
-    font-size: 20px;
-    font-weight: 600;
-    margin-right: 16px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 16px;
 }
-.space {
-    flex: 1;
-}
+
+
+
 button {
-    color: white !important;
-    text-transform: uppercase;
-    margin-left: 8px;
+  color: white !important;
+  text-transform: uppercase;
+  margin-left: 8px;
 }
 
 button.active {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .custom-toolbar {
-    background-color: #ff000f;
+  background-color: #ff000f;
 }
 
 .mat-icon.logout-icon {
-    color: rgb(253, 83, 83);
-    /* Specific color for logout icon */
+  color: rgb(253, 83, 83);
 }
 
-/* Text styles for menu items */
 .menu-text {
-    font-size: 14px;
-    /* Adjust text size */
-    color: #636262;
-    /* Neutral color for text */
-    margin-left: 5px;
-    /* Space between icon and text */
-    font-weight: 500;
-    /* Consistent font weight */
+  font-size: 14px;
+  color: #636262;
+  margin-left: 5px;
+  font-weight: 500;
 }
 
+/* Footer */
 .footer-panel {
-    position: relative;
-    bottom: 0;
-    width: calc(100% - 40px); /* Account for horizontal padding */
-    margin: 0 20px; /* Center the footer with equal margins */
-    padding: 10px 15px; /* Inner spacing */
-    display: flex;
-    justify-content: center; /* Align items to the right */
-    align-items: center;
-    gap: 100px; /* Space between buttons */
-    background-size: cover; /* Ensure the background image covers */
-    background-position: center; /* Center the background image */
-    box-shadow: 0 -2px 5px rgba(14, 13, 13, 0.1); /* Subtle shadow */
-    border-radius: 10px; /* Rounded corners */
-    box-sizing: border-box; /* Include padding in width/height */
-  }
-  
-  .footer-panel button {
-    display: flex;
-    align-items: center; /* Align icon and text */
-    gap: 5px; /* Space between icon and text */
-    border-radius: 5px; /* Rounded corners */
-    font-weight: bold; /* Emphasize button text */
-    padding: 8px 12px; /* Provide consistent button padding */
-    cursor: pointer; /* Show pointer on hover */
-  }
-  
-  .footer-panel button i {
-    font-size: 20px; /* Icon size */
-    line-height: 1; /* Align icon with text */
-  }
- 
+  position: relative;
+  bottom: 0;
+  width: calc(100% - 40px);
+  margin: 0 20px;
+  padding: 10px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 -2px 5px rgba(14, 13, 13, 0.1);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.footer-panel button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.footer-panel button i {
+  font-size: 20px;
+  line-height: 1;
+}
+
 header {
-    flex: 0 0 auto; /* Navbar takes up only as much space as needed */
+  flex: 0 0 auto;
+}
+
+main {
+  flex: 1 0 auto;
+  padding: 20px;
+}
+
+/* ---------- Mobile Responsive Adjustments ---------- */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px;
   }
-  
-  main {
-    flex: 1 0 auto; /* Main content area grows to fill available space */
-    padding: 20px;  /* Optional: Add padding for content */
+
+  .navbar-brand {
+    margin-bottom: 10px;
   }
+  .admin-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    width: 40%;
+    margin-top: 5px;
+  }
+  .admin-buttons button {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .footer-panel {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 12px;
+  }
+
+  .footer-panel button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (max-width: 500px) {
+    .menu-text {
+      display: none; /* ✅ hide text on very small screens */
+    }
+  }
+
+  button {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}
+
+.admin-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 
